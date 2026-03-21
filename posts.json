@@ -1,0 +1,56 @@
+[
+  {
+    "id": "b1",
+    "title": "Building a Production-Ready Online Pharmacy from Scratch",
+    "cat": "dev",
+    "date": "December 2024",
+    "readTime": "8 min read",
+    "excerpt": "Every architectural decision in a regulated e-health platform carries legal and safety implications. Here's how I designed, built, and launched a fully compliant pharmacy.",
+    "body": "<h2>The Challenge</h2><p>Building a regulated e-commerce pharmacy is not like building a regular online shop. Every decision carries legal and safety implications. Products must be verified, orders must be traceable, and customers must trust the platform with their health.</p><h2>Architecture</h2><p>I chose a decoupled architecture: React frontend, Node.js/Express API, MongoDB datastore. Each layer is independently deployable and scalable.</p><h2>Key Lesson</h2><p>In any platform that handles health-related products, trust and reliability are everything.</p>"
+  },
+  {
+    "id": "b2",
+    "title": "RBAC Done Right: Securing Multi-Role Healthcare Platforms",
+    "cat": "security",
+    "date": "November 2024",
+    "readTime": "6 min read",
+    "excerpt": "A practical guide to Role-Based Access Control in regulated environments — from schema design to middleware patterns and audit logging.",
+    "body": "<h2>Why RBAC Matters in Healthcare</h2><p>A pharmacy platform needs precise access scoping. Customers, pharmacists, admins, and delivery staff each need different views and capabilities.</p><h2>Audit Trails</h2><p>Every state-changing action writes to an append-only audit log with actor, timestamp, and before/after state. Non-negotiable in regulated environments.</p>"
+  },
+  {
+    "id": "b3",
+    "title": "IoT-Driven Irrigation: Lessons from 9 Years in Commercial Floriculture",
+    "cat": "agritech",
+    "date": "October 2024",
+    "readTime": "7 min read",
+    "excerpt": "Real-world insights from operating Gavish computerised irrigation systems — and how those skills transfer directly to software engineering.",
+    "body": "<h2>The Scale of the Problem</h2><p>Managing irrigation and nutrient delivery across dozens of greenhouses is a precision data problem. Too little water and you lose a crop.</p><h2>What This Taught Me</h2><p>Running 24/7 systems where failure means crop loss teaches you to design for reliability from first principles.</p>"
+  },
+  {
+    "id": "b4",
+    "title": "M-Pesa API Integration: A Complete Developer Guide for Node.js",
+    "cat": "dev",
+    "date": "September 2024",
+    "readTime": "10 min read",
+    "excerpt": "OAuth token management, STK Push flow, callback handling, idempotency, and every production pitfall of the M-Pesa Daraja API.",
+    "body": "<h2>Token Management</h2><p>Cache your access token — never fetch a new one on every request. Tokens last 60 minutes; cache for 59 and refresh proactively.</p><h2>Idempotency</h2><p>Callbacks can arrive more than once. Always check if the transaction ID already exists in your database before processing.</p>"
+  },
+  {
+    "id": "b5",
+    "title": "From Fertigation Technician to Full-Stack Developer",
+    "cat": "career",
+    "date": "July 2024",
+    "readTime": "4 min read",
+    "excerpt": "How a decade operating computerised agricultural systems shaped my engineering perspective — and why cross-domain experience is a genuine technical advantage.",
+    "body": "<h2>An Unconventional Path</h2><p>I spent years operating precision computerised systems in the cut flower industry before transitioning into software.</p><h2>The Advantage</h2><p>When I build AgriTech software today, I have lived the domain. That makes the difference between software that looks correct and software that actually works in the field.</p>"
+  },
+  {
+    "id": "b6",
+    "title": "Preventing SQL Injection & XSS in Django and Node.js",
+    "cat": "security",
+    "date": "June 2024",
+    "readTime": "5 min read",
+    "excerpt": "Side-by-side security patterns across frameworks with real code examples and the common mistakes to avoid in production.",
+    "body": "<h2>SQL Injection</h2><p>Never build queries by concatenating user input. Always use parameterised queries or an ORM.</p><h2>Content Security Policy</h2><p>A strict CSP header prevents inline script execution even if an injection vulnerability slips through code review.</p>"
+  }
+]
