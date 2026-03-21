@@ -1,0 +1,8 @@
+User-agent: *
+Allow: /
+
+# Block admin-related paths (nothing sensitive here, but good practice)
+Disallow: /admin/
+
+# Sitemap location
+Sitemap: https://jamesmainamwangi.com/sitemap.xml

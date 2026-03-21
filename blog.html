@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Blog | James Mwangi — Cybersecurity &amp; Full-Stack Development Insights</title>
+<meta name="description" content="Technical articles on cybersecurity, full-stack development, M-Pesa API integration, IoT systems, and building software in East Africa.">
+<meta property="og:title" content="Blog — James Mwangi">
+<meta property="og:type" content="website">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://jamesmainamwangi.com/blog.html">
+<link rel="icon" href="favicon.ico">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0d1117;--bg2:#161b22;--bg3:#21262d;--bg4:#30363d;--text:#e6edf3;--text2:#8b949e;--text3:#484f58;--accent:#6366f1;--accent2:#818cf8;--green:#3fb950;--border:rgba(255,255,255,.06);--border2:rgba(255,255,255,.1);--shadow2:0 4px 20px rgba(0,0,0,.4);--r:10px;--r2:16px;--t:all .25s cubic-bezier(.4,0,.2,1);}
+[data-theme="light"]{--bg:#f6f8fa;--bg2:#fff;--bg3:#f0f2f5;--bg4:#e4e8ed;--text:#1f2328;--text2:#656d76;--text3:#9198a1;--border:rgba(0,0,0,.07);--border2:rgba(0,0,0,.12);--shadow2:0 4px 20px rgba(0,0,0,.06);}
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}html{scroll-behavior:smooth;}
+body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--text);line-height:1.6;overflow-x:hidden;transition:background .3s,color .3s;}
+img{max-width:100%;display:block;}a{color:inherit;text-decoration:none;}button{cursor:pointer;border:none;background:none;font-family:inherit;}ul{list-style:none;}
+::selection{background:var(--accent);color:#fff;}::-webkit-scrollbar{width:4px;}::-webkit-scrollbar-track{background:var(--bg);}::-webkit-scrollbar-thumb{background:var(--bg4);border-radius:2px;}
+.container{max-width:1160px;margin:0 auto;padding:0 1.5rem;}
+.nav{position:fixed;top:0;left:0;right:0;z-index:999;padding:1rem 0;transition:var(--t);}
+.nav.stuck{background:rgba(13,17,23,.92);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);padding:.7rem 0;}
+[data-theme="light"] .nav.stuck{background:rgba(246,248,250,.92);}
+.nav-inner{max-width:1160px;margin:0 auto;padding:0 1.5rem;display:flex;align-items:center;justify-content:space-between;}
+.nav-logo{display:flex;align-items:center;gap:.65rem;}
+.nav-logo-text .name{font-size:.9rem;font-weight:800;color:var(--text);letter-spacing:-.02em;line-height:1.15;}
+.nav-logo-text .name span{color:var(--accent);}
+.nav-logo-text .role{font-family:'JetBrains Mono',monospace;font-size:.52rem;color:var(--text3);letter-spacing:.08em;}
+.nav-links{display:flex;align-items:center;gap:.25rem;}
+.nav-links a{font-size:.82rem;font-weight:500;color:var(--text2);padding:.45rem .8rem;border-radius:6px;transition:var(--t);}
+.nav-links a:hover,.nav-links a.active{color:var(--text);background:var(--bg3);}
+.nav-dropdown{position:relative;}
+.nav-dropdown-btn{font-size:.82rem;font-weight:500;color:var(--text2);padding:.45rem .8rem;border-radius:6px;display:flex;align-items:center;gap:.3rem;transition:var(--t);cursor:pointer;}
+.nav-dropdown-btn:hover{color:var(--text);background:var(--bg3);}
+.nav-dropdown-btn svg{width:12px;height:12px;transition:transform .25s;}
+.nav-dropdown-btn.open svg{transform:rotate(180deg);}
+.dropdown-menu{position:absolute;top:calc(100% + .5rem);right:0;width:220px;background:var(--bg2);border:1px solid var(--border2);border-radius:var(--r2);padding:.5rem;box-shadow:var(--shadow2);display:none;flex-direction:column;gap:.15rem;z-index:10;}
+.dropdown-menu.open{display:flex;}
+.dropdown-item{display:flex;align-items:center;gap:.75rem;padding:.75rem .9rem;border-radius:8px;transition:background .2s;}
+.dropdown-item:hover{background:var(--bg3);}
+.dropdown-item-icon{font-size:1.15rem;flex-shrink:0;}
+.dropdown-item-text .t{font-size:.82rem;font-weight:600;color:var(--text);}
+.dropdown-item-text .s{font-size:.7rem;color:var(--text2);margin-top:.1rem;}
+.nav-right{display:flex;align-items:center;gap:.65rem;}
+.theme-toggle{width:32px;height:32px;border-radius:7px;background:var(--bg3);border:1px solid var(--border2);color:var(--text2);font-size:.9rem;display:flex;align-items:center;justify-content:center;transition:var(--t);}
+.theme-toggle:hover{background:var(--bg4);color:var(--text);}
+.nav-cta{padding:.48rem 1.1rem;background:var(--accent);color:#fff;font-size:.78rem;font-weight:600;border-radius:7px;transition:var(--t);}
+.nav-cta:hover{background:var(--accent2);}
+.hamburger{display:none;flex-direction:column;gap:5px;width:32px;height:32px;align-items:center;justify-content:center;background:var(--bg3);border:1px solid var(--border2);border-radius:7px;padding:0;}
+.hamburger span{display:block;width:16px;height:1.5px;background:var(--text);border-radius:2px;}
+.mob-nav{display:none;position:fixed;inset:0;z-index:9000;background:var(--bg);flex-direction:column;align-items:center;justify-content:center;gap:2rem;}
+.mob-nav.open{display:flex;}
+.mob-nav a{font-size:1.6rem;font-weight:800;color:var(--text);transition:color .2s;}
+.mob-nav a:hover{color:var(--accent2);}
+.mob-close{position:absolute;top:1.5rem;right:1.5rem;font-size:1.3rem;color:var(--text2);width:36px;height:36px;border-radius:8px;background:var(--bg2);border:1px solid var(--border2);display:flex;align-items:center;justify-content:center;cursor:pointer;}
+.page-hero{padding:7rem 0 4rem;background:var(--bg2);border-bottom:1px solid var(--border);}
+.page-hero-eyebrow{font-family:'JetBrains Mono',monospace;font-size:.62rem;color:var(--accent2);letter-spacing:.2em;text-transform:uppercase;margin-bottom:.9rem;display:flex;align-items:center;gap:.5rem;}
+.page-hero-eyebrow::before{content:'//';opacity:.4;}
+.page-hero h1{font-size:clamp(2.2rem,5vw,3.5rem);font-weight:900;letter-spacing:-.04em;line-height:1.05;margin-bottom:.9rem;}
+.page-hero h1 em{font-style:italic;color:var(--accent);}
+.page-hero-sub{font-size:.92rem;color:var(--text2);line-height:1.75;max-width:520px;}
+.breadcrumb-bar{background:var(--bg2);border-bottom:1px solid var(--border);padding:.65rem 0;}
+.breadcrumb-inner{max-width:1160px;margin:0 auto;padding:0 1.5rem;display:flex;align-items:center;gap:.35rem;flex-wrap:wrap;}
+.bc-crumb{font-family:'JetBrains Mono',monospace;font-size:.62rem;color:var(--text3);transition:color .2s;}
+.bc-crumb:hover{color:var(--accent2);}
+.bc-sep{color:var(--text3);font-size:.65rem;}
+.bc-active{font-family:'JetBrains Mono',monospace;font-size:.62rem;color:var(--accent2);}
+.bc-pill{font-family:'JetBrains Mono',monospace;font-size:.62rem;color:var(--text3);padding:.28rem .7rem;border:1px solid var(--border2);border-radius:5px;transition:all .2s;}
+.bc-pill:hover{color:var(--accent2);border-color:var(--accent2);}
+.blog-layout{display:grid;grid-template-columns:1fr 300px;gap:3rem;align-items:start;padding:4rem 0 6rem;}
+.blog-filters{display:flex;gap:.5rem;flex-wrap:wrap;margin-bottom:2.5rem;}
+.bf{font-family:'JetBrains Mono',monospace;font-size:.62rem;letter-spacing:.08em;text-transform:uppercase;padding:.38rem .9rem;border-radius:7px;background:var(--bg2);border:1px solid var(--border2);color:var(--text3);transition:var(--t);cursor:pointer;}
+.bf:hover,.bf.on{border-color:var(--accent);color:var(--accent);background:rgba(99,102,241,.07);}
+.blog-grid{display:flex;flex-direction:column;gap:1.25rem;}
+.blog-card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r2);padding:1.75rem;cursor:pointer;transition:var(--t);display:flex;flex-direction:column;}
+.blog-card:hover{border-color:rgba(99,102,241,.4);transform:translateY(-2px);box-shadow:var(--shadow2);}
+.blog-card.featured{flex-direction:row;gap:2rem;align-items:flex-start;}
+.bc-icon{width:88px;height:88px;border-radius:12px;background:var(--bg3);border:1px solid var(--border2);display:flex;align-items:center;justify-content:center;font-size:2rem;flex-shrink:0;}
+.bc-badge{display:inline-block;font-family:'JetBrains Mono',monospace;font-size:.56rem;letter-spacing:.1em;text-transform:uppercase;padding:.2rem .55rem;border-radius:4px;background:rgba(99,102,241,.1);color:var(--accent2);margin-bottom:.65rem;}
+.bc-title{font-size:1rem;font-weight:700;margin-bottom:.5rem;line-height:1.35;}
+.blog-card.featured .bc-title{font-size:1.15rem;}
+.bc-excerpt{font-size:.8rem;color:var(--text2);line-height:1.65;flex:1;margin-bottom:1rem;}
+.bc-meta{display:flex;justify-content:space-between;align-items:center;margin-top:auto;padding-top:.75rem;border-top:1px solid var(--border);}
+.bc-date{font-family:'JetBrains Mono',monospace;font-size:.6rem;color:var(--text3);}
+.bc-read{font-size:.75rem;font-weight:600;color:var(--accent2);}
+.loading-state{text-align:center;padding:3rem 2rem;color:var(--text3);font-family:'JetBrains Mono',monospace;font-size:.75rem;}
+.spinner{width:28px;height:28px;border:2px solid var(--border2);border-top-color:var(--accent);border-radius:50%;animation:spin .7s linear infinite;margin:0 auto 1rem;}
+@keyframes spin{to{transform:rotate(360deg);}}
+.empty-state{text-align:center;padding:4rem 2rem;color:var(--text3);font-family:'JetBrains Mono',monospace;font-size:.75rem;}
+.blog-sidebar{position:sticky;top:5.5rem;display:flex;flex-direction:column;gap:1.25rem;}
+.sidebar-card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r2);padding:1.5rem;}
+.sc-title{font-family:'JetBrains Mono',monospace;font-size:.6rem;color:var(--accent2);letter-spacing:.15em;text-transform:uppercase;margin-bottom:1.1rem;}
+.sc-tags{display:flex;flex-wrap:wrap;gap:.45rem;}
+.sc-tag{font-family:'JetBrains Mono',monospace;font-size:.6rem;padding:.25rem .6rem;border-radius:5px;background:var(--bg3);border:1px solid var(--border2);color:var(--text3);cursor:pointer;transition:var(--t);}
+.sc-tag:hover,.sc-tag.on{border-color:var(--accent);color:var(--accent2);}
+.sc-recent{display:flex;flex-direction:column;gap:.75rem;}
+.sc-recent-item{display:flex;gap:.75rem;align-items:flex-start;cursor:pointer;transition:opacity .2s;}
+.sc-recent-item:hover{opacity:.75;}
+.sc-recent-num{font-family:'JetBrains Mono',monospace;font-size:.6rem;color:var(--accent2);flex-shrink:0;margin-top:.15rem;}
+.sc-recent-title{font-size:.78rem;font-weight:500;color:var(--text2);line-height:1.45;}
+.sc-author{display:flex;align-items:center;gap:.85rem;}
+.sc-author-avatar{width:48px;height:48px;border-radius:50%;background:var(--accent);display:flex;align-items:center;justify-content:center;font-size:1.1rem;font-weight:800;color:#fff;flex-shrink:0;border:2px solid var(--accent);}
+.sc-author-name{font-size:.85rem;font-weight:700;color:var(--text);}
+.sc-author-role{font-family:'JetBrains Mono',monospace;font-size:.58rem;color:var(--text3);margin-top:.2rem;}
+.ad-unit{background:var(--bg2);border:1px dashed var(--border2);border-radius:var(--r);padding:1.25rem;text-align:center;min-height:90px;display:flex;align-items:center;justify-content:center;}
+.ad-label{font-family:'JetBrains Mono',monospace;font-size:.58rem;color:var(--text3);letter-spacing:.1em;text-transform:uppercase;}
+.post-reader{display:none;padding:4rem 0 6rem;}
+.post-reader.open{display:block;}
+.post-reader-inner{display:grid;grid-template-columns:1fr 300px;gap:3rem;align-items:start;}
+.post-back{display:inline-flex;align-items:center;gap:.45rem;font-family:'JetBrains Mono',monospace;font-size:.68rem;color:var(--accent2);margin-bottom:2.5rem;cursor:pointer;background:none;border:none;transition:gap .2s;text-transform:uppercase;letter-spacing:.08em;}
+.post-back:hover{gap:.8rem;}
+.post-cat{font-family:'JetBrains Mono',monospace;font-size:.62rem;color:var(--accent2);letter-spacing:.15em;text-transform:uppercase;margin-bottom:.75rem;}
+.post-title-h{font-size:clamp(1.6rem,4vw,2.5rem);font-weight:900;letter-spacing:-.03em;line-height:1.1;margin-bottom:1rem;}
+.post-meta-bar{display:flex;gap:2rem;font-family:'JetBrains Mono',monospace;font-size:.62rem;color:var(--text3);padding-bottom:1.5rem;border-bottom:1px solid var(--border2);margin-bottom:2.25rem;flex-wrap:wrap;}
+.post-body{font-size:.95rem;line-height:1.85;color:var(--text2);}
+.post-body h2{font-size:1.3rem;font-weight:800;color:var(--text);margin:2.5rem 0 .85rem;letter-spacing:-.02em;}
+.post-body h3{font-size:1.05rem;font-weight:700;color:var(--text);margin:2rem 0 .6rem;}
+.post-body p{margin-bottom:1.35rem;}
+.post-body strong{color:var(--text);}
+.post-body a{color:var(--accent2);text-decoration:underline;}
+.post-body code{font-family:'JetBrains Mono',monospace;font-size:.83em;background:var(--bg2);border:1px solid var(--border2);padding:.12em .45em;color:var(--accent2);border-radius:4px;}
+.post-body pre{background:var(--bg2);border:1px solid var(--border2);padding:1.4rem;border-radius:var(--r2);margin:1.5rem 0;overflow-x:auto;}
+.post-body pre code{background:none;border:none;padding:0;color:var(--text);font-size:.82rem;line-height:1.7;}
+.post-body ul,.post-body ol{margin:1rem 0 1.35rem 1.5rem;}
+.post-body ul{list-style:disc;}.post-body ol{list-style:decimal;}
+.post-body li{margin-bottom:.45rem;}
+.post-body blockquote{border-left:3px solid var(--accent);padding:1rem 1.25rem;color:var(--text2);font-style:italic;margin:1.5rem 0;background:var(--bg2);border-radius:0 8px 8px 0;}
+.post-body img{width:100%;border-radius:var(--r);border:1px solid var(--border2);margin:1.5rem 0;}
+.post-body hr{border:none;border-top:1px solid var(--border2);margin:2rem 0;}
+.post-body .video-wrap{position:relative;padding-bottom:56.25%;height:0;margin:1.5rem 0;border-radius:var(--r);overflow:hidden;}
+.post-body .video-wrap iframe{position:absolute;inset:0;width:100%;height:100%;}
+.share-strip{margin-top:3rem;padding-top:2rem;border-top:1px solid var(--border2);}
+.share-label{font-family:'JetBrains Mono',monospace;font-size:.6rem;color:var(--text3);letter-spacing:.12em;text-transform:uppercase;margin-bottom:.9rem;}
+.share-btns{display:flex;gap:.6rem;flex-wrap:wrap;}
+.sh{padding:.48rem 1.05rem;border-radius:7px;font-size:.72rem;font-weight:700;display:flex;align-items:center;gap:.4rem;transition:var(--t);font-family:'Inter',sans-serif;border:none;cursor:pointer;}
+.sh:hover{transform:translateY(-2px);}
+.sh-wa{background:#25d366;color:#fff;}.sh-tw{background:#1da1f2;color:#fff;}.sh-li{background:#0077b5;color:#fff;}
+.sh-cp{background:var(--bg2);border:1px solid var(--border2);color:var(--text2);}
+.sh-cp:hover{border-color:var(--accent);color:var(--accent2);}
+.wa-fab{position:fixed;bottom:2rem;right:2rem;z-index:800;width:50px;height:50px;border-radius:50%;background:#25d366;color:#fff;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 20px rgba(37,211,102,.45);transition:var(--t);text-decoration:none;}
+.wa-fab:hover{transform:scale(1.1);}
+.toast{position:fixed;bottom:2rem;left:50%;transform:translateX(-50%) translateY(80px);background:var(--bg2);border:1px solid var(--border2);color:var(--text);padding:.7rem 1.6rem;border-radius:9px;font-size:.82rem;font-weight:500;z-index:99999;transition:transform .35s;white-space:nowrap;box-shadow:var(--shadow2);pointer-events:none;}
+.toast.show{transform:translateX(-50%) translateY(0);}
+.footer{background:var(--bg2);border-top:1px solid var(--border);padding:4rem 0 2rem;}
+.footer-top{display:grid;grid-template-columns:1.4fr 1fr;gap:4rem;margin-bottom:3rem;}
+.fb-logo{display:flex;align-items:center;gap:.65rem;margin-bottom:1rem;}
+.fb-name{font-size:.9rem;font-weight:800;letter-spacing:-.02em;}
+.fb-name span{color:var(--accent);}
+.fb-role{font-family:'JetBrains Mono',monospace;font-size:.52rem;color:var(--text3);margin-top:.15rem;}
+.footer-bio{font-size:.8rem;color:var(--text3);line-height:1.7;max-width:320px;}
+.footer-cols{display:grid;grid-template-columns:repeat(3,1fr);gap:2rem;}
+.fc-title{font-family:'JetBrains Mono',monospace;font-size:.58rem;color:var(--accent2);letter-spacing:.15em;text-transform:uppercase;margin-bottom:.85rem;}
+.footer-col{display:flex;flex-direction:column;gap:.45rem;}
+.footer-col a{font-size:.8rem;color:var(--text3);transition:color .2s;}
+.footer-col a:hover{color:var(--accent2);}
+.footer-bottom{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem;padding-top:1.5rem;border-top:1px solid var(--border);}
+.footer-copy{font-family:'JetBrains Mono',monospace;font-size:.6rem;color:var(--text3);}
+.footer-socials{display:flex;gap:.5rem;}
+.soc-btn{width:32px;height:32px;border-radius:7px;background:var(--bg3);border:1px solid var(--border2);color:var(--text3);display:flex;align-items:center;justify-content:center;transition:var(--t);}
+.soc-btn:hover{background:var(--accent);border-color:var(--accent);color:#fff;transform:translateY(-2px);}
+.reveal{opacity:0;transform:translateY(20px);transition:opacity .6s,transform .6s;}
+.reveal.in{opacity:1;transform:translateY(0);}
+@media(max-width:1024px){.blog-layout,.post-reader-inner{grid-template-columns:1fr;}.blog-sidebar{position:static;}.footer-top{grid-template-columns:1fr;gap:3rem;}}
+@media(max-width:768px){.nav-links,.nav-dropdown,.nav-cta{display:none;}.hamburger{display:flex;}.blog-card.featured{flex-direction:column;}.bc-icon{width:60px;height:60px;font-size:1.5rem;}.footer-cols{grid-template-columns:repeat(2,1fr);}}
+@media(max-width:520px){.footer-cols{grid-template-columns:1fr;}}
+</style>
+</head>
+<body>
+
+<div class="mob-nav" id="mobNav">
+  <button class="mob-close" onclick="closeMob()">&#x2715;</button>
+  <a href="index.html" onclick="closeMob()">Home</a>
+  <a href="index.html#about" onclick="closeMob()">About</a>
+  <a href="index.html#projects" onclick="closeMob()">Projects</a>
+  <a href="blog.html" onclick="closeMob()" style="color:var(--accent2)">Blog</a>
+  <a href="tutoring.html" onclick="closeMob()">Tutoring</a>
+  <a href="shop.html" onclick="closeMob()">Shop</a>
+  <a href="index.html#contact" onclick="closeMob()">Contact</a>
+</div>
+
+<nav class="nav" id="mainNav">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo">
+      <svg width="34" height="34" viewBox="0 0 36 36" fill="none"><rect width="36" height="36" rx="9" fill="#6366f1"/><path d="M21 8h5v17c0 3.9-2.4 6.5-6.5 6.5S13 28.9 13 25h4.2c0 1.7 1 2.7 2.3 2.7s2.5-1 2.5-2.7V8z" fill="white" opacity=".95"/><circle cx="28.5" cy="27.5" r="3" fill="#a5b4fc"/><path d="M8.5 19.5l-3 3 3 3M14.5 19.5l3 3-3 3" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" opacity=".45"/></svg>
+      <div class="nav-logo-text"><div class="name">James<span>.</span>dev</div><div class="role">Full-Stack &middot; Security</div></div>
+    </a>
+    <div class="nav-links">
+      <a href="index.html">Home</a><a href="index.html#about">About</a><a href="index.html#skills">Skills</a>
+      <a href="index.html#projects">Projects</a><a href="blog.html" class="active">Blog</a>
+      <div class="nav-dropdown">
+        <button class="nav-dropdown-btn" id="venturesBtn" onclick="toggleDropdown()">Ventures<svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 4l4 4 4-4"/></svg></button>
+        <div class="dropdown-menu" id="venturesMenu">
+          <a href="tutoring.html" class="dropdown-item"><span class="dropdown-item-icon">&#x1F4DA;</span><div class="dropdown-item-text"><div class="t">IT &amp; CS Tutoring</div><div class="s">Academic coaching &amp; mentorship</div></div></a>
+          <a href="shop.html" class="dropdown-item"><span class="dropdown-item-icon">&#x1F6CD;</span><div class="dropdown-item-text"><div class="t">Tech Shop</div><div class="s">Curated developer tools &amp; gadgets</div></div></a>
+        </div>
+      </div>
+      <a href="index.html#contact">Contact</a>
+    </div>
+    <div class="nav-right">
+      <button class="theme-toggle" id="themeBtn" onclick="toggleTheme()">&#x1F319;</button>
+      <a href="index.html#contact" class="nav-cta">Hire Me</a>
+      <button class="hamburger" onclick="openMob()"><span></span><span></span><span></span></button>
+    </div>
+  </div>
+</nav>
+
+<header class="page-hero">
+  <div class="container">
+    <div class="page-hero-eyebrow">Technical Blog</div>
+    <h1>Insights &amp; <em>Articles</em></h1>
+    <p class="page-hero-sub">Practical writing on cybersecurity, full-stack development, M-Pesa integration, IoT systems, and building software in East Africa.</p>
+  </div>
+</header>
+
+<div class="breadcrumb-bar"><div class="breadcrumb-inner">
+  <a href="index.html" class="bc-crumb">Home</a><span class="bc-sep">&#x203A;</span><span class="bc-active">Blog</span>
+  <div style="flex:1"></div>
+  <a href="tutoring.html" class="bc-pill">&#x1F4DA; Tutoring</a>
+  <a href="shop.html" class="bc-pill">&#x1F6CD; Shop</a>
+  <a href="index.html#contact" class="bc-pill">&#x2709;&#xFE0F; Hire Me</a>
+</div></div>
+
+<div class="container">
+  <div id="blogIndex">
+    <div class="blog-layout">
+      <div>
+        <div class="blog-filters" id="blogFilters">
+          <button class="bf on" onclick="filterPosts(this,'all')">All Posts</button>
+          <button class="bf" onclick="filterPosts(this,'dev')">Development</button>
+          <button class="bf" onclick="filterPosts(this,'security')">Security</button>
+          <button class="bf" onclick="filterPosts(this,'agritech')">AgriTech</button>
+          <button class="bf" onclick="filterPosts(this,'healthtech')">HealthTech</button>
+          <button class="bf" onclick="filterPosts(this,'career')">Career</button>
+        </div>
+        <div class="blog-grid" id="blogGrid">
+          <div class="loading-state"><div class="spinner"></div>// Loading posts&hellip;</div>
+        </div>
+      </div>
+      <aside class="blog-sidebar">
+        <div class="sidebar-card">
+          <div class="sc-title">About the Author</div>
+          <div class="sc-author"><div class="sc-author-avatar">JM</div><div><div class="sc-author-name">James Mwangi</div><div class="sc-author-role">Full-Stack Developer<br>Cybersecurity Specialist</div></div></div>
+          <p style="font-size:.78rem;color:var(--text2);line-height:1.7;margin-top:.9rem;">14+ years building and securing systems &mdash; from IoT irrigation to regulated HealthTech platforms.</p>
+          <a href="index.html" style="display:inline-flex;align-items:center;gap:.4rem;margin-top:1rem;font-size:.75rem;font-weight:600;color:var(--accent2);">View Portfolio &rarr;</a>
+        </div>
+        <div class="sidebar-card">
+          <div class="sc-title">Topics</div>
+          <div class="sc-tags" id="sidebarTags">
+            <span class="sc-tag on" onclick="filterPosts(null,'all')">All</span>
+            <span class="sc-tag" onclick="filterPosts(null,'dev')">Development</span>
+            <span class="sc-tag" onclick="filterPosts(null,'security')">Security</span>
+            <span class="sc-tag" onclick="filterPosts(null,'agritech')">AgriTech</span>
+            <span class="sc-tag" onclick="filterPosts(null,'healthtech')">HealthTech</span>
+            <span class="sc-tag" onclick="filterPosts(null,'career')">Career</span>
+          </div>
+        </div>
+        <div class="sidebar-card"><div class="sc-title">Recent Posts</div><div class="sc-recent" id="recentPosts"></div></div>
+        <div class="ad-unit"><div class="ad-label">Advertisement</div></div>
+      </aside>
+    </div>
+  </div>
+
+  <div class="post-reader" id="postReader">
+    <div class="post-reader-inner">
+      <div>
+        <button class="post-back" onclick="closePost()">&larr; Back to Blog</button>
+        <div id="postContent"></div>
+      </div>
+      <aside class="blog-sidebar">
+        <div class="sidebar-card">
+          <div class="sc-title">About the Author</div>
+          <div class="sc-author"><div class="sc-author-avatar">JM</div><div><div class="sc-author-name">James Mwangi</div><div class="sc-author-role">Full-Stack Developer<br>Cybersecurity Specialist</div></div></div>
+          <p style="font-size:.78rem;color:var(--text2);line-height:1.7;margin-top:.9rem;">14+ years building and securing systems across HealthTech, AgriTech, media, and enterprise IT.</p>
+          <a href="index.html" style="display:inline-flex;align-items:center;gap:.4rem;margin-top:1rem;font-size:.75rem;font-weight:600;color:var(--accent2);">View Portfolio &rarr;</a>
+        </div>
+        <div class="sidebar-card"><div class="sc-title">More Articles</div><div class="sc-recent" id="recentPosts2"></div></div>
+        <div class="ad-unit" style="min-height:250px;"><div class="ad-label">Advertisement</div></div>
+      </aside>
+    </div>
+  </div>
+</div>
+
+<footer class="footer"><div class="container">
+  <div class="footer-top">
+    <div>
+      <div class="fb-logo"><svg width="32" height="32" viewBox="0 0 36 36" fill="none"><rect width="36" height="36" rx="9" fill="#6366f1"/><path d="M21 8h5v17c0 3.9-2.4 6.5-6.5 6.5S13 28.9 13 25h4.2c0 1.7 1 2.7 2.3 2.7s2.5-1 2.5-2.7V8z" fill="white" opacity=".95"/><circle cx="28.5" cy="27.5" r="3" fill="#a5b4fc"/></svg><div><div class="fb-name">James<span>.</span>dev</div><div class="fb-role">Full-Stack &middot; Security</div></div></div>
+      <p class="footer-bio">Full-Stack Developer and Cybersecurity Specialist. Building secure, scalable digital products across East Africa and beyond.</p>
+    </div>
+    <div class="footer-cols">
+      <div class="footer-col"><div class="fc-title">Portfolio</div><a href="index.html#about">About</a><a href="index.html#skills">Skills</a><a href="index.html#experience">Experience</a><a href="index.html#projects">Projects</a></div>
+      <div class="footer-col"><div class="fc-title">Ventures</div><a href="blog.html">Technical Blog</a><a href="tutoring.html">IT Tutoring</a><a href="shop.html">Tech Shop</a></div>
+      <div class="footer-col"><div class="fc-title">Legal</div><a href="privacy.html">Privacy Policy</a><a href="privacy.html#cookies">Cookie Policy</a><a href="privacy.html#terms">Terms of Use</a></div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <div class="footer-copy">&copy; 2026 James Mwangi. All rights reserved.</div>
+    <div class="footer-socials">
+      <a href="https://github.com/Ruchathi2010" target="_blank" rel="noopener" class="soc-btn"><svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg></a>
+      <a href="https://wa.me/254711618115" target="_blank" rel="noopener" class="soc-btn"><svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg></a>
+      <a href="https://linkedin.com" target="_blank" rel="noopener" class="soc-btn"><svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg></a>
+      <a href="https://twitter.com" target="_blank" rel="noopener" class="soc-btn"><svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a>
+    </div>
+  </div>
+</div></footer>
+
+<a href="https://wa.me/254711618115" target="_blank" rel="noopener" class="wa-fab"><svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg></a>
+<div class="toast" id="toast"></div>
+
+<script>
+const CAT_LABELS = { dev:'Full-Stack Dev', security:'Cybersecurity', agritech:'AgriTech & IoT', career:'Career', healthtech:'HealthTech' };
+const CAT_ICONS  = { dev:'{ }', security:'&#x1F6E1;', agritech:'&#x1F331;', career:'&#x1F30D;', healthtech:'&#x1F48A;' };
+
+let allPosts     = [];
+let activeFilter = 'all';
+let shareData    = { title: '', url: '' };
+
+function esc(s) {
+  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+/* ================================================================
+   LOAD — fetches posts.json from the same server
+   No API keys. No database. Zero config.
+   To add a post: edit posts.json on GitHub, commit, done.
+================================================================ */
+async function loadPosts() {
+  const grid = document.getElementById('blogGrid');
+  if (grid) grid.innerHTML = '<div class="loading-state"><div class="spinner"></div>// Loading posts&hellip;</div>';
+
+  try {
+    const res = await fetch('posts.json?t=' + Date.now());
+    if (!res.ok) throw new Error('HTTP ' + res.status);
+    allPosts = await res.json();
+    console.log('[Blog] Loaded', allPosts.length, 'posts from posts.json');
+  } catch (err) {
+    console.error('[Blog] Failed to load posts.json:', err.message);
+    allPosts = [];
+  }
+
+  renderBlog();
+  checkUrlPost();
+}
+
+/* ================================================================
+   RENDER
+================================================================ */
+function renderBlog() {
+  const grid = document.getElementById('blogGrid');
+  if (!grid) return;
+
+  const posts = activeFilter === 'all' ? allPosts : allPosts.filter(function(p) { return p.cat === activeFilter; });
+
+  if (!posts.length) {
+    grid.innerHTML = '<div class="empty-state">// No posts in this category yet.</div>';
+    renderRecent();
+    return;
+  }
+
+  var html = '';
+  for (var i = 0; i < posts.length; i++) {
+    var p     = posts[i];
+    var label = CAT_LABELS[p.cat] || p.cat;
+    var icon  = CAT_ICONS[p.cat]  || '&#x1F4DD;';
+    var feat  = i === 0 ? ' featured' : '';
+    html += '<article class="blog-card' + feat + '" onclick="openPost(' + "'" + esc(p.id) + "'" + ')" role="button" tabindex="0">';
+    html += '<div class="bc-icon">' + icon + '</div>';
+    html += '<div style="flex:1">';
+    html += '<span class="bc-badge">' + esc(label) + '</span>';
+    html += '<h2 class="bc-title">' + esc(p.title) + '</h2>';
+    html += '<p class="bc-excerpt">' + esc(p.excerpt || '') + '</p>';
+    html += '<div class="bc-meta">';
+    html += '<span class="bc-date">' + esc(p.date || '') + '</span>';
+    html += '<span class="bc-read">' + esc(p.readTime || '5 min read') + ' &rarr;</span>';
+    html += '</div></div></article>';
+  }
+  grid.innerHTML = html;
+  grid.querySelectorAll('.blog-card').forEach(function(el) { el.classList.add('reveal'); revObs.observe(el); });
+  renderRecent();
+}
+
+function renderRecent() {
+  var posts = allPosts.slice(0, 5);
+  var html  = '';
+  for (var i = 0; i < posts.length; i++) {
+    var p = posts[i];
+    html += '<div class="sc-recent-item" onclick="openPost(' + "'" + esc(p.id) + "'" + ')">';
+    html += '<span class="sc-recent-num">0' + (i + 1) + '</span>';
+    html += '<span class="sc-recent-title">' + esc(p.title) + '</span></div>';
+  }
+  ['recentPosts','recentPosts2'].forEach(function(id) {
+    var el = document.getElementById(id);
+    if (el) el.innerHTML = html;
+  });
+}
+
+function filterPosts(btn, cat) {
+  activeFilter = cat;
+  document.querySelectorAll('#blogFilters .bf').forEach(function(b) {
+    b.classList.toggle('on', b === btn || (b.getAttribute('onclick') || '').indexOf("'" + cat + "'") !== -1);
+  });
+  document.querySelectorAll('#sidebarTags .sc-tag').forEach(function(t) {
+    t.classList.toggle('on', (t.getAttribute('onclick') || '').indexOf("'" + cat + "'") !== -1);
+  });
+  renderBlog();
+}
+
+/* ================================================================
+   READ POST
+================================================================ */
+function openPost(id) {
+  var p = null;
+  for (var i = 0; i < allPosts.length; i++) { if (allPosts[i].id === id) { p = allPosts[i]; break; } }
+  if (!p) return;
+
+  var label   = CAT_LABELS[p.cat] || p.cat;
+  var pageUrl = location.origin + location.pathname + '?post=' + encodeURIComponent(id);
+  shareData   = { title: p.title, url: pageUrl };
+
+  var html = '';
+  html += '<div class="post-cat">' + esc(label) + '</div>';
+  html += '<h1 class="post-title-h">' + esc(p.title) + '</h1>';
+  html += '<div class="post-meta-bar">';
+  html += '<span>&#x1F4C5; ' + esc(p.date || '') + '</span>';
+  html += '<span>&#x23F1; ' + esc(p.readTime || '5 min read') + '</span>';
+  html += '<span>&#x270D;&#xFE0F; James Mwangi</span></div>';
+  html += '<div class="post-body">' + (p.body || '') + '</div>';
+  html += '<div class="share-strip"><div class="share-label">Share this article</div><div class="share-btns">';
+  html += '<button class="sh sh-wa" onclick="doShare(\'wa\')">&#x1F4F2; WhatsApp</button>';
+  html += '<button class="sh sh-tw" onclick="doShare(\'tw\')">Twitter</button>';
+  html += '<button class="sh sh-li" onclick="doShare(\'li\')">LinkedIn</button>';
+  html += '<button class="sh sh-cp" onclick="doShare(\'cp\')">&#x1F4CB; Copy Link</button>';
+  html += '</div></div>';
+  html += '<div style="margin-top:3rem;padding-top:2rem;border-top:1px solid var(--border2)">';
+  html += '<div style="font-family:\'JetBrains Mono\',monospace;font-size:.62rem;color:var(--accent2);letter-spacing:.15em;text-transform:uppercase;margin-bottom:1.5rem">// Comments</div>';
+  html += '<div id="disqus_thread"></div></div>';
+
+  document.getElementById('postContent').innerHTML = html;
+  document.getElementById('blogIndex').style.display = 'none';
+  document.getElementById('postReader').classList.add('open');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+  history.pushState({ postId: id }, '', '?post=' + id);
+  loadDisqus(id, p.title, pageUrl);
+  renderRecent();
+}
+
+function closePost() {
+  document.getElementById('blogIndex').style.display = '';
+  document.getElementById('postReader').classList.remove('open');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+  history.pushState({}, '', location.pathname);
+  if (window.DISQUS) window.DISQUS.reset({ reload: false });
+}
+
+window.addEventListener('popstate', function(e) {
+  if (e.state && e.state.postId) openPost(e.state.postId);
+  else { document.getElementById('blogIndex').style.display = ''; document.getElementById('postReader').classList.remove('open'); }
+});
+
+function checkUrlPost() {
+  var id = new URLSearchParams(location.search).get('post');
+  if (id) openPost(id);
+}
+
+function doShare(type) {
+  var t = encodeURIComponent(shareData.title);
+  var u = encodeURIComponent(shareData.url);
+  if (type === 'wa') window.open('https://wa.me/?text=' + t + '%0A' + u, '_blank');
+  else if (type === 'tw') window.open('https://twitter.com/intent/tweet?text=' + t + '&url=' + u, '_blank');
+  else if (type === 'li') window.open('https://linkedin.com/sharing/share-offsite/?url=' + u, '_blank');
+  else if (type === 'cp') navigator.clipboard.writeText(shareData.url).then(function() { showToast('Link copied!'); });
+}
+
+function loadDisqus(id, title, url) {
+  window.disqus_config = function() { this.page.url = url; this.page.identifier = 'post-' + id; this.page.title = title; };
+  if (window.DISQUS) { window.DISQUS.reset({ reload: true, config: window.disqus_config }); }
+  else { var s = document.createElement('script'); s.src = 'https://jamesmwangi.disqus.com/embed.js'; s.async = true; document.head.appendChild(s); }
+}
+
+/* ================================================================
+   THEME / NAV
+================================================================ */
+(function() {
+  if (localStorage.getItem('jm_theme') === 'light') {
+    document.documentElement.setAttribute('data-theme','light');
+    var b = document.getElementById('themeBtn'); if (b) b.textContent = '\u2600\uFE0F';
+  }
+})();
+function toggleTheme() {
+  var html = document.documentElement, l = html.getAttribute('data-theme') === 'light';
+  html.setAttribute('data-theme', l ? 'dark' : 'light');
+  var b = document.getElementById('themeBtn'); if (b) b.textContent = l ? '\uD83C\uDF19' : '\u2600\uFE0F';
+  localStorage.setItem('jm_theme', l ? 'dark' : 'light');
+}
+window.addEventListener('scroll', function() { document.getElementById('mainNav').classList.toggle('stuck', window.scrollY > 60); }, { passive: true });
+function openMob()  { document.getElementById('mobNav').classList.add('open'); }
+function closeMob() { document.getElementById('mobNav').classList.remove('open'); }
+function toggleDropdown() {
+  var btn = document.getElementById('venturesBtn'), menu = document.getElementById('venturesMenu');
+  if (!btn || !menu) return;
+  var open = menu.classList.toggle('open'); btn.classList.toggle('open', open);
+}
+document.addEventListener('click', function(e) {
+  var btn = document.getElementById('venturesBtn'), menu = document.getElementById('venturesMenu');
+  if (btn && menu && !btn.contains(e.target) && !menu.contains(e.target)) { menu.classList.remove('open'); btn.classList.remove('open'); }
+});
+var revObs = new IntersectionObserver(function(entries) { entries.forEach(function(e) { if (e.isIntersecting) e.target.classList.add('in'); }); }, { threshold: 0.08 });
+document.querySelectorAll('.reveal').forEach(function(el) { revObs.observe(el); });
+function showToast(msg) {
+  var t = document.getElementById('toast'); if (!t) return;
+  t.textContent = msg; t.classList.add('show');
+  setTimeout(function() { t.classList.remove('show'); }, 3500);
+}
+
+/* ================================================================
+   INIT
+================================================================ */
+document.addEventListener('DOMContentLoaded', loadPosts);
+</script>
+</body>
+</html>

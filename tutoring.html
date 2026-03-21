@@ -1,0 +1,808 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IT & CS Tutoring | James Mwangi — Academic Coaching, Nairobi Kenya</title>
+<meta name="description" content="Professional IT and Computer Science tutoring by James Mwangi. Coaching for university students in web development, cybersecurity, databases, programming and system design. Nairobi, Kenya.">
+<meta name="keywords" content="IT tutoring Kenya, computer science tutoring Nairobi, programming tutoring, web development coaching, BBIT tutoring, Python tutor Kenya, Node.js tutor">
+<meta property="og:title" content="IT & CS Tutoring — James Mwangi">
+<meta property="og:description" content="Expert academic coaching for IT and CS students. Conceptual depth, real skills — not shortcuts.">
+<meta property="og:type" content="website">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://jamesmainamwangi.com/tutoring.html">
+<meta property="og:image" content="https://jamesmainamwangi.com/og-image.png">
+<link rel="icon" href="favicon.ico">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+/* ═══════════════════════════════════════
+   DESIGN TOKENS
+═══════════════════════════════════════ */
+:root {
+  --bg:#0d1117; --bg2:#161b22; --bg3:#21262d; --bg4:#30363d;
+  --text:#e6edf3; --text2:#8b949e; --text3:#484f58;
+  --accent:#6366f1; --accent2:#818cf8; --accent3:#a5b4fc;
+  --green:#3fb950; --amber:#f59e0b; --rose:#f43f5e;
+  --border:rgba(255,255,255,.06); --border2:rgba(255,255,255,.1);
+  --shadow:0 20px 60px rgba(0,0,0,.6); --shadow2:0 4px 20px rgba(0,0,0,.4);
+  --r:10px; --r2:16px; --t:all .25s cubic-bezier(.4,0,.2,1);
+}
+[data-theme="light"] {
+  --bg:#f6f8fa; --bg2:#ffffff; --bg3:#f0f2f5; --bg4:#e4e8ed;
+  --text:#1f2328; --text2:#656d76; --text3:#9198a1;
+  --border:rgba(0,0,0,.07); --border2:rgba(0,0,0,.12);
+  --shadow:0 20px 60px rgba(0,0,0,.1); --shadow2:0 4px 20px rgba(0,0,0,.06);
+}
+*,*::before,*::after { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior:smooth; }
+body { font-family:'Inter',system-ui,sans-serif; background:var(--bg); color:var(--text); line-height:1.6; overflow-x:hidden; transition:background .3s,color .3s; }
+img { max-width:100%; display:block; }
+a { color:inherit; text-decoration:none; }
+button { cursor:pointer; border:none; background:none; font-family:inherit; }
+ul { list-style:none; }
+::selection { background:var(--accent); color:#fff; }
+::-webkit-scrollbar { width:4px; }
+::-webkit-scrollbar-track { background:var(--bg); }
+::-webkit-scrollbar-thumb { background:var(--bg4); border-radius:2px; }
+
+/* ═══ LAYOUT ═══ */
+.container { max-width:1160px; margin:0 auto; padding:0 1.5rem; }
+.section { padding:5.5rem 0; }
+.section-alt { background:var(--bg2); }
+
+/* ═══ NAV ═══ */
+.nav { position:fixed; top:0; left:0; right:0; z-index:999; padding:1rem 0; transition:var(--t); }
+.nav.stuck { background:rgba(13,17,23,.92); backdrop-filter:blur(20px); border-bottom:1px solid var(--border); padding:.7rem 0; }
+[data-theme="light"] .nav.stuck { background:rgba(246,248,250,.92); }
+.nav-inner { max-width:1160px; margin:0 auto; padding:0 1.5rem; display:flex; align-items:center; justify-content:space-between; }
+.nav-logo { display:flex; align-items:center; gap:.65rem; text-decoration:none; }
+.nav-logo-text .name { font-size:.9rem; font-weight:800; color:var(--text); letter-spacing:-.02em; line-height:1.15; }
+.nav-logo-text .name span { color:var(--accent); }
+.nav-logo-text .role { font-family:'JetBrains Mono',monospace; font-size:.52rem; color:var(--text3); letter-spacing:.08em; }
+.nav-links { display:flex; align-items:center; gap:.25rem; }
+.nav-links a { font-size:.82rem; font-weight:500; color:var(--text2); padding:.45rem .8rem; border-radius:6px; transition:var(--t); }
+.nav-links a:hover, .nav-links a.active { color:var(--text); background:var(--bg3); }
+.nav-dropdown { position:relative; }
+.nav-dropdown-btn { font-size:.82rem; font-weight:500; color:var(--text2); padding:.45rem .8rem; border-radius:6px; display:flex; align-items:center; gap:.3rem; transition:var(--t); cursor:pointer; }
+.nav-dropdown-btn:hover { color:var(--text); background:var(--bg3); }
+.nav-dropdown-btn svg { width:12px; height:12px; transition:transform .25s; }
+.nav-dropdown-btn.open svg { transform:rotate(180deg); }
+.dropdown-menu { position:absolute; top:calc(100% + .5rem); right:0; width:220px; background:var(--bg2); border:1px solid var(--border2); border-radius:var(--r2); padding:.5rem; box-shadow:var(--shadow2); display:none; flex-direction:column; gap:.15rem; z-index:10; }
+.dropdown-menu.open { display:flex; }
+.dropdown-item { display:flex; align-items:center; gap:.75rem; padding:.75rem .9rem; border-radius:8px; transition:background .2s; }
+.dropdown-item:hover { background:var(--bg3); }
+.dropdown-item-icon { font-size:1.15rem; flex-shrink:0; }
+.dropdown-item-text .t { font-size:.82rem; font-weight:600; color:var(--text); }
+.dropdown-item-text .s { font-size:.7rem; color:var(--text2); margin-top:.1rem; }
+.nav-right { display:flex; align-items:center; gap:.65rem; }
+.theme-toggle { width:32px; height:32px; border-radius:7px; background:var(--bg3); border:1px solid var(--border2); color:var(--text2); font-size:.9rem; display:flex; align-items:center; justify-content:center; transition:var(--t); }
+.theme-toggle:hover { background:var(--bg4); color:var(--text); }
+.nav-cta { padding:.48rem 1.1rem; background:var(--accent); color:#fff; font-size:.78rem; font-weight:600; border-radius:7px; transition:var(--t); }
+.nav-cta:hover { background:var(--accent2); }
+.hamburger { display:none; flex-direction:column; gap:5px; width:32px; height:32px; align-items:center; justify-content:center; background:var(--bg3); border:1px solid var(--border2); border-radius:7px; padding:0; }
+.hamburger span { display:block; width:16px; height:1.5px; background:var(--text); border-radius:2px; transition:var(--t); }
+.mob-nav { display:none; position:fixed; inset:0; z-index:9000; background:var(--bg); flex-direction:column; align-items:center; justify-content:center; gap:2rem; }
+.mob-nav.open { display:flex; }
+.mob-nav a, .mob-nav button { font-size:1.6rem; font-weight:800; color:var(--text); letter-spacing:-.03em; background:none; border:none; cursor:pointer; font-family:'Inter',sans-serif; transition:color .2s; }
+.mob-nav a:hover, .mob-nav button:hover { color:var(--accent2); }
+.mob-nav .mob-sub { font-size:1.1rem; color:var(--text3); }
+.mob-close { position:absolute; top:1.5rem; right:1.5rem; font-size:1.3rem; color:var(--text2); width:36px; height:36px; border-radius:8px; background:var(--bg2); border:1px solid var(--border2); display:flex; align-items:center; justify-content:center; }
+
+/* ═══ BUTTONS ═══ */
+.btn { display:inline-flex; align-items:center; gap:.5rem; font-size:.85rem; font-weight:600; border-radius:8px; padding:.75rem 1.6rem; transition:var(--t); font-family:'Inter',sans-serif; white-space:nowrap; cursor:pointer; border:none; }
+.btn-primary { background:var(--accent); color:#fff; }
+.btn-primary:hover { background:var(--accent2); transform:translateY(-2px); box-shadow:0 8px 24px rgba(99,102,241,.35); }
+.btn-outline { background:transparent; color:var(--text); border:1px solid var(--border2); }
+.btn-outline:hover { border-color:var(--accent); color:var(--accent2); transform:translateY(-2px); }
+.btn-wa { background:#25d366; color:#fff; }
+.btn-wa:hover { background:#22c55e; transform:translateY(-2px); box-shadow:0 8px 24px rgba(37,211,102,.3); }
+.btn-amber { background:var(--amber); color:#0d1117; }
+.btn-amber:hover { background:#e08906; transform:translateY(-2px); }
+
+/* ═══ PAGE HERO ═══ */
+.page-hero { padding:7rem 0 4.5rem; background:var(--bg2); border-bottom:1px solid var(--border); position:relative; overflow:hidden; }
+.page-hero::before { content:''; position:absolute; inset:0; background-image:radial-gradient(circle,rgba(99,102,241,.1) 1px,transparent 1px); background-size:28px 28px; pointer-events:none; opacity:.5; }
+.page-hero-inner { position:relative; z-index:1; display:grid; grid-template-columns:1fr auto; gap:3rem; align-items:center; }
+.page-hero-eyebrow { font-family:'JetBrains Mono',monospace; font-size:.62rem; color:var(--accent2); letter-spacing:.2em; text-transform:uppercase; margin-bottom:.9rem; display:flex; align-items:center; gap:.5rem; }
+.page-hero-eyebrow::before { content:'//'; opacity:.4; }
+.page-hero h1 { font-size:clamp(2.2rem,5vw,3.5rem); font-weight:900; letter-spacing:-.04em; line-height:1.05; margin-bottom:.9rem; }
+.page-hero h1 em { font-style:italic; color:var(--accent); }
+.page-hero-sub { font-size:.92rem; color:var(--text2); line-height:1.75; max-width:520px; margin-bottom:1.75rem; }
+.hero-actions { display:flex; gap:.85rem; flex-wrap:wrap; }
+.page-hero-right { flex-shrink:0; }
+.hero-card { background:var(--bg3); border:1px solid var(--border2); border-radius:var(--r2); padding:1.5rem; width:240px; }
+.hc-stat { display:flex; flex-direction:column; gap:1.25rem; }
+.hcs-item { display:flex; align-items:center; gap:.85rem; }
+.hcs-icon { width:38px; height:38px; border-radius:9px; background:rgba(99,102,241,.12); color:var(--accent2); display:flex; align-items:center; justify-content:center; font-size:1rem; flex-shrink:0; }
+.hcs-num { font-size:1.3rem; font-weight:900; color:var(--text); letter-spacing:-.03em; line-height:1; }
+.hcs-lbl { font-family:'JetBrains Mono',monospace; font-size:.58rem; color:var(--text3); text-transform:uppercase; letter-spacing:.06em; }
+
+/* ═══ INTEGRITY BANNER ═══ */
+.integrity-banner { background:rgba(245,158,11,.06); border:1px solid rgba(245,158,11,.2); border-radius:var(--r2); padding:2rem; display:flex; align-items:flex-start; gap:1.25rem; }
+.ib-icon { font-size:1.6rem; flex-shrink:0; line-height:1; }
+.ib-title { font-size:.9rem; font-weight:700; color:var(--amber); margin-bottom:.5rem; }
+.ib-body { font-size:.82rem; color:var(--text2); line-height:1.75; }
+.ib-body strong { color:var(--text); }
+
+/* ═══ SERVICES GRID ═══ */
+.services-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:1.25rem; }
+.svc-card { background:var(--bg2); border:1px solid var(--border); border-radius:var(--r2); padding:1.75rem; transition:var(--t); }
+.svc-card:hover { border-color:rgba(99,102,241,.4); transform:translateY(-3px); box-shadow:var(--shadow2); }
+.svc-icon { font-size:2rem; margin-bottom:1.1rem; }
+.svc-title { font-size:.95rem; font-weight:700; margin-bottom:.5rem; }
+.svc-desc { font-size:.8rem; color:var(--text2); line-height:1.7; margin-bottom:1.1rem; }
+.svc-topics { display:flex; flex-wrap:wrap; gap:.4rem; }
+.topic-tag { font-family:'JetBrains Mono',monospace; font-size:.58rem; padding:.2rem .55rem; border-radius:5px; background:var(--bg3); border:1px solid var(--border2); color:var(--text3); }
+
+/* ═══ HOW IT WORKS ═══ */
+.steps-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:1.5rem; position:relative; }
+.steps-grid::before { content:''; position:absolute; top:24px; left:10%; right:10%; height:1px; background:linear-gradient(90deg,transparent,var(--border2),transparent); pointer-events:none; }
+.step-card { text-align:center; position:relative; }
+.step-num { width:48px; height:48px; border-radius:50%; background:var(--bg2); border:2px solid var(--accent); color:var(--accent2); font-size:1rem; font-weight:800; display:flex; align-items:center; justify-content:center; margin:0 auto 1rem; position:relative; z-index:1; }
+.step-title { font-size:.88rem; font-weight:700; margin-bottom:.45rem; }
+.step-desc { font-size:.78rem; color:var(--text2); line-height:1.65; }
+
+/* ═══ PRICING ═══ */
+.pricing-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:1.25rem; align-items:start; }
+.price-card { background:var(--bg2); border:1px solid var(--border); border-radius:var(--r2); padding:2rem; display:flex; flex-direction:column; transition:var(--t); }
+.price-card:hover { border-color:var(--border2); transform:translateY(-2px); }
+.price-card.popular { border-color:var(--accent); position:relative; }
+.price-card.popular::before { content:'Most Popular'; position:absolute; top:-13px; left:50%; transform:translateX(-50%); background:var(--accent); color:#fff; font-size:.62rem; font-weight:700; letter-spacing:.08em; padding:.28rem .9rem; border-radius:100px; white-space:nowrap; font-family:'JetBrains Mono',monospace; text-transform:uppercase; }
+.pc-tier { font-family:'JetBrains Mono',monospace; font-size:.6rem; color:var(--accent2); letter-spacing:.15em; text-transform:uppercase; margin-bottom:.85rem; }
+.pc-price { font-size:2.4rem; font-weight:900; color:var(--text); letter-spacing:-.04em; line-height:1; margin-bottom:.25rem; }
+.pc-price sub { font-size:.85rem; font-weight:500; color:var(--text2); vertical-align:baseline; }
+.pc-period { font-size:.78rem; color:var(--text3); margin-bottom:1.5rem; font-family:'JetBrains Mono',monospace; }
+.pc-divider { height:1px; background:var(--border2); margin-bottom:1.5rem; }
+.pc-features { display:flex; flex-direction:column; gap:.65rem; flex:1; margin-bottom:2rem; }
+.pc-feat { font-size:.8rem; color:var(--text2); display:flex; align-items:flex-start; gap:.5rem; line-height:1.5; }
+.pc-feat::before { content:'✓'; color:var(--green); font-weight:700; flex-shrink:0; margin-top:.05rem; }
+.pc-feat.no { color:var(--text3); }
+.pc-feat.no::before { content:'✗'; color:var(--text3); }
+
+/* ═══ FAQ ═══ */
+.faq-wrap { max-width:760px; margin:0 auto; }
+.faq-item { border-bottom:1px solid var(--border); }
+.faq-item:first-child { border-top:1px solid var(--border); }
+.faq-q { width:100%; text-align:left; padding:1.25rem 0; font-size:.92rem; font-weight:600; color:var(--text); display:flex; justify-content:space-between; align-items:center; gap:1rem; background:none; border:none; cursor:pointer; font-family:'Inter',sans-serif; transition:color .2s; }
+.faq-q:hover { color:var(--accent2); }
+.faq-arrow { color:var(--text3); font-size:.75rem; transition:transform .25s; flex-shrink:0; }
+.faq-item.open .faq-arrow { transform:rotate(180deg); color:var(--accent2); }
+.faq-a { display:none; padding:0 0 1.25rem; font-size:.85rem; color:var(--text2); line-height:1.78; }
+.faq-item.open .faq-a { display:block; }
+.faq-a strong { color:var(--text); }
+
+/* ═══ CONTACT STRIP ═══ */
+.contact-strip { display:grid; grid-template-columns:1fr 1.1fr; gap:5rem; align-items:start; }
+.contact-info h2 { margin-bottom:1rem; }
+.contact-info > p { font-size:.9rem; color:var(--text2); line-height:1.8; margin-bottom:2rem; }
+.contact-ways { display:flex; flex-direction:column; gap:.85rem; }
+.cway { display:flex; align-items:center; gap:1rem; background:var(--bg2); border:1px solid var(--border); border-radius:var(--r); padding:.95rem 1.15rem; transition:var(--t); text-decoration:none; color:inherit; }
+.cway:hover { border-color:rgba(99,102,241,.4); transform:translateX(4px); }
+.ci-icon { width:36px; height:36px; border-radius:8px; background:rgba(99,102,241,.1); color:var(--accent2); display:flex; align-items:center; justify-content:center; font-size:.9rem; flex-shrink:0; }
+.ci-label { font-family:'JetBrains Mono',monospace; font-size:.56rem; color:var(--text3); text-transform:uppercase; letter-spacing:.08em; }
+.ci-value { font-size:.84rem; font-weight:600; color:var(--text); }
+/* Form */
+.form-wrap { background:var(--bg2); border:1px solid var(--border); border-radius:var(--r2); padding:2rem; }
+.fg { display:flex; flex-direction:column; gap:.4rem; margin-bottom:1rem; }
+.fg label { font-family:'JetBrains Mono',monospace; font-size:.6rem; font-weight:600; color:var(--text2); letter-spacing:.06em; text-transform:uppercase; }
+.fg input,.fg textarea,.fg select { background:var(--bg3); border:1px solid var(--border2); color:var(--text); border-radius:8px; padding:.75rem 1rem; font-size:.875rem; font-family:'Inter',sans-serif; outline:none; transition:border-color .2s,box-shadow .2s; width:100%; }
+.fg input:focus,.fg textarea:focus,.fg select:focus { border-color:var(--accent); box-shadow:0 0 0 3px rgba(99,102,241,.12); }
+.fg textarea { height:120px; resize:vertical; }
+.fg select option { background:var(--bg3); }
+.fg-row { display:grid; grid-template-columns:1fr 1fr; gap:1rem; }
+.btn-submit { width:100%; padding:.9rem; background:var(--accent); color:#fff; font-size:.875rem; font-weight:700; border-radius:9px; font-family:'Inter',sans-serif; cursor:pointer; border:none; margin-top:.5rem; transition:var(--t); }
+.btn-submit:hover { background:var(--accent2); }
+.form-note { font-family:'JetBrains Mono',monospace; font-size:.58rem; color:var(--text3); text-align:center; margin-top:.65rem; }
+
+/* ═══ FOOTER ═══ */
+.footer { background:var(--bg2); border-top:1px solid var(--border); padding:4rem 0 2rem; }
+.footer-top { display:grid; grid-template-columns:1.4fr 1fr; gap:4rem; margin-bottom:3rem; }
+.footer-brand .fb-logo { display:flex; align-items:center; gap:.65rem; margin-bottom:1rem; }
+.fb-name { font-size:.9rem; font-weight:800; letter-spacing:-.02em; }
+.fb-name span { color:var(--accent); }
+.fb-role { font-family:'JetBrains Mono',monospace; font-size:.52rem; color:var(--text3); margin-top:.15rem; }
+.footer-bio { font-size:.8rem; color:var(--text3); line-height:1.7; max-width:320px; }
+.footer-cols { display:grid; grid-template-columns:repeat(3,1fr); gap:2rem; }
+.fc-title { font-family:'JetBrains Mono',monospace; font-size:.58rem; color:var(--accent2); letter-spacing:.15em; text-transform:uppercase; margin-bottom:.85rem; }
+.footer-col { display:flex; flex-direction:column; gap:.45rem; }
+.footer-col a { font-size:.8rem; color:var(--text3); transition:color .2s; }
+.footer-col a:hover { color:var(--accent2); }
+.footer-bottom { display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:1rem; padding-top:1.5rem; border-top:1px solid var(--border); }
+.footer-copy { font-family:'JetBrains Mono',monospace; font-size:.6rem; color:var(--text3); }
+.footer-socials { display:flex; gap:.5rem; }
+.soc-btn { width:32px; height:32px; border-radius:7px; background:var(--bg3); border:1px solid var(--border2); color:var(--text3); display:flex; align-items:center; justify-content:center; transition:var(--t); }
+.soc-btn:hover { background:var(--accent); border-color:var(--accent); color:#fff; transform:translateY(-2px); }
+
+/* ═══ FLOATING WA ═══ */
+.wa-fab { position:fixed; bottom:2rem; right:2rem; z-index:800; width:52px; height:52px; border-radius:50%; background:#25d366; color:#fff; display:flex; align-items:center; justify-content:center; box-shadow:0 4px 20px rgba(37,211,102,.45); transition:var(--t); text-decoration:none; }
+.wa-fab:hover { transform:scale(1.1); box-shadow:0 6px 28px rgba(37,211,102,.6); }
+
+/* ═══ TOAST ═══ */
+.toast { position:fixed; bottom:2rem; left:50%; transform:translateX(-50%) translateY(80px); background:var(--bg2); border:1px solid var(--border2); color:var(--text); padding:.65rem 1.5rem; border-radius:9px; font-size:.8rem; font-weight:500; z-index:99999; transition:transform .35s; white-space:nowrap; box-shadow:var(--shadow2); }
+.toast.show { transform:translateX(-50%) translateY(0); }
+
+/* ═══ REVEAL ═══ */
+.reveal { opacity:0; transform:translateY(22px); transition:opacity .6s ease,transform .6s ease; }
+.reveal.in { opacity:1; transform:translateY(0); }
+.reveal-l { opacity:0; transform:translateX(-22px); transition:opacity .6s ease,transform .6s ease; }
+.reveal-l.in { opacity:1; transform:translateX(0); }
+
+/* ═══ RESPONSIVE ═══ */
+@media(max-width:1024px) {
+  .page-hero-inner { grid-template-columns:1fr; }
+  .page-hero-right { display:none; }
+  .contact-strip { grid-template-columns:1fr; gap:3rem; }
+  .footer-top { grid-template-columns:1fr; gap:3rem; }
+}
+@media(max-width:768px) {
+  .nav-links,.nav-dropdown,.nav-cta { display:none; }
+  .hamburger { display:flex; }
+  .services-grid { grid-template-columns:repeat(2,1fr); }
+  .steps-grid { grid-template-columns:repeat(2,1fr); }
+  .steps-grid::before { display:none; }
+  .pricing-grid { grid-template-columns:1fr; }
+  .footer-cols { grid-template-columns:repeat(2,1fr); }
+  .fg-row { grid-template-columns:1fr; }
+  .section { padding:4.5rem 0; }
+}
+@media(max-width:520px) {
+  .services-grid { grid-template-columns:1fr; }
+  .steps-grid { grid-template-columns:1fr; }
+  .footer-cols { grid-template-columns:1fr; }
+  .hero-actions { flex-direction:column; }
+  .hero-actions .btn { width:100%; justify-content:center; }
+}
+</style>
+</head>
+<body>
+
+<!-- MOBILE MENU -->
+<div class="mob-nav" id="mobNav">
+  <button class="mob-close" onclick="closeMob()">✕</button>
+  <a href="index.html">Home</a>
+  <a href="blog.html">Blog</a>
+  <a href="tutoring.html" class="active">Tutoring</a>
+  <button class="mob-sub" onclick="window.location='shop.html';closeMob()">Shop ↗</button>
+  <a href="#book" onclick="closeMob()">Book a Session</a>
+</div>
+
+<!-- NAV -->
+<nav class="nav" id="mainNav">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo">
+      <svg width="34" height="34" viewBox="0 0 36 36" fill="none">
+        <rect width="36" height="36" rx="9" fill="#6366f1"/>
+        <path d="M21 8h5v17c0 3.9-2.4 6.5-6.5 6.5S13 28.9 13 25h4.2c0 1.7 1 2.7 2.3 2.7s2.5-1 2.5-2.7V8z" fill="white" opacity=".95"/>
+        <circle cx="28.5" cy="27.5" r="3" fill="#a5b4fc"/>
+        <path d="M8.5 19.5l-3 3 3 3" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" opacity=".45"/>
+        <path d="M14.5 19.5l3 3-3 3" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" opacity=".45"/>
+      </svg>
+      <div class="nav-logo-text">
+        <div class="name">James<span>.</span>dev</div>
+        <div class="role">Full-Stack · Security</div>
+      </div>
+    </a>
+    <div class="nav-links">
+      <a href="index.html">Home</a>
+      <a href="blog.html">Blog</a>
+      <div class="nav-dropdown">
+        <button class="nav-dropdown-btn" id="venturesBtn" onclick="toggleDropdown()">
+          Ventures
+          <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 4l4 4 4-4"/></svg>
+        </button>
+        <div class="dropdown-menu" id="venturesMenu">
+          <a href="tutoring.html" class="dropdown-item">
+            <span class="dropdown-item-icon">📚</span>
+            <div class="dropdown-item-text"><div class="t">IT &amp; CS Tutoring</div><div class="s">Academic coaching &amp; mentorship</div></div>
+          </a>
+          <a href="shop.html" class="dropdown-item">
+            <span class="dropdown-item-icon">🛍</span>
+            <div class="dropdown-item-text"><div class="t">Tech Shop</div><div class="s">Curated developer tools &amp; gadgets</div></div>
+          </a>
+        </div>
+      </div>
+      <a href="index.html#contact">Contact</a>
+    </div>
+    <div class="nav-right">
+      <button class="theme-toggle" id="themeBtn" onclick="toggleTheme()">🌙</button>
+      <a href="#book" class="nav-cta">Book Session</a>
+      <button class="hamburger" onclick="openMob()"><span></span><span></span><span></span></button>
+    </div>
+  </div>
+</nav>
+
+<!-- PAGE HERO -->
+<header class="page-hero">
+  <div class="container">
+    <div class="page-hero-inner">
+      <div>
+        <div class="page-hero-eyebrow">Academic Coaching Venture</div>
+        <h1>IT &amp; CS <em>Tutoring</em></h1>
+        <p class="page-hero-sub">Professional academic coaching for university students in Computer Science, Information Technology, and programming. Focused on genuine skill-building and conceptual mastery — not shortcuts.</p>
+        <div class="hero-actions">
+          <a href="#book" class="btn btn-primary">📅 Book a Session</a>
+          <a href="https://wa.me/254711618115?text=Hi%20James%2C%20I%20would%20like%20to%20book%20a%20tutoring%20session." target="_blank" rel="noopener" class="btn btn-wa">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+            WhatsApp Me
+          </a>
+        </div>
+      </div>
+      <div class="page-hero-right">
+        <div class="hero-card">
+          <div class="hc-stat">
+            <div class="hcs-item">
+              <div class="hcs-icon">🎓</div>
+              <div><div class="hcs-num">100+</div><div class="hcs-lbl">Students helped</div></div>
+            </div>
+            <div class="hcs-item">
+              <div class="hcs-icon">💻</div>
+              <div><div class="hcs-num">6+</div><div class="hcs-lbl">Subjects covered</div></div>
+            </div>
+            <div class="hcs-item">
+              <div class="hcs-icon">⭐</div>
+              <div><div class="hcs-num">4.9</div><div class="hcs-lbl">Student rating</div></div>
+            </div>
+            <div class="hcs-item">
+              <div class="hcs-icon">🕐</div>
+              <div><div class="hcs-num">24hr</div><div class="hcs-lbl">Response time</div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- ACADEMIC INTEGRITY BANNER -->
+<section style="padding:3rem 0;">
+  <div class="container">
+    <div class="integrity-banner reveal">
+      <div class="ib-icon">⚖️</div>
+      <div>
+        <div class="ib-title">Academic Integrity Policy — Please Read Before Booking</div>
+        <div class="ib-body">
+          This tutoring service is strictly focused on <strong>conceptual understanding, skill development, and guided learning</strong>. I help students genuinely understand their coursework so they can perform independently and confidently.
+          <br><br>
+          <strong>I do not write assignments, complete coursework, or sit exams on behalf of students.</strong> Requests for this type of assistance will be declined without exception. This is a firm, non-negotiable policy — both as a matter of professional ethics and out of respect for the academic institutions my students attend.
+          <br><br>
+          If your goal is to genuinely learn and build skills that will serve you throughout your career — you are in exactly the right place.
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section class="section section-alt" id="services">
+  <div class="container">
+    <div style="font-family:'JetBrains Mono',monospace;font-size:.62rem;color:var(--accent2);letter-spacing:.2em;text-transform:uppercase;margin-bottom:.8rem;display:flex;align-items:center;gap:.5rem;"><span style="opacity:.4">//</span> What I teach</div>
+    <h2 style="margin-bottom:.75rem;">Coaching <span style="color:var(--accent)">Areas</span></h2>
+    <p style="font-size:.9rem;color:var(--text2);max-width:540px;margin-bottom:3rem;line-height:1.75;">Structured guidance across the core disciplines of modern IT and Computer Science education.</p>
+    <div class="services-grid reveal">
+
+      <article class="svc-card">
+        <div class="svc-icon">🌐</div>
+        <h3 class="svc-title">Web Development</h3>
+        <p class="svc-desc">From HTML/CSS fundamentals to full-stack applications. Learn to build real, functional things — not just follow tutorials.</p>
+        <div class="svc-topics">
+          <span class="topic-tag">HTML5 / CSS3</span><span class="topic-tag">JavaScript</span><span class="topic-tag">React</span><span class="topic-tag">Node.js</span><span class="topic-tag">REST APIs</span><span class="topic-tag">Django</span>
+        </div>
+      </article>
+
+      <article class="svc-card">
+        <div class="svc-icon">🔐</div>
+        <h3 class="svc-title">Cybersecurity Fundamentals</h3>
+        <p class="svc-desc">Understanding how attacks work, how to defend against them, and how to write secure code from the very first line.</p>
+        <div class="svc-topics">
+          <span class="topic-tag">OWASP Top 10</span><span class="topic-tag">SQL Injection</span><span class="topic-tag">XSS</span><span class="topic-tag">Cryptography</span><span class="topic-tag">Network Security</span>
+        </div>
+      </article>
+
+      <article class="svc-card">
+        <div class="svc-icon">🗄️</div>
+        <h3 class="svc-title">Database Design</h3>
+        <p class="svc-desc">Relational and NoSQL database design, normalisation, SQL querying, indexing, and data modelling that actually makes sense.</p>
+        <div class="svc-topics">
+          <span class="topic-tag">MySQL</span><span class="topic-tag">MongoDB</span><span class="topic-tag">SQL</span><span class="topic-tag">ERDs</span><span class="topic-tag">Normalisation</span>
+        </div>
+      </article>
+
+      <article class="svc-card">
+        <div class="svc-icon">⚙️</div>
+        <h3 class="svc-title">Programming Foundations</h3>
+        <p class="svc-desc">Object-oriented programming, data structures, algorithms, and the problem-solving methodology that makes the difference in exams and in real jobs.</p>
+        <div class="svc-topics">
+          <span class="topic-tag">Python</span><span class="topic-tag">JavaScript</span><span class="topic-tag">OOP</span><span class="topic-tag">Algorithms</span><span class="topic-tag">Data Structures</span>
+        </div>
+      </article>
+
+      <article class="svc-card">
+        <div class="svc-icon">🏗️</div>
+        <h3 class="svc-title">System Design &amp; Analysis</h3>
+        <p class="svc-desc">Requirements gathering, UML diagrams, system architecture, and technical documentation — the skills that separate good developers from great ones.</p>
+        <div class="svc-topics">
+          <span class="topic-tag">UML</span><span class="topic-tag">Use Cases</span><span class="topic-tag">Architecture</span><span class="topic-tag">Documentation</span>
+        </div>
+      </article>
+
+      <article class="svc-card">
+        <div class="svc-icon">📁</div>
+        <h3 class="svc-title">Final Year Project Guidance</h3>
+        <p class="svc-desc">I guide your thinking, review your architecture, and give honest feedback on your implementation. <em style="color:var(--text3)">You do the building — I sharpen the approach.</em></p>
+        <div class="svc-topics">
+          <span class="topic-tag">Project Planning</span><span class="topic-tag">Architecture Review</span><span class="topic-tag">Code Review</span><span class="topic-tag">Documentation</span>
+        </div>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section class="section" id="process">
+  <div class="container">
+    <div style="font-family:'JetBrains Mono',monospace;font-size:.62rem;color:var(--accent2);letter-spacing:.2em;text-transform:uppercase;margin-bottom:.8rem;display:flex;align-items:center;gap:.5rem;"><span style="opacity:.4">//</span> The process</div>
+    <h2 style="margin-bottom:.75rem;">How It <span style="color:var(--accent)">Works</span></h2>
+    <p style="font-size:.9rem;color:var(--text2);max-width:540px;margin-bottom:3.5rem;line-height:1.75;">Simple, structured, and focused entirely on your progress.</p>
+    <div class="steps-grid reveal">
+      <div class="step-card">
+        <div class="step-num">1</div>
+        <h3 class="step-title">Book via WhatsApp or Form</h3>
+        <p class="step-desc">Send me a message explaining your subject, what's challenging you, and your goals. I'll respond within 24 hours.</p>
+      </div>
+      <div class="step-card">
+        <div class="step-num">2</div>
+        <h3 class="step-title">Free Diagnostic Call</h3>
+        <p class="step-desc">We start with a free 20-minute diagnostic call to assess your current level and build a focused learning plan together.</p>
+      </div>
+      <div class="step-card">
+        <div class="step-num">3</div>
+        <h3 class="step-title">1-on-1 Video Sessions</h3>
+        <p class="step-desc">Live sessions via Google Meet or Zoom. I explain concepts clearly with real examples and assign practical exercises for you to complete independently.</p>
+      </div>
+      <div class="step-card">
+        <div class="step-num">4</div>
+        <h3 class="step-title">Mastery &amp; Confidence</h3>
+        <p class="step-desc">You finish each session understanding the material deeply enough to explain it, apply it, and build on it — in exams and in real projects.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section class="section section-alt" id="pricing">
+  <div class="container">
+    <div style="font-family:'JetBrains Mono',monospace;font-size:.62rem;color:var(--accent2);letter-spacing:.2em;text-transform:uppercase;margin-bottom:.8rem;display:flex;align-items:center;gap:.5rem;"><span style="opacity:.4">//</span> Investment</div>
+    <h2 style="margin-bottom:.75rem;">Session <span style="color:var(--accent)">Pricing</span></h2>
+    <p style="font-size:.9rem;color:var(--text2);max-width:540px;margin-bottom:3.5rem;line-height:1.75;">Transparent, fair pricing for focused, high-quality academic coaching. No hidden fees. First diagnostic call is always free.</p>
+    <div class="pricing-grid reveal">
+
+      <div class="price-card">
+        <div class="pc-tier">Single Session</div>
+        <div class="pc-price">KSh <sub></sub>800</div>
+        <div class="pc-period">per hour · pay as you go</div>
+        <div class="pc-divider"></div>
+        <div class="pc-features">
+          <div class="pc-feat">1-on-1 video session (1 hour)</div>
+          <div class="pc-feat">Session notes shared after</div>
+          <div class="pc-feat">Practice exercises included</div>
+          <div class="pc-feat no">Priority scheduling</div>
+          <div class="pc-feat no">Between-session Q&amp;A</div>
+        </div>
+        <a href="#book" class="btn btn-outline" style="width:100%;justify-content:center;">Book Single Session</a>
+      </div>
+
+      <div class="price-card popular">
+        <div class="pc-tier">Monthly Package</div>
+        <div class="pc-price">KSh <sub></sub>2,800</div>
+        <div class="pc-period">per month · 4 sessions included</div>
+        <div class="pc-divider"></div>
+        <div class="pc-features">
+          <div class="pc-feat">4 × 1-hour sessions per month</div>
+          <div class="pc-feat">Session notes &amp; resources</div>
+          <div class="pc-feat">Practice exercises included</div>
+          <div class="pc-feat">Priority scheduling</div>
+          <div class="pc-feat">WhatsApp Q&amp;A between sessions</div>
+        </div>
+        <a href="#book" class="btn btn-primary" style="width:100%;justify-content:center;">Book Monthly Package</a>
+      </div>
+
+      <div class="price-card">
+        <div class="pc-tier">Project Guidance</div>
+        <div class="pc-price" style="font-size:1.8rem;">Custom</div>
+        <div class="pc-period">scoped per project</div>
+        <div class="pc-divider"></div>
+        <div class="pc-features">
+          <div class="pc-feat">Architecture &amp; design review</div>
+          <div class="pc-feat">Code review &amp; feedback sessions</div>
+          <div class="pc-feat">Concept explanation throughout</div>
+          <div class="pc-feat">You build — I guide the thinking</div>
+          <div class="pc-feat">Priority WhatsApp support</div>
+        </div>
+        <a href="https://wa.me/254711618115?text=Hi%20James%2C%20I%20need%20project%20guidance%20for%20my%20final%20year%20project." target="_blank" rel="noopener" class="btn btn-outline" style="width:100%;justify-content:center;">Enquire on WhatsApp</a>
+      </div>
+
+    </div>
+    <p style="text-align:center;font-family:'JetBrains Mono',monospace;font-size:.65rem;color:var(--text3);margin-top:2rem;">Prices in Kenyan Shillings (KES). International students — USD/GBP equivalent available on request. Group sessions (2–4 students) available at reduced per-person rates.</p>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="section" id="faq">
+  <div class="container">
+    <div style="font-family:'JetBrains Mono',monospace;font-size:.62rem;color:var(--accent2);letter-spacing:.2em;text-transform:uppercase;margin-bottom:.8rem;display:flex;align-items:center;gap:.5rem;"><span style="opacity:.4">//</span> Common questions</div>
+    <h2 style="margin-bottom:3rem;">Frequently Asked <span style="color:var(--accent)">Questions</span></h2>
+    <div class="faq-wrap reveal">
+
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">
+          Will you write my assignment for me?
+          <span class="faq-arrow">▾</span>
+        </button>
+        <div class="faq-a">No — and this is a firm, non-negotiable policy. I help you <strong>understand</strong> the material so that you can complete your own work with skill and confidence. If your goal is to genuinely learn, I am the right person. If you want someone to do the work for you, please look elsewhere. No exceptions.</div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">
+          What level of student do you tutor?
+          <span class="faq-arrow">▾</span>
+        </button>
+        <div class="faq-a">Primarily undergraduate and diploma students in IT, BBIT, Computer Science, and related programmes at Kenyan universities. I also work with career-changers who need structured foundations in software development or cybersecurity.</div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">
+          How are sessions conducted?
+          <span class="faq-arrow">▾</span>
+        </button>
+        <div class="faq-a">All sessions are 1-on-1 via video call (Google Meet or Zoom). I share my screen for live coding demonstrations and use collaborative tools like CodePen or Replit for hands-on practice. Session notes are shared afterwards as a reference.</div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">
+          Can you help with my final year project?
+          <span class="faq-arrow">▾</span>
+        </button>
+        <div class="faq-a">Yes — through guided mentorship. I help you understand the concepts, review your architecture decisions, and give honest feedback on your implementation approach. The emphasis is on <strong>you</strong> doing the building. Students who go through this process produce genuinely strong final year work — and more importantly, they understand what they built.</div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">
+          Do you offer group sessions?
+          <span class="faq-arrow">▾</span>
+        </button>
+        <div class="faq-a">Yes — small group sessions of 2–4 students can be arranged at a reduced per-person rate. Group sessions work well for shared coursework topics. All students must participate actively — not just one person learning while others watch.</div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">
+          How do I pay?
+          <span class="faq-arrow">▾</span>
+        </button>
+        <div class="faq-a">Payment is via M-Pesa. Details are shared when your session is confirmed. Single sessions are paid before the session begins. Monthly packages are paid at the start of each month.</div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">
+          I'm struggling with a concept right now — can I just WhatsApp you?
+          <span class="faq-arrow">▾</span>
+        </button>
+        <div class="faq-a">Yes — reach out on WhatsApp (+254 711 618 115) any time. Quick conceptual questions are often answered directly. For anything that needs more time, we'll schedule a session.</div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- BOOK / CONTACT -->
+<section class="section section-alt" id="book">
+  <div class="container">
+    <div class="contact-strip">
+      <div class="reveal-l">
+        <div style="font-family:'JetBrains Mono',monospace;font-size:.62rem;color:var(--accent2);letter-spacing:.2em;text-transform:uppercase;margin-bottom:.8rem;display:flex;align-items:center;gap:.5rem;"><span style="opacity:.4">//</span> Ready to start</div>
+        <h2 style="margin-bottom:1rem;">Book a <span style="color:var(--accent)">Session</span></h2>
+        <p>Fill in the form or message me directly on WhatsApp. I'll get back to you within 24 hours to schedule your free diagnostic call and first session.</p>
+        <div class="contact-ways" style="margin-top:1.75rem;">
+          <a href="https://wa.me/254711618115?text=Hi%20James%2C%20I%20would%20like%20to%20book%20a%20tutoring%20session." target="_blank" rel="noopener" class="cway">
+            <div class="ci-icon">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+            </div>
+            <div><div class="ci-label">WhatsApp (fastest response)</div><div class="ci-value">+254 711 618 115</div></div>
+          </a>
+          <div class="cway" style="cursor:default;">
+            <div class="ci-icon">🕐</div>
+            <div><div class="ci-label">Response time</div><div class="ci-value">Within 24 hours</div></div>
+          </div>
+          <div class="cway" style="cursor:default;">
+            <div class="ci-icon">🎁</div>
+            <div><div class="ci-label">First session</div><div class="ci-value">Free 20-min diagnostic call</div></div>
+          </div>
+          <div class="cway" style="cursor:default;">
+            <div class="ci-icon">💳</div>
+            <div><div class="ci-label">Payment</div><div class="ci-value">M-Pesa · simple &amp; secure</div></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="reveal">
+        <div class="form-wrap">
+          <h3 style="font-size:1rem;font-weight:700;margin-bottom:.35rem;">Send a Booking Request</h3>
+          <p style="font-family:'JetBrains Mono',monospace;font-size:.6rem;color:var(--text3);margin-bottom:1.75rem;">// Free diagnostic call included for all new students</p>
+          <form onsubmit="handleForm(event)">
+            <div class="fg-row">
+              <div class="fg"><label>Your Name</label><input type="text" placeholder="Full name" required></div>
+              <div class="fg"><label>Phone / WhatsApp</label><input type="tel" placeholder="+254 7XX XXX XXX" required></div>
+            </div>
+            <div class="fg"><label>Email</label><input type="email" placeholder="your@email.com"></div>
+            <div class="fg">
+              <label>Subject / Topic</label>
+              <select>
+                <option>Web Development (HTML/CSS/JS/React)</option>
+                <option>Backend Development (Node.js / Django)</option>
+                <option>Database Design (MySQL / MongoDB)</option>
+                <option>Cybersecurity Fundamentals</option>
+                <option>Programming Foundations (Python / JS / OOP)</option>
+                <option>System Design &amp; Analysis / UML</option>
+                <option>Final Year Project Guidance</option>
+                <option>DevOps &amp; Cloud Basics</option>
+                <option>Multiple Topics / General IT</option>
+              </select>
+            </div>
+            <div class="fg">
+              <label>Session Type</label>
+              <select>
+                <option>Single session (KSh 800/hr)</option>
+                <option>Monthly package (KSh 2,800 / 4 sessions)</option>
+                <option>Final year project guidance (custom)</option>
+                <option>Group session (2–4 students)</option>
+              </select>
+            </div>
+            <div class="fg"><label>Tell me about your learning goals</label><textarea placeholder="What are you studying, what is challenging you, and what do you want to achieve?"></textarea></div>
+            <button type="submit" class="btn-submit">Send Booking Request 📅</button>
+            <div class="form-note">I respond within 24 hours. First diagnostic call is free.</div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <div class="fb-logo">
+          <svg width="32" height="32" viewBox="0 0 36 36" fill="none">
+            <rect width="36" height="36" rx="9" fill="#6366f1"/>
+            <path d="M21 8h5v17c0 3.9-2.4 6.5-6.5 6.5S13 28.9 13 25h4.2c0 1.7 1 2.7 2.3 2.7s2.5-1 2.5-2.7V8z" fill="white" opacity=".95"/>
+            <circle cx="28.5" cy="27.5" r="3" fill="#a5b4fc"/>
+            <path d="M8.5 19.5l-3 3 3 3" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" opacity=".45"/>
+            <path d="M14.5 19.5l3 3-3 3" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" opacity=".45"/>
+          </svg>
+          <div><div class="fb-name">James<span>.</span>dev</div><div class="fb-role">Full-Stack · Security</div></div>
+        </div>
+        <p class="footer-bio">Full-Stack Developer and Cybersecurity Specialist offering professional academic coaching for IT and CS students across Kenya.</p>
+      </div>
+      <div class="footer-cols">
+        <div class="footer-col">
+          <div class="fc-title">Portfolio</div>
+          <a href="index.html">Home</a>
+          <a href="index.html#skills">Skills</a>
+          <a href="index.html#experience">Experience</a>
+          <a href="index.html#projects">Projects</a>
+        </div>
+        <div class="footer-col">
+          <div class="fc-title">Ventures</div>
+          <a href="blog.html">Technical Blog</a>
+          <a href="tutoring.html">IT Tutoring</a>
+          <a href="shop.html">Tech Shop</a>
+        </div>
+        <div class="footer-col">
+          <div class="fc-title">Legal</div>
+          <a href="privacy.html">Privacy Policy</a>
+          <a href="privacy.html#cookies">Cookie Policy</a>
+          <a href="privacy.html#terms">Terms of Use</a>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div class="footer-copy">© 2025 James Mwangi. All rights reserved.</div>
+      <div class="footer-socials">
+        <a href="https://github.com/Ruchathi2010" target="_blank" rel="noopener" class="soc-btn" aria-label="GitHub">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+        </a>
+        <a href="https://wa.me/254711618115" target="_blank" rel="noopener" class="soc-btn" aria-label="WhatsApp">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+        </a>
+        <a href="https://linkedin.com" target="_blank" rel="noopener" class="soc-btn" aria-label="LinkedIn">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+        </a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- FLOATING WHATSAPP -->
+<a href="https://wa.me/254711618115?text=Hi%20James%2C%20I%20would%20like%20to%20book%20a%20tutoring%20session." target="_blank" rel="noopener" class="wa-fab" aria-label="Book tutoring on WhatsApp">
+  <svg width="26" height="26" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+</a>
+
+<div class="toast" id="toast"></div>
+
+<script>
+/* ── Theme ── */
+(function(){
+  const saved = localStorage.getItem('jm_theme');
+  if(saved === 'light'){
+    document.documentElement.setAttribute('data-theme','light');
+    const btn = document.getElementById('themeBtn');
+    if(btn) btn.textContent = '☀️';
+  }
+})();
+function toggleTheme(){
+  const html = document.documentElement;
+  const isLight = html.getAttribute('data-theme') === 'light';
+  html.setAttribute('data-theme', isLight ? 'dark' : 'light');
+  const btn = document.getElementById('themeBtn');
+  if(btn) btn.textContent = isLight ? '🌙' : '☀️';
+  localStorage.setItem('jm_theme', isLight ? 'dark' : 'light');
+}
+
+/* ── Nav ── */
+window.addEventListener('scroll', () => {
+  document.getElementById('mainNav')?.classList.toggle('stuck', scrollY > 60);
+}, { passive:true });
+function openMob(){ document.getElementById('mobNav')?.classList.add('open'); }
+function closeMob(){ document.getElementById('mobNav')?.classList.remove('open'); }
+function toggleDropdown(){
+  const btn  = document.getElementById('venturesBtn');
+  const menu = document.getElementById('venturesMenu');
+  if(!btn || !menu) return;
+  const open = menu.classList.toggle('open');
+  btn.classList.toggle('open', open);
+}
+document.addEventListener('click', e => {
+  const btn  = document.getElementById('venturesBtn');
+  const menu = document.getElementById('venturesMenu');
+  if(btn && menu && !btn.contains(e.target) && !menu.contains(e.target)){
+    menu.classList.remove('open'); btn.classList.remove('open');
+  }
+});
+
+/* ── Scroll reveal ── */
+const obs = new IntersectionObserver(entries => {
+  entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('in'); });
+}, { threshold:0.1 });
+document.querySelectorAll('.reveal, .reveal-l').forEach(el => obs.observe(el));
+
+/* ── FAQ accordion ── */
+function toggleFaq(btn){
+  const item   = btn.parentElement;
+  const isOpen = item.classList.contains('open');
+  document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
+  if(!isOpen) item.classList.add('open');
+}
+
+/* ── Contact form ── */
+function handleForm(e){
+  e.preventDefault();
+  const btn = e.target.querySelector('.btn-submit');
+  btn.textContent = '✓ Request sent!';
+  btn.style.background = 'var(--green)';
+  showToast('Booking request sent! I\'ll reply within 24 hours.');
+  setTimeout(() => { btn.textContent = 'Send Booking Request 📅'; btn.style.background = ''; }, 3500);
+}
+
+/* ── Toast ── */
+function showToast(msg){
+  const t = document.getElementById('toast');
+  if(!t) return;
+  t.textContent = msg; t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 3500);
+}
+</script>
+<script src="main.js" defer></script>
+</body>
+</html>

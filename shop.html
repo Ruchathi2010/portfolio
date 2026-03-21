@@ -1,0 +1,816 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tech Shop | James Mwangi — Developer Tools & Gadgets Kenya</title>
+<meta name="description" content="Curated tech products for developers and tech enthusiasts in Kenya. Developer tools, networking gear, peripherals, storage, and gadgets — handpicked and delivered across Kenya.">
+<meta name="keywords" content="tech shop Kenya, developer tools Nairobi, buy gadgets Kenya, networking equipment Kenya, mechanical keyboard Kenya, SSD Kenya, Raspberry Pi Kenya">
+<meta property="og:title" content="Tech Shop — James Mwangi">
+<meta property="og:description" content="Curated developer tools, gadgets, and tech accessories. Handpicked for builders and tech enthusiasts in Kenya.">
+<meta property="og:type" content="website">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://jamesmainamwangi.com/shop.html">
+<meta property="og:image" content="https://jamesmainamwangi.com/og-image.png">
+<link rel="icon" href="favicon.ico">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+/* ═══════════════════════════════════════
+   TOKENS
+═══════════════════════════════════════ */
+:root {
+  --bg:#0d1117; --bg2:#161b22; --bg3:#21262d; --bg4:#30363d;
+  --text:#e6edf3; --text2:#8b949e; --text3:#484f58;
+  --accent:#6366f1; --accent2:#818cf8; --accent3:#a5b4fc;
+  --green:#3fb950; --amber:#f59e0b;
+  --border:rgba(255,255,255,.06); --border2:rgba(255,255,255,.1);
+  --shadow:0 20px 60px rgba(0,0,0,.6); --shadow2:0 4px 20px rgba(0,0,0,.4);
+  --r:10px; --r2:16px; --t:all .25s cubic-bezier(.4,0,.2,1);
+}
+[data-theme="light"] {
+  --bg:#f6f8fa; --bg2:#ffffff; --bg3:#f0f2f5; --bg4:#e4e8ed;
+  --text:#1f2328; --text2:#656d76; --text3:#9198a1;
+  --border:rgba(0,0,0,.07); --border2:rgba(0,0,0,.12);
+  --shadow:0 20px 60px rgba(0,0,0,.1); --shadow2:0 4px 20px rgba(0,0,0,.06);
+}
+*,*::before,*::after { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior:smooth; }
+body { font-family:'Inter',system-ui,sans-serif; background:var(--bg); color:var(--text); line-height:1.6; overflow-x:hidden; transition:background .3s,color .3s; }
+img { max-width:100%; display:block; }
+a { color:inherit; text-decoration:none; }
+button { cursor:pointer; border:none; background:none; font-family:inherit; }
+ul { list-style:none; }
+::selection { background:var(--accent); color:#fff; }
+::-webkit-scrollbar { width:4px; }
+::-webkit-scrollbar-track { background:var(--bg); }
+::-webkit-scrollbar-thumb { background:var(--bg4); border-radius:2px; }
+
+/* ═══ LAYOUT ═══ */
+.container { max-width:1160px; margin:0 auto; padding:0 1.5rem; }
+
+/* ═══ NAV ═══ */
+.nav { position:fixed; top:0; left:0; right:0; z-index:999; padding:1rem 0; transition:var(--t); }
+.nav.stuck { background:rgba(13,17,23,.92); backdrop-filter:blur(20px); border-bottom:1px solid var(--border); padding:.7rem 0; }
+[data-theme="light"] .nav.stuck { background:rgba(246,248,250,.92); }
+.nav-inner { max-width:1160px; margin:0 auto; padding:0 1.5rem; display:flex; align-items:center; justify-content:space-between; }
+.nav-logo { display:flex; align-items:center; gap:.65rem; text-decoration:none; }
+.nav-logo-text .name { font-size:.9rem; font-weight:800; color:var(--text); letter-spacing:-.02em; line-height:1.15; }
+.nav-logo-text .name span { color:var(--accent); }
+.nav-logo-text .role { font-family:'JetBrains Mono',monospace; font-size:.52rem; color:var(--text3); letter-spacing:.08em; }
+.nav-links { display:flex; align-items:center; gap:.25rem; }
+.nav-links a { font-size:.82rem; font-weight:500; color:var(--text2); padding:.45rem .8rem; border-radius:6px; transition:var(--t); }
+.nav-links a:hover, .nav-links a.active { color:var(--text); background:var(--bg3); }
+.nav-dropdown { position:relative; }
+.nav-dropdown-btn { font-size:.82rem; font-weight:500; color:var(--text2); padding:.45rem .8rem; border-radius:6px; display:flex; align-items:center; gap:.3rem; transition:var(--t); cursor:pointer; }
+.nav-dropdown-btn:hover { color:var(--text); background:var(--bg3); }
+.nav-dropdown-btn svg { width:12px; height:12px; transition:transform .25s; }
+.nav-dropdown-btn.open svg { transform:rotate(180deg); }
+.dropdown-menu { position:absolute; top:calc(100% + .5rem); right:0; width:220px; background:var(--bg2); border:1px solid var(--border2); border-radius:var(--r2); padding:.5rem; box-shadow:var(--shadow2); display:none; flex-direction:column; gap:.15rem; z-index:10; }
+.dropdown-menu.open { display:flex; }
+.dropdown-item { display:flex; align-items:center; gap:.75rem; padding:.75rem .9rem; border-radius:8px; transition:background .2s; }
+.dropdown-item:hover { background:var(--bg3); }
+.dropdown-item-icon { font-size:1.15rem; flex-shrink:0; }
+.dropdown-item-text .t { font-size:.82rem; font-weight:600; color:var(--text); }
+.dropdown-item-text .s { font-size:.7rem; color:var(--text2); margin-top:.1rem; }
+.nav-right { display:flex; align-items:center; gap:.65rem; }
+.theme-toggle { width:32px; height:32px; border-radius:7px; background:var(--bg3); border:1px solid var(--border2); color:var(--text2); font-size:.9rem; display:flex; align-items:center; justify-content:center; transition:var(--t); }
+.theme-toggle:hover { background:var(--bg4); color:var(--text); }
+.nav-cta { padding:.48rem 1.1rem; background:var(--accent); color:#fff; font-size:.78rem; font-weight:600; border-radius:7px; transition:var(--t); }
+.nav-cta:hover { background:var(--accent2); }
+.hamburger { display:none; flex-direction:column; gap:5px; width:32px; height:32px; align-items:center; justify-content:center; background:var(--bg3); border:1px solid var(--border2); border-radius:7px; padding:0; }
+.hamburger span { display:block; width:16px; height:1.5px; background:var(--text); border-radius:2px; transition:var(--t); }
+.mob-nav { display:none; position:fixed; inset:0; z-index:9000; background:var(--bg); flex-direction:column; align-items:center; justify-content:center; gap:2rem; }
+.mob-nav.open { display:flex; }
+.mob-nav a, .mob-nav button { font-size:1.6rem; font-weight:800; color:var(--text); letter-spacing:-.03em; background:none; border:none; cursor:pointer; font-family:'Inter',sans-serif; transition:color .2s; }
+.mob-nav a:hover, .mob-nav button:hover { color:var(--accent2); }
+.mob-nav .mob-sub { font-size:1.1rem; color:var(--text3); }
+.mob-close { position:absolute; top:1.5rem; right:1.5rem; font-size:1.3rem; color:var(--text2); width:36px; height:36px; border-radius:8px; background:var(--bg2); border:1px solid var(--border2); display:flex; align-items:center; justify-content:center; }
+
+/* ═══ PAGE HERO ═══ */
+.page-hero { padding:7rem 0 4rem; background:var(--bg2); border-bottom:1px solid var(--border); position:relative; overflow:hidden; }
+.page-hero::before { content:''; position:absolute; inset:0; background-image:radial-gradient(circle,rgba(99,102,241,.08) 1px,transparent 1px); background-size:28px 28px; pointer-events:none; opacity:.6; }
+.hero-inner { position:relative; z-index:1; }
+.hero-eyebrow { font-family:'JetBrains Mono',monospace; font-size:.62rem; color:var(--accent2); letter-spacing:.2em; text-transform:uppercase; margin-bottom:.9rem; display:flex; align-items:center; gap:.5rem; }
+.hero-eyebrow::before { content:'//'; opacity:.4; }
+.page-hero h1 { font-size:clamp(2.2rem,5vw,3.5rem); font-weight:900; letter-spacing:-.04em; line-height:1.05; margin-bottom:.9rem; }
+.page-hero h1 em { font-style:italic; color:var(--accent); }
+.page-hero-sub { font-size:.92rem; color:var(--text2); line-height:1.75; max-width:560px; margin-bottom:2rem; }
+
+/* Delivery notice */
+.delivery-bar { display:flex; align-items:center; flex-wrap:wrap; gap:1.5rem; padding:1rem 1.5rem; background:var(--bg3); border:1px solid var(--border2); border-radius:var(--r); margin-top:1.5rem; }
+.db-item { display:flex; align-items:center; gap:.5rem; font-size:.78rem; color:var(--text2); }
+.db-item .di { font-size:.9rem; }
+.db-item strong { color:var(--text); }
+
+/* ═══ SHOP LAYOUT ═══ */
+.shop-wrap { display:grid; grid-template-columns:220px 1fr; gap:2.5rem; padding:3.5rem 0 6rem; align-items:start; }
+
+/* ═══ SIDEBAR ═══ */
+.shop-sidebar { position:sticky; top:5.5rem; display:flex; flex-direction:column; gap:1.1rem; }
+.sidebar-panel { background:var(--bg2); border:1px solid var(--border); border-radius:var(--r2); padding:1.35rem; }
+.sp-title { font-family:'JetBrains Mono',monospace; font-size:.58rem; color:var(--accent2); letter-spacing:.15em; text-transform:uppercase; margin-bottom:1rem; }
+/* Category filters */
+.cat-list { display:flex; flex-direction:column; gap:.2rem; }
+.cat-btn { width:100%; text-align:left; padding:.6rem .8rem; border-radius:8px; font-size:.82rem; font-weight:500; color:var(--text2); transition:var(--t); display:flex; align-items:center; justify-content:space-between; gap:.5rem; background:none; border:none; font-family:'Inter',sans-serif; }
+.cat-btn:hover, .cat-btn.on { background:rgba(99,102,241,.1); color:var(--accent2); }
+.cat-btn.on { font-weight:600; }
+.cat-btn-left { display:flex; align-items:center; gap:.6rem; }
+.cat-icon { font-size:.95rem; width:20px; text-align:center; }
+.cat-count { font-family:'JetBrains Mono',monospace; font-size:.6rem; color:var(--text3); background:var(--bg3); padding:.1rem .45rem; border-radius:4px; }
+/* Search */
+.search-wrap { position:relative; }
+.search-input { width:100%; background:var(--bg3); border:1px solid var(--border2); color:var(--text); border-radius:8px; padding:.65rem .9rem .65rem 2.2rem; font-size:.82rem; font-family:'Inter',sans-serif; outline:none; transition:border-color .2s; }
+.search-input:focus { border-color:var(--accent); }
+.search-icon { position:absolute; left:.7rem; top:50%; transform:translateY(-50%); color:var(--text3); font-size:.85rem; pointer-events:none; }
+/* Ad unit */
+.ad-unit { background:var(--bg2); border:1px dashed var(--border2); border-radius:var(--r); padding:1.25rem; text-align:center; min-height:90px; display:flex; align-items:center; justify-content:center; }
+.ad-label { font-family:'JetBrains Mono',monospace; font-size:.58rem; color:var(--text3); letter-spacing:.1em; text-transform:uppercase; }
+/* Need help */
+.help-card { background:rgba(99,102,241,.06); border:1px solid rgba(99,102,241,.15); border-radius:var(--r2); padding:1.35rem; }
+.help-card p { font-size:.78rem; color:var(--text2); line-height:1.65; margin-bottom:1rem; }
+.btn-wa-sm { display:flex; align-items:center; justify-content:center; gap:.5rem; width:100%; padding:.6rem; background:#25d366; color:#fff; border-radius:8px; font-size:.78rem; font-weight:600; transition:var(--t); }
+.btn-wa-sm:hover { background:#22c55e; transform:translateY(-1px); }
+
+/* ═══ MAIN AREA ═══ */
+.shop-main {}
+.shop-toolbar { display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:1rem; margin-bottom:2rem; }
+.product-count { font-family:'JetBrains Mono',monospace; font-size:.68rem; color:var(--text3); }
+.product-count span { color:var(--text2); font-weight:600; }
+.sort-select { font-family:'JetBrains Mono',monospace; font-size:.7rem; padding:.42rem .8rem; border-radius:7px; background:var(--bg2); border:1px solid var(--border2); color:var(--text2); outline:none; cursor:pointer; transition:var(--t); }
+.sort-select:focus { border-color:var(--accent); }
+
+/* ═══ PRODUCT GRID ═══ */
+.products-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:1.15rem; }
+.prod-card { background:var(--bg2); border:1px solid var(--border); border-radius:var(--r2); overflow:hidden; transition:var(--t); display:flex; flex-direction:column; }
+.prod-card:hover { border-color:rgba(99,102,241,.4); transform:translateY(-3px); box-shadow:var(--shadow2); }
+/* Thumb */
+.prod-thumb { height:175px; display:flex; align-items:center; justify-content:center; position:relative; overflow:hidden; font-size:3.5rem; }
+.prod-thumb-bg { position:absolute; inset:0; z-index:0; }
+.prod-thumb-emoji { position:relative; z-index:1; transition:transform .35s; }
+.prod-card:hover .prod-thumb-emoji { transform:scale(1.12); }
+/* Badges */
+.prod-badge { position:absolute; top:.75rem; left:.75rem; z-index:2; font-family:'JetBrains Mono',monospace; font-size:.56rem; font-weight:700; padding:.2rem .55rem; border-radius:5px; text-transform:uppercase; letter-spacing:.06em; }
+.badge-new  { background:var(--green); color:#fff; }
+.badge-sale { background:#ef4444; color:#fff; }
+.badge-hot  { background:var(--amber); color:#0d1117; }
+/* Body */
+.prod-body { padding:1.1rem 1.15rem 1.25rem; flex:1; display:flex; flex-direction:column; }
+.prod-cat { font-family:'JetBrains Mono',monospace; font-size:.56rem; color:var(--accent2); letter-spacing:.1em; text-transform:uppercase; margin-bottom:.38rem; }
+.prod-name { font-size:.92rem; font-weight:700; margin-bottom:.42rem; line-height:1.35; }
+.prod-desc { font-size:.78rem; color:var(--text2); line-height:1.6; flex:1; margin-bottom:.95rem; }
+/* Price + buy */
+.prod-footer { display:flex; align-items:center; justify-content:space-between; gap:.75rem; margin-top:auto; }
+.prod-price { display:flex; flex-direction:column; }
+.prod-price-old { font-family:'JetBrains Mono',monospace; font-size:.6rem; color:var(--text3); text-decoration:line-through; line-height:1; }
+.prod-price-now { font-size:1.05rem; font-weight:800; color:var(--text); letter-spacing:-.02em; line-height:1.1; }
+.prod-price-sub { font-family:'JetBrains Mono',monospace; font-size:.56rem; color:var(--text3); }
+.buy-btn { padding:.52rem 1rem; border-radius:8px; font-size:.75rem; font-weight:700; white-space:nowrap; transition:var(--t); font-family:'Inter',sans-serif; display:flex; align-items:center; gap:.35rem; flex-shrink:0; cursor:pointer; border:none; }
+.buy-btn.primary { background:var(--accent); color:#fff; }
+.buy-btn.primary:hover { background:var(--accent2); transform:translateY(-1px); }
+.buy-btn.wa { background:#25d366; color:#fff; }
+.buy-btn.wa:hover { background:#22c55e; transform:translateY(-1px); }
+.buy-btn.sold { background:var(--bg3); color:var(--text3); cursor:not-allowed; }
+
+/* Empty state */
+.empty-state { grid-column:1/-1; text-align:center; padding:4rem 2rem; color:var(--text3); }
+.empty-state .es-icon { font-size:2.5rem; margin-bottom:1rem; }
+.empty-state p { font-family:'JetBrains Mono',monospace; font-size:.75rem; }
+
+/* ═══ ORDER MODAL ═══ */
+.modal-overlay { display:none; position:fixed; inset:0; z-index:9500; background:rgba(13,17,23,.92); backdrop-filter:blur(8px); align-items:center; justify-content:center; padding:1.5rem; }
+.modal-overlay.open { display:flex; }
+.modal { background:var(--bg2); border:1px solid var(--border2); border-radius:var(--r2); padding:2rem; width:100%; max-width:440px; position:relative; }
+.modal-close { position:absolute; top:1rem; right:1rem; width:30px; height:30px; border-radius:7px; background:var(--bg3); border:1px solid var(--border2); color:var(--text2); display:flex; align-items:center; justify-content:center; font-size:1rem; transition:var(--t); }
+.modal-close:hover { background:var(--bg4); color:var(--text); }
+.modal h3 { font-size:1rem; font-weight:700; margin-bottom:.35rem; }
+.modal-sub { font-family:'JetBrains Mono',monospace; font-size:.6rem; color:var(--text3); margin-bottom:1.5rem; }
+.modal-product { display:flex; align-items:center; gap:.85rem; background:var(--bg3); border:1px solid var(--border); border-radius:var(--r); padding:.85rem 1rem; margin-bottom:1.5rem; }
+.mp-emoji { font-size:1.75rem; }
+.mp-name { font-size:.88rem; font-weight:600; color:var(--text); }
+.mp-price { font-family:'JetBrains Mono',monospace; font-size:.72rem; color:var(--accent2); margin-top:.15rem; }
+.mfg { display:flex; flex-direction:column; gap:.38rem; margin-bottom:1rem; }
+.mfg label { font-family:'JetBrains Mono',monospace; font-size:.58rem; font-weight:600; color:var(--text2); letter-spacing:.06em; text-transform:uppercase; }
+.mfg input, .mfg textarea, .mfg select { background:var(--bg3); border:1px solid var(--border2); color:var(--text); border-radius:8px; padding:.7rem .9rem; font-size:.875rem; font-family:'Inter',sans-serif; outline:none; transition:border-color .2s; width:100%; }
+.mfg input:focus, .mfg textarea:focus { border-color:var(--accent); box-shadow:0 0 0 3px rgba(99,102,241,.1); }
+.mfg textarea { height:80px; resize:vertical; }
+.modal-actions { display:flex; gap:.75rem; margin-top:1.25rem; }
+.modal-submit { flex:1; padding:.85rem; background:var(--accent); color:#fff; font-size:.875rem; font-weight:700; border-radius:9px; font-family:'Inter',sans-serif; cursor:pointer; border:none; transition:var(--t); }
+.modal-submit:hover { background:var(--accent2); }
+.modal-wa { padding:.85rem 1rem; background:#25d366; color:#fff; font-size:.78rem; font-weight:700; border-radius:9px; font-family:'Inter',sans-serif; cursor:pointer; border:none; transition:var(--t); white-space:nowrap; display:flex; align-items:center; gap:.4rem; }
+.modal-wa:hover { background:#22c55e; }
+.modal-note { font-family:'JetBrains Mono',monospace; font-size:.58rem; color:var(--text3); text-align:center; margin-top:.65rem; }
+
+/* ═══ FOOTER ═══ */
+.footer { background:var(--bg2); border-top:1px solid var(--border); padding:4rem 0 2rem; }
+.footer-top { display:grid; grid-template-columns:1.4fr 1fr; gap:4rem; margin-bottom:3rem; }
+.footer-brand .fb-logo { display:flex; align-items:center; gap:.65rem; margin-bottom:1rem; }
+.fb-name { font-size:.9rem; font-weight:800; letter-spacing:-.02em; }
+.fb-name span { color:var(--accent); }
+.fb-role { font-family:'JetBrains Mono',monospace; font-size:.52rem; color:var(--text3); margin-top:.15rem; }
+.footer-bio { font-size:.8rem; color:var(--text3); line-height:1.7; max-width:320px; }
+.footer-cols { display:grid; grid-template-columns:repeat(3,1fr); gap:2rem; }
+.fc-title { font-family:'JetBrains Mono',monospace; font-size:.58rem; color:var(--accent2); letter-spacing:.15em; text-transform:uppercase; margin-bottom:.85rem; }
+.footer-col { display:flex; flex-direction:column; gap:.45rem; }
+.footer-col a { font-size:.8rem; color:var(--text3); transition:color .2s; }
+.footer-col a:hover { color:var(--accent2); }
+.footer-bottom { display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:1rem; padding-top:1.5rem; border-top:1px solid var(--border); }
+.footer-copy { font-family:'JetBrains Mono',monospace; font-size:.6rem; color:var(--text3); }
+.footer-socials { display:flex; gap:.5rem; }
+.soc-btn { width:32px; height:32px; border-radius:7px; background:var(--bg3); border:1px solid var(--border2); color:var(--text3); display:flex; align-items:center; justify-content:center; transition:var(--t); }
+.soc-btn:hover { background:var(--accent); border-color:var(--accent); color:#fff; transform:translateY(-2px); }
+
+/* ═══ FLOATING WA ═══ */
+.wa-fab { position:fixed; bottom:2rem; right:2rem; z-index:800; width:52px; height:52px; border-radius:50%; background:#25d366; color:#fff; display:flex; align-items:center; justify-content:center; box-shadow:0 4px 20px rgba(37,211,102,.45); transition:var(--t); text-decoration:none; }
+.wa-fab:hover { transform:scale(1.1); }
+
+/* ═══ TOAST ═══ */
+.toast { position:fixed; bottom:2rem; left:50%; transform:translateX(-50%) translateY(80px); background:var(--bg2); border:1px solid var(--border2); color:var(--text); padding:.65rem 1.5rem; border-radius:9px; font-size:.8rem; font-weight:500; z-index:99999; transition:transform .35s; white-space:nowrap; box-shadow:var(--shadow2); }
+.toast.show { transform:translateX(-50%) translateY(0); }
+
+/* ═══ REVEAL ═══ */
+.reveal { opacity:0; transform:translateY(20px); transition:opacity .55s ease,transform .55s ease; }
+.reveal.in { opacity:1; transform:translateY(0); }
+
+/* ═══ RESPONSIVE ═══ */
+@media(max-width:1024px) {
+  .shop-wrap { grid-template-columns:1fr; }
+  .shop-sidebar { position:static; display:grid; grid-template-columns:1fr 1fr; gap:1rem; }
+  .cat-list { flex-direction:row; flex-wrap:wrap; }
+  .cat-btn { width:auto; }
+  .footer-top { grid-template-columns:1fr; gap:3rem; }
+}
+@media(max-width:768px) {
+  .nav-links,.nav-dropdown,.nav-cta { display:none; }
+  .hamburger { display:flex; }
+  .products-grid { grid-template-columns:repeat(2,1fr); }
+  .footer-cols { grid-template-columns:repeat(2,1fr); }
+  .shop-sidebar { grid-template-columns:1fr; }
+}
+@media(max-width:520px) {
+  .products-grid { grid-template-columns:1fr; }
+  .footer-cols { grid-template-columns:1fr; }
+  .modal-actions { flex-direction:column; }
+}
+</style>
+</head>
+<body>
+
+<!-- MOBILE MENU -->
+<div class="mob-nav" id="mobNav">
+  <button class="mob-close" onclick="closeMob()">✕</button>
+  <a href="index.html">Home</a>
+  <a href="blog.html">Blog</a>
+  <button class="mob-sub" onclick="window.location='tutoring.html';closeMob()">Tutoring ↗</button>
+  <a href="shop.html" class="active">Shop</a>
+  <a href="index.html#contact">Contact</a>
+</div>
+
+<!-- NAV -->
+<nav class="nav" id="mainNav">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo">
+      <svg width="34" height="34" viewBox="0 0 36 36" fill="none">
+        <rect width="36" height="36" rx="9" fill="#6366f1"/>
+        <path d="M21 8h5v17c0 3.9-2.4 6.5-6.5 6.5S13 28.9 13 25h4.2c0 1.7 1 2.7 2.3 2.7s2.5-1 2.5-2.7V8z" fill="white" opacity=".95"/>
+        <circle cx="28.5" cy="27.5" r="3" fill="#a5b4fc"/>
+        <path d="M8.5 19.5l-3 3 3 3" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" opacity=".45"/>
+        <path d="M14.5 19.5l3 3-3 3" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" opacity=".45"/>
+      </svg>
+      <div class="nav-logo-text">
+        <div class="name">James<span>.</span>dev</div>
+        <div class="role">Full-Stack · Security</div>
+      </div>
+    </a>
+    <div class="nav-links">
+      <a href="index.html">Home</a>
+      <a href="blog.html">Blog</a>
+      <div class="nav-dropdown">
+        <button class="nav-dropdown-btn" id="venturesBtn" onclick="toggleDropdown()">
+          Ventures
+          <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 4l4 4 4-4"/></svg>
+        </button>
+        <div class="dropdown-menu" id="venturesMenu">
+          <a href="tutoring.html" class="dropdown-item">
+            <span class="dropdown-item-icon">📚</span>
+            <div class="dropdown-item-text"><div class="t">IT &amp; CS Tutoring</div><div class="s">Academic coaching &amp; mentorship</div></div>
+          </a>
+          <a href="shop.html" class="dropdown-item">
+            <span class="dropdown-item-icon">🛍</span>
+            <div class="dropdown-item-text"><div class="t">Tech Shop</div><div class="s">Curated developer tools &amp; gadgets</div></div>
+          </a>
+        </div>
+      </div>
+      <a href="index.html#contact">Contact</a>
+    </div>
+    <div class="nav-right">
+      <button class="theme-toggle" id="themeBtn" onclick="toggleTheme()">🌙</button>
+      <a href="https://wa.me/254711618115?text=Hi%20James%2C%20I%20want%20to%20order%20from%20the%20tech%20shop." target="_blank" rel="noopener" class="nav-cta">Order via WhatsApp</a>
+      <button class="hamburger" onclick="openMob()"><span></span><span></span><span></span></button>
+    </div>
+  </div>
+</nav>
+
+<!-- PAGE HERO -->
+<header class="page-hero">
+  <div class="container">
+    <div class="hero-inner">
+      <div class="hero-eyebrow">E-Commerce Venture</div>
+      <h1>Curated <em>Tech Shop</em></h1>
+      <p class="page-hero-sub">Developer tools, networking gear, peripherals, and tech gadgets — handpicked for builders and tech enthusiasts. Delivered across Kenya.</p>
+      <div class="delivery-bar">
+        <div class="db-item"><span class="di">🚚</span> <span><strong>Nairobi:</strong> Same/next day delivery</span></div>
+        <div class="db-item"><span class="di">📦</span> <span><strong>Nationwide:</strong> 3–5 business days</span></div>
+        <div class="db-item"><span class="di">💳</span> <span><strong>Payment:</strong> M-Pesa on order confirmation</span></div>
+        <div class="db-item"><span class="di">💬</span> <span><strong>Questions?</strong> WhatsApp +254 711 618 115</span></div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- SHOP BODY -->
+<div class="container">
+  <div class="shop-wrap">
+
+    <!-- SIDEBAR -->
+    <aside class="shop-sidebar">
+
+      <!-- Search -->
+      <div class="sidebar-panel">
+        <div class="sp-title">Search</div>
+        <div class="search-wrap">
+          <span class="search-icon">🔍</span>
+          <input class="search-input" id="searchInput" type="text" placeholder="Search products..." oninput="renderProducts()">
+        </div>
+      </div>
+
+      <!-- Categories -->
+      <div class="sidebar-panel">
+        <div class="sp-title">Categories</div>
+        <div class="cat-list" id="catList">
+          <button class="cat-btn on" onclick="setCat(this,'all')">
+            <span class="cat-btn-left"><span class="cat-icon">🛍</span> All Products</span>
+            <span class="cat-count" id="cnt-all">0</span>
+          </button>
+          <button class="cat-btn" onclick="setCat(this,'dev')">
+            <span class="cat-btn-left"><span class="cat-icon">💻</span> Dev Tools</span>
+            <span class="cat-count" id="cnt-dev">0</span>
+          </button>
+          <button class="cat-btn" onclick="setCat(this,'networking')">
+            <span class="cat-btn-left"><span class="cat-icon">🌐</span> Networking</span>
+            <span class="cat-count" id="cnt-networking">0</span>
+          </button>
+          <button class="cat-btn" onclick="setCat(this,'peripherals')">
+            <span class="cat-btn-left"><span class="cat-icon">⌨️</span> Peripherals</span>
+            <span class="cat-count" id="cnt-peripherals">0</span>
+          </button>
+          <button class="cat-btn" onclick="setCat(this,'storage')">
+            <span class="cat-btn-left"><span class="cat-icon">💾</span> Storage</span>
+            <span class="cat-count" id="cnt-storage">0</span>
+          </button>
+          <button class="cat-btn" onclick="setCat(this,'power')">
+            <span class="cat-btn-left"><span class="cat-icon">🔋</span> Power</span>
+            <span class="cat-count" id="cnt-power">0</span>
+          </button>
+          <button class="cat-btn" onclick="setCat(this,'security')">
+            <span class="cat-btn-left"><span class="cat-icon">🔐</span> Security</span>
+            <span class="cat-count" id="cnt-security">0</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Ad unit -->
+      <div class="ad-unit"><div class="ad-label">Advertisement</div></div>
+
+      <!-- Need help -->
+      <div class="help-card">
+        <div class="sp-title">Need Help Choosing?</div>
+        <p>Not sure which product suits your setup? Message me on WhatsApp and I'll advise before you order.</p>
+        <a href="https://wa.me/254711618115?text=Hi%20James%2C%20I%20need%20help%20choosing%20a%20product%20from%20your%20tech%20shop." target="_blank" rel="noopener" class="btn-wa-sm">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+          Ask on WhatsApp
+        </a>
+      </div>
+
+    </aside>
+
+    <!-- MAIN PRODUCTS AREA -->
+    <div class="shop-main">
+      <div class="shop-toolbar">
+        <div class="product-count" id="productCount">Showing <span>0</span> products</div>
+        <select class="sort-select" id="sortSelect" onchange="renderProducts()">
+          <option value="default">Sort: Featured</option>
+          <option value="price-asc">Price: Low to High</option>
+          <option value="price-desc">Price: High to Low</option>
+          <option value="name">Name: A–Z</option>
+        </select>
+      </div>
+      <div class="products-grid reveal" id="productsGrid"></div>
+    </div>
+
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <div class="fb-logo">
+          <svg width="32" height="32" viewBox="0 0 36 36" fill="none">
+            <rect width="36" height="36" rx="9" fill="#6366f1"/>
+            <path d="M21 8h5v17c0 3.9-2.4 6.5-6.5 6.5S13 28.9 13 25h4.2c0 1.7 1 2.7 2.3 2.7s2.5-1 2.5-2.7V8z" fill="white" opacity=".95"/>
+            <circle cx="28.5" cy="27.5" r="3" fill="#a5b4fc"/>
+            <path d="M8.5 19.5l-3 3 3 3" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" opacity=".45"/>
+            <path d="M14.5 19.5l3 3-3 3" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" opacity=".45"/>
+          </svg>
+          <div><div class="fb-name">James<span>.</span>dev</div><div class="fb-role">Full-Stack · Security</div></div>
+        </div>
+        <p class="footer-bio">Curated tech products for developers and tech enthusiasts across Kenya. Fast delivery, M-Pesa payments, honest advice.</p>
+      </div>
+      <div class="footer-cols">
+        <div class="footer-col">
+          <div class="fc-title">Portfolio</div>
+          <a href="index.html">Home</a>
+          <a href="index.html#skills">Skills</a>
+          <a href="index.html#projects">Projects</a>
+          <a href="blog.html">Blog</a>
+        </div>
+        <div class="footer-col">
+          <div class="fc-title">Ventures</div>
+          <a href="tutoring.html">IT Tutoring</a>
+          <a href="shop.html">Tech Shop</a>
+          <a href="index.html#contact">Contact</a>
+        </div>
+        <div class="footer-col">
+          <div class="fc-title">Legal</div>
+          <a href="privacy.html">Privacy Policy</a>
+          <a href="privacy.html#cookies">Cookie Policy</a>
+          <a href="privacy.html#terms">Terms of Use</a>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div class="footer-copy">© 2025 James Mwangi. All rights reserved.</div>
+      <div class="footer-socials">
+        <a href="https://github.com/Ruchathi2010" target="_blank" rel="noopener" class="soc-btn" aria-label="GitHub">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+        </a>
+        <a href="https://wa.me/254711618115" target="_blank" rel="noopener" class="soc-btn" aria-label="WhatsApp">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+        </a>
+        <a href="https://linkedin.com" target="_blank" rel="noopener" class="soc-btn" aria-label="LinkedIn">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+        </a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- FLOATING WHATSAPP -->
+<a href="https://wa.me/254711618115?text=Hi%20James%2C%20I%20want%20to%20order%20from%20the%20tech%20shop." target="_blank" rel="noopener" class="wa-fab" aria-label="Order on WhatsApp">
+  <svg width="26" height="26" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+</a>
+
+<!-- ORDER MODAL -->
+<div class="modal-overlay" id="orderModal">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal()">✕</button>
+    <h3>Place an Order</h3>
+    <div class="modal-sub" id="modalSub">// Confirm your details and we'll contact you</div>
+    <div class="modal-product" id="modalProduct"></div>
+    <form onsubmit="submitOrder(event)">
+      <div class="mfg"><label>Your Name</label><input type="text" id="oName" placeholder="Full name" required></div>
+      <div class="mfg"><label>Phone / WhatsApp</label><input type="tel" id="oPhone" placeholder="+254 7XX XXX XXX" required></div>
+      <div class="mfg"><label>Delivery Location</label><input type="text" id="oLocation" placeholder="e.g. Westlands, Nairobi" required></div>
+      <div class="mfg"><label>Notes (optional)</label><textarea id="oNotes" placeholder="Any specific requirements, quantity, colour preference..."></textarea></div>
+      <div class="modal-actions">
+        <button type="submit" class="modal-submit">Confirm Order</button>
+        <button type="button" class="modal-wa" id="modalWaBtn">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+          Order via WhatsApp
+        </button>
+      </div>
+      <div class="modal-note">Payment via M-Pesa on order confirmation. Delivery details sent via WhatsApp.</div>
+    </form>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+/* ══════════════════════════════════════
+   PRODUCT CATALOGUE
+   To add a product: copy a block and
+   fill in the fields. Set stripe_link
+   to your real Stripe Payment Link URL
+   once you have one.
+══════════════════════════════════════ */
+const PRODUCTS = [
+  /* ── DEV TOOLS ── */
+  { id:'p01', cat:'dev', badge:'hot', emoji:'🍓',
+    name:'Raspberry Pi 4 Model B (4GB RAM)',
+    desc:'The developer\'s favourite single-board computer. Perfect for home servers, IoT projects, learning Linux, and network tools.',
+    price:9800, tags:['IoT','Linux','Servers','Home Lab'] },
+
+  { id:'p02', cat:'dev', badge:'new', emoji:'🔧',
+    name:'USB Logic Analyser — 8 Channel',
+    desc:'Professional-grade logic analyser for debugging digital circuits, IoT sensors, and serial protocols. Works with PulseView.',
+    price:2400, tags:['Electronics','Debug','IoT'] },
+
+  { id:'p03', cat:'dev', badge:'', emoji:'📟',
+    name:'NodeMCU ESP32 Dev Board (5-pack)',
+    desc:'Wi-Fi + Bluetooth microcontroller boards essential for IoT projects, home automation, and smart sensor systems.',
+    price:1800, tags:['IoT','Microcontroller','WiFi'] },
+
+  { id:'p04', cat:'security', badge:'new', emoji:'🔑',
+    name:'YubiKey 5 NFC Security Key',
+    desc:'Hardware 2FA security key supporting FIDO2, WebAuthn, and OTP. The most effective way to protect your accounts from phishing.',
+    price:6500, tags:['Security','2FA','FIDO2','Hardware'] },
+
+  /* ── NETWORKING ── */
+  { id:'p05', cat:'networking', badge:'hot', emoji:'📡',
+    name:'TP-Link Archer AX55 Wi-Fi 6 Router',
+    desc:'AX3000 dual-band Wi-Fi 6 router with excellent range and stable throughput. Handles multiple devices without slowdown.',
+    price:8500, tags:['WiFi 6','Router','Home Office'] },
+
+  { id:'p06', cat:'networking', badge:'', emoji:'🌐',
+    name:'8-Port Gigabit Network Switch',
+    desc:'Unmanaged Gigabit switch for home lab and office setups. Plug-and-play, fanless, low latency.',
+    price:3100, tags:['Networking','Home Lab','Gigabit'] },
+
+  { id:'p07', cat:'networking', badge:'', emoji:'🛡',
+    name:'GL.iNet GL-MT3000 Travel Router',
+    desc:'Compact VPN-capable travel router running OpenWrt. Supports WireGuard, OpenVPN, and Tor. Essential for secure remote work.',
+    price:5800, tags:['VPN','Security','Travel','OpenWrt'] },
+
+  /* ── PERIPHERALS ── */
+  { id:'p08', cat:'peripherals', badge:'sale', emoji:'⌨️',
+    name:'Mechanical Keyboard — TKL Brown Switches',
+    desc:'Tactile mechanical keyboard with tenkeyless layout, PBT keycaps, and satisfying brown switches. Built for long coding sessions.',
+    price:7800, oldPrice:9500, tags:['Typing','Productivity','Office'] },
+
+  { id:'p09', cat:'peripherals', badge:'', emoji:'🖱️',
+    name:'Logitech MX Master 3S Mouse',
+    desc:'The gold standard productivity mouse. Ergonomic, ultra-fast scroll wheel, works across 3 devices. A developer staple.',
+    price:11500, tags:['Productivity','Ergonomics','Wireless'] },
+
+  { id:'p10', cat:'peripherals', badge:'', emoji:'🎧',
+    name:'Sony MDR-7506 Studio Headphones',
+    desc:'Industry-standard monitor headphones. Crystal-clear audio, closed-back, folds flat. Perfect for focused deep work.',
+    price:12500, tags:['Audio','Focus','Studio','Closed-back'] },
+
+  { id:'p11', cat:'peripherals', badge:'new', emoji:'🖥️',
+    name:'Anker 7-in-1 USB-C Hub',
+    desc:'4K HDMI, 2× USB-A 3.0, USB-C PD charging, SD/microSD slots. Expands your laptop for the desk setup.',
+    price:5400, tags:['USB-C','Hub','HDMI','Office'] },
+
+  /* ── STORAGE ── */
+  { id:'p12', cat:'storage', badge:'hot', emoji:'💾',
+    name:'Samsung T7 Portable SSD — 1TB',
+    desc:'USB 3.2 Gen 2 portable SSD with 1,050 MB/s reads. Carry your dev environment, backups, and projects everywhere.',
+    price:8900, tags:['SSD','Portable','Fast','1TB'] },
+
+  { id:'p13', cat:'storage', badge:'', emoji:'🗄️',
+    name:'Seagate IronWolf NAS HDD — 4TB',
+    desc:'NAS-optimised 4TB HDD built for 24/7 operation. Ideal for home NAS servers, CCTV systems, and backup drives.',
+    price:13500, tags:['NAS','4TB','HDD','Backup'] },
+
+  { id:'p14', cat:'storage', badge:'new', emoji:'💿',
+    name:'SanDisk Extreme microSDXC — 256GB',
+    desc:'A2-rated microSD card with 190MB/s reads. Perfect for Raspberry Pi, drones, action cameras, and Android devices.',
+    price:3200, tags:['microSD','256GB','Raspberry Pi','Fast'] },
+
+  /* ── POWER ── */
+  { id:'p15', cat:'power', badge:'', emoji:'🔋',
+    name:'Anker 737 Power Bank — 24,000mAh',
+    desc:'140W output, digital display, charges laptops and phones simultaneously. The power bank for serious mobile setups.',
+    price:9200, tags:['Power Bank','140W','Laptop','Travel'] },
+
+  { id:'p16', cat:'power', badge:'new', emoji:'⚡',
+    name:'65W GaN USB-C Charger (3-port)',
+    desc:'Gallium nitride 3-port charger (2× USB-C + 1× USB-A). Powers a laptop, tablet, and phone simultaneously. Pocket-sized.',
+    price:3800, tags:['GaN','65W','USB-C','Compact'] },
+];
+
+/* ══════════════════════════════════════
+   STATE
+══════════════════════════════════════ */
+let currentCat  = 'all';
+let currentSort = 'default';
+let activeProductId = null;
+
+const CAT_LABELS = {
+  dev:'Dev Tools', networking:'Networking',
+  peripherals:'Peripherals', storage:'Storage',
+  power:'Power', security:'Security'
+};
+
+/* ══════════════════════════════════════
+   RENDER
+══════════════════════════════════════ */
+function getFiltered(){
+  const q = document.getElementById('searchInput')?.value.toLowerCase().trim() || '';
+  let list = currentCat === 'all' ? [...PRODUCTS] : PRODUCTS.filter(p => p.cat === currentCat);
+  if(q) list = list.filter(p =>
+    p.name.toLowerCase().includes(q) ||
+    p.desc.toLowerCase().includes(q) ||
+    p.tags.some(t => t.toLowerCase().includes(q))
+  );
+  const sort = document.getElementById('sortSelect')?.value || 'default';
+  if(sort === 'price-asc')  list.sort((a,b) => a.price - b.price);
+  if(sort === 'price-desc') list.sort((a,b) => b.price - a.price);
+  if(sort === 'name')       list.sort((a,b) => a.name.localeCompare(b.name));
+  return list;
+}
+
+function renderProducts(){
+  const list  = getFiltered();
+  const grid  = document.getElementById('productsGrid');
+  const count = document.getElementById('productCount');
+  if(count) count.querySelector('span').textContent = list.length;
+
+  if(!list.length){
+    grid.innerHTML = `<div class="empty-state"><div class="es-icon">🔍</div><p>// No products found. Try a different search or category.</p></div>`;
+    return;
+  }
+
+  grid.innerHTML = list.map(p => {
+    const badge = p.badge
+      ? `<span class="prod-badge badge-${p.badge}">${p.badge === 'hot' ? '🔥 Hot' : p.badge === 'new' ? 'New' : 'Sale'}</span>`
+      : '';
+    const oldPrice = p.oldPrice
+      ? `<span class="prod-price-old">KSh ${p.oldPrice.toLocaleString()}</span>`
+      : '';
+    const tagHtml = p.tags.slice(0,3).map(t => `<span style="font-family:'JetBrains Mono',monospace;font-size:.56rem;padding:.16rem .48rem;border-radius:4px;background:var(--bg3);border:1px solid var(--border);color:var(--text3);">${t}</span>`).join('');
+
+    return `
+    <article class="prod-card" data-id="${p.id}">
+      <div class="prod-thumb" style="background:var(--bg3);">
+        ${badge}
+        <span class="prod-thumb-emoji">${p.emoji}</span>
+      </div>
+      <div class="prod-body">
+        <div class="prod-cat">${CAT_LABELS[p.cat] || p.cat}</div>
+        <h3 class="prod-name">${p.name}</h3>
+        <p class="prod-desc">${p.desc}</p>
+        <div style="display:flex;flex-wrap:wrap;gap:.35rem;margin-bottom:.95rem;">${tagHtml}</div>
+        <div class="prod-footer">
+          <div class="prod-price">
+            ${oldPrice}
+            <span class="prod-price-now">KSh ${p.price.toLocaleString()}</span>
+            <span class="prod-price-sub">+ delivery</span>
+          </div>
+          <button class="buy-btn wa" onclick="openModal('${p.id}')">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+            Order
+          </button>
+        </div>
+      </div>
+    </article>`;
+  }).join('');
+
+  // Re-observe for reveal animation
+  grid.querySelectorAll('.prod-card').forEach(el => {
+    el.classList.add('reveal');
+    revObs.observe(el);
+  });
+}
+
+function updateCounts(){
+  const cats = ['all','dev','networking','peripherals','storage','power','security'];
+  cats.forEach(c => {
+    const el = document.getElementById('cnt-'+c);
+    if(!el) return;
+    el.textContent = c === 'all' ? PRODUCTS.length : PRODUCTS.filter(p => p.cat === c).length;
+  });
+}
+
+function setCat(btn, cat){
+  currentCat = cat;
+  document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('on'));
+  btn.classList.add('on');
+  renderProducts();
+}
+
+/* ══════════════════════════════════════
+   ORDER MODAL
+══════════════════════════════════════ */
+function openModal(id){
+  const p = PRODUCTS.find(x => x.id === id);
+  if(!p) return;
+  activeProductId = id;
+
+  document.getElementById('modalProduct').innerHTML = `
+    <span class="mp-emoji">${p.emoji}</span>
+    <div>
+      <div class="mp-name">${p.name}</div>
+      <div class="mp-price">KSh ${p.price.toLocaleString()} + delivery</div>
+    </div>`;
+
+  // Pre-fill WhatsApp button
+  const waMsg = encodeURIComponent(`Hi James, I'd like to order:\n\n*${p.name}*\nPrice: KSh ${p.price.toLocaleString()}\n\nPlease confirm availability and share M-Pesa payment details.`);
+  document.getElementById('modalWaBtn').onclick = () => {
+    window.open('https://wa.me/254711618115?text=' + waMsg, '_blank');
+  };
+
+  document.getElementById('orderModal').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeModal(){
+  document.getElementById('orderModal').classList.remove('open');
+  document.body.style.overflow = '';
+  activeProductId = null;
+}
+
+function submitOrder(e){
+  e.preventDefault();
+  const p      = PRODUCTS.find(x => x.id === activeProductId);
+  const name   = document.getElementById('oName').value.trim();
+  const phone  = document.getElementById('oPhone').value.trim();
+  const loc    = document.getElementById('oLocation').value.trim();
+  const notes  = document.getElementById('oNotes').value.trim();
+  if(!p) return;
+
+  const waMsg = encodeURIComponent(
+    `Hi James, I'd like to place an order!\n\n` +
+    `*Product:* ${p.name}\n` +
+    `*Price:* KSh ${p.price.toLocaleString()}\n` +
+    `*Name:* ${name}\n` +
+    `*Phone:* ${phone}\n` +
+    `*Location:* ${loc}\n` +
+    (notes ? `*Notes:* ${notes}` : '')
+  );
+  window.open('https://wa.me/254711618115?text=' + waMsg, '_blank');
+  closeModal();
+  showToast('Redirecting to WhatsApp to confirm your order...');
+}
+
+/* ══════════════════════════════════════
+   THEME / NAV / HELPERS
+══════════════════════════════════════ */
+(function(){
+  const saved = localStorage.getItem('jm_theme');
+  if(saved === 'light'){
+    document.documentElement.setAttribute('data-theme','light');
+    const btn = document.getElementById('themeBtn');
+    if(btn) btn.textContent = '☀️';
+  }
+})();
+function toggleTheme(){
+  const html = document.documentElement;
+  const isLight = html.getAttribute('data-theme') === 'light';
+  html.setAttribute('data-theme', isLight ? 'dark' : 'light');
+  const btn = document.getElementById('themeBtn');
+  if(btn) btn.textContent = isLight ? '🌙' : '☀️';
+  localStorage.setItem('jm_theme', isLight ? 'dark' : 'light');
+}
+window.addEventListener('scroll', () => {
+  document.getElementById('mainNav')?.classList.toggle('stuck', scrollY > 60);
+}, { passive:true });
+function openMob(){ document.getElementById('mobNav')?.classList.add('open'); }
+function closeMob(){ document.getElementById('mobNav')?.classList.remove('open'); }
+function toggleDropdown(){
+  const btn  = document.getElementById('venturesBtn');
+  const menu = document.getElementById('venturesMenu');
+  if(!btn || !menu) return;
+  const open = menu.classList.toggle('open');
+  btn.classList.toggle('open', open);
+}
+document.addEventListener('click', e => {
+  const btn  = document.getElementById('venturesBtn');
+  const menu = document.getElementById('venturesMenu');
+  if(btn && menu && !btn.contains(e.target) && !menu.contains(e.target)){
+    menu.classList.remove('open'); btn.classList.remove('open');
+  }
+  // Close modal on backdrop click
+  if(e.target.id === 'orderModal') closeModal();
+});
+// Close modal on Escape
+document.addEventListener('keydown', e => { if(e.key === 'Escape') closeModal(); });
+
+/* Scroll reveal */
+const revObs = new IntersectionObserver(entries => {
+  entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('in'); });
+}, { threshold:0.08 });
+document.querySelectorAll('.reveal').forEach(el => revObs.observe(el));
+
+function showToast(msg){
+  const t = document.getElementById('toast');
+  if(!t) return;
+  t.textContent = msg; t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 3500);
+}
+
+/* ══════════════════════════════════════
+   INIT
+══════════════════════════════════════ */
+window.addEventListener('DOMContentLoaded', () => {
+  updateCounts();
+  renderProducts();
+});
+</script>
+<script src="main.js" defer></script>
+</body>
+</html>
