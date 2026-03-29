@@ -3,520 +3,1064 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Blog | James Mwangi — Cybersecurity &amp; Full-Stack Development Insights</title>
-<meta name="description" content="Technical articles on cybersecurity, full-stack development, M-Pesa API integration, IoT systems, and building software in East Africa.">
-<meta property="og:title" content="Blog — James Mwangi">
+<title>Technical Blog — James Mwangi | Full-Stack & Cybersecurity</title>
+<meta name="description" content="Practical deep-dives on Full-Stack development, cybersecurity, M-Pesa integrations, and building for the African market.">
+<meta property="og:title" content="James Mwangi — Technical Blog">
+<meta property="og:description" content="Practical engineering insights for African developers.">
 <meta property="og:type" content="website">
 <meta name="robots" content="index, follow">
-<link rel="canonical" href="https://jamesmainamwangi.com/blog.html">
-<link rel="icon" href="favicon.ico">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;0,9..40,800;0,9..40,900;1,9..40,400&family=DM+Mono:wght@400;500;600&family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,600;0,9..144,700;0,9..144,900;1,9..144,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+
 <style>
-:root{--bg:#0d1117;--bg2:#161b22;--bg3:#21262d;--bg4:#30363d;--text:#e6edf3;--text2:#8b949e;--text3:#484f58;--accent:#6366f1;--accent2:#818cf8;--green:#3fb950;--border:rgba(255,255,255,.06);--border2:rgba(255,255,255,.1);--shadow2:0 4px 20px rgba(0,0,0,.4);--r:10px;--r2:16px;--t:all .25s cubic-bezier(.4,0,.2,1);}
-[data-theme="light"]{--bg:#f6f8fa;--bg2:#fff;--bg3:#f0f2f5;--bg4:#e4e8ed;--text:#1f2328;--text2:#656d76;--text3:#9198a1;--border:rgba(0,0,0,.07);--border2:rgba(0,0,0,.12);--shadow2:0 4px 20px rgba(0,0,0,.06);}
-*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}html{scroll-behavior:smooth;}
-body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--text);line-height:1.6;overflow-x:hidden;transition:background .3s,color .3s;}
-img{max-width:100%;display:block;}a{color:inherit;text-decoration:none;}button{cursor:pointer;border:none;background:none;font-family:inherit;}ul{list-style:none;}
-::selection{background:var(--accent);color:#fff;}::-webkit-scrollbar{width:4px;}::-webkit-scrollbar-track{background:var(--bg);}::-webkit-scrollbar-thumb{background:var(--bg4);border-radius:2px;}
-.container{max-width:1160px;margin:0 auto;padding:0 1.5rem;}
-.nav{position:fixed;top:0;left:0;right:0;z-index:999;padding:1rem 0;transition:var(--t);}
-.nav.stuck{background:rgba(13,17,23,.92);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);padding:.7rem 0;}
-[data-theme="light"] .nav.stuck{background:rgba(246,248,250,.92);}
-.nav-inner{max-width:1160px;margin:0 auto;padding:0 1.5rem;display:flex;align-items:center;justify-content:space-between;}
-.nav-logo{display:flex;align-items:center;gap:.65rem;}
-.nav-logo-text .name{font-size:.9rem;font-weight:800;color:var(--text);letter-spacing:-.02em;line-height:1.15;}
-.nav-logo-text .name span{color:var(--accent);}
-.nav-logo-text .role{font-family:'JetBrains Mono',monospace;font-size:.52rem;color:var(--text3);letter-spacing:.08em;}
-.nav-links{display:flex;align-items:center;gap:.25rem;}
-.nav-links a{font-size:.82rem;font-weight:500;color:var(--text2);padding:.45rem .8rem;border-radius:6px;transition:var(--t);}
-.nav-links a:hover,.nav-links a.active{color:var(--text);background:var(--bg3);}
-.nav-dropdown{position:relative;}
-.nav-dropdown-btn{font-size:.82rem;font-weight:500;color:var(--text2);padding:.45rem .8rem;border-radius:6px;display:flex;align-items:center;gap:.3rem;transition:var(--t);cursor:pointer;}
-.nav-dropdown-btn:hover{color:var(--text);background:var(--bg3);}
-.nav-dropdown-btn svg{width:12px;height:12px;transition:transform .25s;}
-.nav-dropdown-btn.open svg{transform:rotate(180deg);}
-.dropdown-menu{position:absolute;top:calc(100% + .5rem);right:0;width:220px;background:var(--bg2);border:1px solid var(--border2);border-radius:var(--r2);padding:.5rem;box-shadow:var(--shadow2);display:none;flex-direction:column;gap:.15rem;z-index:10;}
-.dropdown-menu.open{display:flex;}
-.dropdown-item{display:flex;align-items:center;gap:.75rem;padding:.75rem .9rem;border-radius:8px;transition:background .2s;}
-.dropdown-item:hover{background:var(--bg3);}
-.dropdown-item-icon{font-size:1.15rem;flex-shrink:0;}
-.dropdown-item-text .t{font-size:.82rem;font-weight:600;color:var(--text);}
-.dropdown-item-text .s{font-size:.7rem;color:var(--text2);margin-top:.1rem;}
-.nav-right{display:flex;align-items:center;gap:.65rem;}
-.theme-toggle{width:32px;height:32px;border-radius:7px;background:var(--bg3);border:1px solid var(--border2);color:var(--text2);font-size:.9rem;display:flex;align-items:center;justify-content:center;transition:var(--t);}
-.theme-toggle:hover{background:var(--bg4);color:var(--text);}
-.nav-cta{padding:.48rem 1.1rem;background:var(--accent);color:#fff;font-size:.78rem;font-weight:600;border-radius:7px;transition:var(--t);}
-.nav-cta:hover{background:var(--accent2);}
-.hamburger{display:none;flex-direction:column;gap:5px;width:32px;height:32px;align-items:center;justify-content:center;background:var(--bg3);border:1px solid var(--border2);border-radius:7px;padding:0;}
-.hamburger span{display:block;width:16px;height:1.5px;background:var(--text);border-radius:2px;}
-.mob-nav{display:none;position:fixed;inset:0;z-index:9000;background:var(--bg);flex-direction:column;align-items:center;justify-content:center;gap:2rem;}
-.mob-nav.open{display:flex;}
-.mob-nav a{font-size:1.6rem;font-weight:800;color:var(--text);transition:color .2s;}
-.mob-nav a:hover{color:var(--accent2);}
-.mob-close{position:absolute;top:1.5rem;right:1.5rem;font-size:1.3rem;color:var(--text2);width:36px;height:36px;border-radius:8px;background:var(--bg2);border:1px solid var(--border2);display:flex;align-items:center;justify-content:center;cursor:pointer;}
-.page-hero{padding:7rem 0 4rem;background:var(--bg2);border-bottom:1px solid var(--border);}
-.page-hero-eyebrow{font-family:'JetBrains Mono',monospace;font-size:.62rem;color:var(--accent2);letter-spacing:.2em;text-transform:uppercase;margin-bottom:.9rem;display:flex;align-items:center;gap:.5rem;}
-.page-hero-eyebrow::before{content:'//';opacity:.4;}
-.page-hero h1{font-size:clamp(2.2rem,5vw,3.5rem);font-weight:900;letter-spacing:-.04em;line-height:1.05;margin-bottom:.9rem;}
-.page-hero h1 em{font-style:italic;color:var(--accent);}
-.page-hero-sub{font-size:.92rem;color:var(--text2);line-height:1.75;max-width:520px;}
-.breadcrumb-bar{background:var(--bg2);border-bottom:1px solid var(--border);padding:.65rem 0;}
-.breadcrumb-inner{max-width:1160px;margin:0 auto;padding:0 1.5rem;display:flex;align-items:center;gap:.35rem;flex-wrap:wrap;}
-.bc-crumb{font-family:'JetBrains Mono',monospace;font-size:.62rem;color:var(--text3);transition:color .2s;}
-.bc-crumb:hover{color:var(--accent2);}
-.bc-sep{color:var(--text3);font-size:.65rem;}
-.bc-active{font-family:'JetBrains Mono',monospace;font-size:.62rem;color:var(--accent2);}
-.bc-pill{font-family:'JetBrains Mono',monospace;font-size:.62rem;color:var(--text3);padding:.28rem .7rem;border:1px solid var(--border2);border-radius:5px;transition:all .2s;}
-.bc-pill:hover{color:var(--accent2);border-color:var(--accent2);}
-.blog-layout{display:grid;grid-template-columns:1fr 300px;gap:3rem;align-items:start;padding:4rem 0 6rem;}
-.blog-filters{display:flex;gap:.5rem;flex-wrap:wrap;margin-bottom:2.5rem;}
-.bf{font-family:'JetBrains Mono',monospace;font-size:.62rem;letter-spacing:.08em;text-transform:uppercase;padding:.38rem .9rem;border-radius:7px;background:var(--bg2);border:1px solid var(--border2);color:var(--text3);transition:var(--t);cursor:pointer;}
-.bf:hover,.bf.on{border-color:var(--accent);color:var(--accent);background:rgba(99,102,241,.07);}
-.blog-grid{display:flex;flex-direction:column;gap:1.25rem;}
-.blog-card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r2);padding:1.75rem;cursor:pointer;transition:var(--t);display:flex;flex-direction:column;}
-.blog-card:hover{border-color:rgba(99,102,241,.4);transform:translateY(-2px);box-shadow:var(--shadow2);}
-.blog-card.featured{flex-direction:row;gap:2rem;align-items:flex-start;}
-.bc-icon{width:88px;height:88px;border-radius:12px;background:var(--bg3);border:1px solid var(--border2);display:flex;align-items:center;justify-content:center;font-size:2rem;flex-shrink:0;}
-.bc-badge{display:inline-block;font-family:'JetBrains Mono',monospace;font-size:.56rem;letter-spacing:.1em;text-transform:uppercase;padding:.2rem .55rem;border-radius:4px;background:rgba(99,102,241,.1);color:var(--accent2);margin-bottom:.65rem;}
-.bc-title{font-size:1rem;font-weight:700;margin-bottom:.5rem;line-height:1.35;}
-.blog-card.featured .bc-title{font-size:1.15rem;}
-.bc-excerpt{font-size:.8rem;color:var(--text2);line-height:1.65;flex:1;margin-bottom:1rem;}
-.bc-meta{display:flex;justify-content:space-between;align-items:center;margin-top:auto;padding-top:.75rem;border-top:1px solid var(--border);}
-.bc-date{font-family:'JetBrains Mono',monospace;font-size:.6rem;color:var(--text3);}
-.bc-read{font-size:.75rem;font-weight:600;color:var(--accent2);}
-.loading-state{text-align:center;padding:3rem 2rem;color:var(--text3);font-family:'JetBrains Mono',monospace;font-size:.75rem;}
-.spinner{width:28px;height:28px;border:2px solid var(--border2);border-top-color:var(--accent);border-radius:50%;animation:spin .7s linear infinite;margin:0 auto 1rem;}
-@keyframes spin{to{transform:rotate(360deg);}}
-.empty-state{text-align:center;padding:4rem 2rem;color:var(--text3);font-family:'JetBrains Mono',monospace;font-size:.75rem;}
-.blog-sidebar{position:sticky;top:5.5rem;display:flex;flex-direction:column;gap:1.25rem;}
-.sidebar-card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r2);padding:1.5rem;}
-.sc-title{font-family:'JetBrains Mono',monospace;font-size:.6rem;color:var(--accent2);letter-spacing:.15em;text-transform:uppercase;margin-bottom:1.1rem;}
-.sc-tags{display:flex;flex-wrap:wrap;gap:.45rem;}
-.sc-tag{font-family:'JetBrains Mono',monospace;font-size:.6rem;padding:.25rem .6rem;border-radius:5px;background:var(--bg3);border:1px solid var(--border2);color:var(--text3);cursor:pointer;transition:var(--t);}
-.sc-tag:hover,.sc-tag.on{border-color:var(--accent);color:var(--accent2);}
-.sc-recent{display:flex;flex-direction:column;gap:.75rem;}
-.sc-recent-item{display:flex;gap:.75rem;align-items:flex-start;cursor:pointer;transition:opacity .2s;}
-.sc-recent-item:hover{opacity:.75;}
-.sc-recent-num{font-family:'JetBrains Mono',monospace;font-size:.6rem;color:var(--accent2);flex-shrink:0;margin-top:.15rem;}
-.sc-recent-title{font-size:.78rem;font-weight:500;color:var(--text2);line-height:1.45;}
-.sc-author{display:flex;align-items:center;gap:.85rem;}
-.sc-author-avatar{width:48px;height:48px;border-radius:50%;background:var(--accent);display:flex;align-items:center;justify-content:center;font-size:1.1rem;font-weight:800;color:#fff;flex-shrink:0;border:2px solid var(--accent);}
-.sc-author-name{font-size:.85rem;font-weight:700;color:var(--text);}
-.sc-author-role{font-family:'JetBrains Mono',monospace;font-size:.58rem;color:var(--text3);margin-top:.2rem;}
-.ad-unit{background:var(--bg2);border:1px dashed var(--border2);border-radius:var(--r);padding:1.25rem;text-align:center;min-height:90px;display:flex;align-items:center;justify-content:center;}
-.ad-label{font-family:'JetBrains Mono',monospace;font-size:.58rem;color:var(--text3);letter-spacing:.1em;text-transform:uppercase;}
-.post-reader{display:none;padding:4rem 0 6rem;}
-.post-reader.open{display:block;}
-.post-reader-inner{display:grid;grid-template-columns:1fr 300px;gap:3rem;align-items:start;}
-.post-back{display:inline-flex;align-items:center;gap:.45rem;font-family:'JetBrains Mono',monospace;font-size:.68rem;color:var(--accent2);margin-bottom:2.5rem;cursor:pointer;background:none;border:none;transition:gap .2s;text-transform:uppercase;letter-spacing:.08em;}
-.post-back:hover{gap:.8rem;}
-.post-cat{font-family:'JetBrains Mono',monospace;font-size:.62rem;color:var(--accent2);letter-spacing:.15em;text-transform:uppercase;margin-bottom:.75rem;}
-.post-title-h{font-size:clamp(1.6rem,4vw,2.5rem);font-weight:900;letter-spacing:-.03em;line-height:1.1;margin-bottom:1rem;}
-.post-meta-bar{display:flex;gap:2rem;font-family:'JetBrains Mono',monospace;font-size:.62rem;color:var(--text3);padding-bottom:1.5rem;border-bottom:1px solid var(--border2);margin-bottom:2.25rem;flex-wrap:wrap;}
-.post-body{font-size:.95rem;line-height:1.85;color:var(--text2);}
-.post-body h2{font-size:1.3rem;font-weight:800;color:var(--text);margin:2.5rem 0 .85rem;letter-spacing:-.02em;}
-.post-body h3{font-size:1.05rem;font-weight:700;color:var(--text);margin:2rem 0 .6rem;}
-.post-body p{margin-bottom:1.35rem;}
-.post-body strong{color:var(--text);}
-.post-body a{color:var(--accent2);text-decoration:underline;}
-.post-body code{font-family:'JetBrains Mono',monospace;font-size:.83em;background:var(--bg2);border:1px solid var(--border2);padding:.12em .45em;color:var(--accent2);border-radius:4px;}
-.post-body pre{background:var(--bg2);border:1px solid var(--border2);padding:1.4rem;border-radius:var(--r2);margin:1.5rem 0;overflow-x:auto;}
-.post-body pre code{background:none;border:none;padding:0;color:var(--text);font-size:.82rem;line-height:1.7;}
-.post-body ul,.post-body ol{margin:1rem 0 1.35rem 1.5rem;}
-.post-body ul{list-style:disc;}.post-body ol{list-style:decimal;}
-.post-body li{margin-bottom:.45rem;}
-.post-body blockquote{border-left:3px solid var(--accent);padding:1rem 1.25rem;color:var(--text2);font-style:italic;margin:1.5rem 0;background:var(--bg2);border-radius:0 8px 8px 0;}
-.post-body img{width:100%;border-radius:var(--r);border:1px solid var(--border2);margin:1.5rem 0;}
-.post-body hr{border:none;border-top:1px solid var(--border2);margin:2rem 0;}
-.post-body .video-wrap{position:relative;padding-bottom:56.25%;height:0;margin:1.5rem 0;border-radius:var(--r);overflow:hidden;}
-.post-body .video-wrap iframe{position:absolute;inset:0;width:100%;height:100%;}
-.share-strip{margin-top:3rem;padding-top:2rem;border-top:1px solid var(--border2);}
-.share-label{font-family:'JetBrains Mono',monospace;font-size:.6rem;color:var(--text3);letter-spacing:.12em;text-transform:uppercase;margin-bottom:.9rem;}
-.share-btns{display:flex;gap:.6rem;flex-wrap:wrap;}
-.sh{padding:.48rem 1.05rem;border-radius:7px;font-size:.72rem;font-weight:700;display:flex;align-items:center;gap:.4rem;transition:var(--t);font-family:'Inter',sans-serif;border:none;cursor:pointer;}
-.sh:hover{transform:translateY(-2px);}
-.sh-wa{background:#25d366;color:#fff;}.sh-tw{background:#1da1f2;color:#fff;}.sh-li{background:#0077b5;color:#fff;}
-.sh-cp{background:var(--bg2);border:1px solid var(--border2);color:var(--text2);}
-.sh-cp:hover{border-color:var(--accent);color:var(--accent2);}
-.wa-fab{position:fixed;bottom:2rem;right:2rem;z-index:800;width:50px;height:50px;border-radius:50%;background:#25d366;color:#fff;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 20px rgba(37,211,102,.45);transition:var(--t);text-decoration:none;}
-.wa-fab:hover{transform:scale(1.1);}
-.toast{position:fixed;bottom:2rem;left:50%;transform:translateX(-50%) translateY(80px);background:var(--bg2);border:1px solid var(--border2);color:var(--text);padding:.7rem 1.6rem;border-radius:9px;font-size:.82rem;font-weight:500;z-index:99999;transition:transform .35s;white-space:nowrap;box-shadow:var(--shadow2);pointer-events:none;}
-.toast.show{transform:translateX(-50%) translateY(0);}
-.footer{background:var(--bg2);border-top:1px solid var(--border);padding:4rem 0 2rem;}
-.footer-top{display:grid;grid-template-columns:1.4fr 1fr;gap:4rem;margin-bottom:3rem;}
-.fb-logo{display:flex;align-items:center;gap:.65rem;margin-bottom:1rem;}
-.fb-name{font-size:.9rem;font-weight:800;letter-spacing:-.02em;}
-.fb-name span{color:var(--accent);}
-.fb-role{font-family:'JetBrains Mono',monospace;font-size:.52rem;color:var(--text3);margin-top:.15rem;}
-.footer-bio{font-size:.8rem;color:var(--text3);line-height:1.7;max-width:320px;}
-.footer-cols{display:grid;grid-template-columns:repeat(3,1fr);gap:2rem;}
-.fc-title{font-family:'JetBrains Mono',monospace;font-size:.58rem;color:var(--accent2);letter-spacing:.15em;text-transform:uppercase;margin-bottom:.85rem;}
-.footer-col{display:flex;flex-direction:column;gap:.45rem;}
-.footer-col a{font-size:.8rem;color:var(--text3);transition:color .2s;}
-.footer-col a:hover{color:var(--accent2);}
-.footer-bottom{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem;padding-top:1.5rem;border-top:1px solid var(--border);}
-.footer-copy{font-family:'JetBrains Mono',monospace;font-size:.6rem;color:var(--text3);}
-.footer-socials{display:flex;gap:.5rem;}
-.soc-btn{width:32px;height:32px;border-radius:7px;background:var(--bg3);border:1px solid var(--border2);color:var(--text3);display:flex;align-items:center;justify-content:center;transition:var(--t);}
-.soc-btn:hover{background:var(--accent);border-color:var(--accent);color:#fff;transform:translateY(-2px);}
-.reveal{opacity:0;transform:translateY(20px);transition:opacity .6s,transform .6s;}
-.reveal.in{opacity:1;transform:translateY(0);}
-@media(max-width:1024px){.blog-layout,.post-reader-inner{grid-template-columns:1fr;}.blog-sidebar{position:static;}.footer-top{grid-template-columns:1fr;gap:3rem;}}
-@media(max-width:768px){.nav-links,.nav-dropdown,.nav-cta{display:none;}.hamburger{display:flex;}.blog-card.featured{flex-direction:column;}.bc-icon{width:60px;height:60px;font-size:1.5rem;}.footer-cols{grid-template-columns:repeat(2,1fr);}}
-@media(max-width:520px){.footer-cols{grid-template-columns:1fr;}}
+/* ═══════════════════════════════════════════════════════════════
+   BLOG-SPECIFIC STYLES
+   ═══════════════════════════════════════════════════════════════ */
+
+/* ── Blog Hero ─────────────────────────────────────────────────── */
+.blog-hero {
+  padding: clamp(6rem,14vw,10rem) 0 clamp(3rem,6vw,5rem);
+  position: relative; overflow: hidden;
+}
+.blog-hero::before {
+  content:''; position:absolute; inset:0; pointer-events:none;
+  background: radial-gradient(ellipse 60% 50% at 80% 30%, rgba(99,102,241,0.12) 0%, transparent 70%);
+}
+.blog-hero-inner { position:relative; z-index:1; }
+.blog-hero h1 {
+  font-family: var(--font-display);
+  font-size: var(--text-5xl); font-weight:900;
+  letter-spacing:-0.04em; line-height:1.0;
+  margin-bottom:1rem;
+}
+.blog-hero h1 em {
+  font-style:italic; color:var(--accent);
+}
+.blog-hero p {
+  font-size:var(--text-lg); color:var(--text2);
+  max-width:520px; line-height:1.7;
+}
+
+/* ── Filter Bar ────────────────────────────────────────────────── */
+.filter-bar {
+  display:flex; align-items:center; gap:0.5rem;
+  flex-wrap:wrap; margin-bottom: clamp(2rem,4vw,3rem);
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid var(--border);
+}
+.filter-btn {
+  font-family: var(--font-mono); font-size:var(--text-xs);
+  letter-spacing:0.08em; text-transform:uppercase;
+  padding:0.4rem 1rem; border-radius:100px;
+  border:1px solid var(--border2); color:var(--text3);
+  background:transparent; cursor:pointer; transition:var(--t);
+}
+.filter-btn:hover { border-color:var(--accent2); color:var(--accent2); }
+.filter-btn.active {
+  background:var(--accent); border-color:var(--accent);
+  color:#fff;
+}
+.search-wrap {
+  margin-left:auto;
+  position:relative;
+}
+.search-wrap input {
+  background:var(--bg2); border:1px solid var(--border2);
+  color:var(--text); border-radius:100px;
+  padding:0.45rem 1rem 0.45rem 2.5rem;
+  font-size:var(--text-sm); font-family:var(--font-body);
+  width:clamp(160px,20vw,240px); outline:none;
+  transition:border-color 0.2s, width 0.3s;
+}
+.search-wrap input:focus {
+  border-color:var(--accent); width:clamp(200px,26vw,300px);
+}
+.search-icon {
+  position:absolute; left:0.85rem; top:50%;
+  transform:translateY(-50%); color:var(--text3);
+  font-size:0.85rem; pointer-events:none;
+}
+
+/* ── Masonry Grid ──────────────────────────────────────────────── */
+.masonry {
+  columns: 3; column-gap: 1.5rem;
+  /* JS fallback — pure CSS masonry via columns */
+}
+.masonry .blog-card { break-inside: avoid; margin-bottom:1.5rem; }
+
+/* ── Blog Card ─────────────────────────────────────────────────── */
+.blog-card {
+  background: var(--bg2); border:1px solid var(--border);
+  border-radius: var(--r2); overflow:hidden;
+  transition: var(--t); display:flex; flex-direction:column;
+  cursor:pointer;
+}
+.blog-card:hover {
+  border-color:rgba(99,102,241,0.35);
+  transform:translateY(-4px); box-shadow:var(--shadow2);
+}
+.blog-card:focus-within {
+  outline:2px solid var(--accent); outline-offset:3px;
+}
+.bc-cover {
+  width:100%; aspect-ratio:16/9; object-fit:cover;
+  display:block; transition:transform 0.5s;
+}
+.blog-card:hover .bc-cover { transform:scale(1.04); }
+.bc-cover-wrap { overflow:hidden; }
+.bc-body { padding:1.5rem; flex:1; display:flex; flex-direction:column; }
+.bc-cat {
+  font-family:var(--font-mono); font-size:var(--text-xs);
+  color:var(--accent2); letter-spacing:0.12em; text-transform:uppercase;
+  margin-bottom:0.5rem;
+}
+.bc-title {
+  font-family:var(--font-display); font-size:var(--text-xl);
+  font-weight:700; line-height:1.25; margin-bottom:0.65rem;
+  color:var(--text); transition:color 0.2s;
+}
+.blog-card:hover .bc-title { color:var(--accent2); }
+.bc-excerpt {
+  font-size:var(--text-sm); color:var(--text2);
+  line-height:1.7; flex:1; margin-bottom:1.1rem;
+}
+.bc-tags { display:flex; flex-wrap:wrap; gap:0.4rem; margin-bottom:1rem; }
+.bc-tag {
+  font-family:var(--font-mono); font-size:var(--text-xs);
+  padding:0.18rem 0.55rem; border-radius:5px;
+  background:rgba(99,102,241,0.1); color:var(--accent2);
+  border:1px solid rgba(99,102,241,0.15);
+}
+.bc-meta {
+  display:flex; justify-content:space-between; align-items:center;
+  padding-top:1rem; border-top:1px solid var(--border);
+  margin-top:auto;
+}
+.bc-date {
+  font-family:var(--font-mono); font-size:var(--text-xs); color:var(--text3);
+}
+.bc-read {
+  font-size:var(--text-xs); font-weight:600; color:var(--accent2);
+  display:flex; align-items:center; gap:0.35rem;
+}
+.bc-likes {
+  display:flex; align-items:center; gap:0.3rem;
+  font-family:var(--font-mono); font-size:var(--text-xs); color:var(--text3);
+  cursor:pointer; transition:color 0.2s;
+}
+.bc-likes:hover { color:var(--rose); }
+.bc-likes.liked { color:var(--rose); }
+
+/* Featured card */
+.blog-card.featured {
+  border-color:rgba(99,102,241,0.25);
+  background:linear-gradient(135deg, var(--bg2) 0%, rgba(99,102,241,0.05) 100%);
+}
+.feat-badge {
+  display:inline-flex; align-items:center; gap:0.4rem;
+  font-family:var(--font-mono); font-size:var(--text-xs);
+  padding:0.25rem 0.7rem; border-radius:100px;
+  background:rgba(99,102,241,0.15); color:var(--accent2);
+  border:1px solid rgba(99,102,241,0.2); margin-bottom:0.7rem;
+}
+
+/* ── Single Post Layout ────────────────────────────────────────── */
+#postView { display:none; }
+.post-hero {
+  padding: clamp(5.5rem,12vw,9rem) 0 clamp(2rem,5vw,4rem);
+  position:relative; overflow:hidden;
+}
+.post-hero-bg {
+  position:absolute; inset:0;
+  background:linear-gradient(to bottom, rgba(15,23,42,0) 0%, var(--bg) 100%);
+  z-index:1;
+}
+.post-hero-cover {
+  position:absolute; inset:0;
+  width:100%; height:100%; object-fit:cover; opacity:0.15;
+}
+.post-hero-inner { position:relative; z-index:2; max-width:800px; }
+.post-hero-cat {
+  font-family:var(--font-mono); font-size:var(--text-xs);
+  color:var(--accent2); letter-spacing:0.15em; text-transform:uppercase;
+  margin-bottom:1rem;
+}
+.post-hero-title {
+  font-family: var(--font-display);
+  font-size: clamp(2rem,5.5vw,3.75rem);
+  font-weight:900; letter-spacing:-0.04em; line-height:1.05;
+  margin-bottom:1.25rem;
+}
+.post-meta-row {
+  display:flex; align-items:center; gap:1.25rem; flex-wrap:wrap;
+  font-family:var(--font-mono); font-size:var(--text-xs); color:var(--text3);
+}
+.post-meta-row .dot { color:var(--border2); }
+.post-share-bar {
+  display:flex; align-items:center; gap:0.65rem; margin-top:1.5rem;
+}
+.share-btn {
+  display:flex; align-items:center; gap:0.4rem;
+  font-size:var(--text-xs); font-weight:600;
+  padding:0.42rem 0.9rem; border-radius:7px;
+  border:1px solid var(--border2); color:var(--text2);
+  background:transparent; cursor:pointer; transition:var(--t);
+}
+.share-btn:hover { border-color:var(--accent); color:var(--accent2); }
+.share-btn.tw:hover { border-color:#1d9bf0; color:#1d9bf0; }
+.share-btn.wa:hover { border-color:#25d366; color:#25d366; }
+.share-btn.cp:hover { border-color:var(--green); color:var(--green); }
+
+/* Post content typography */
+.post-layout {
+  display:grid;
+  grid-template-columns:1fr clamp(60px,200px,220px);
+  gap:clamp(2rem,5vw,4rem);
+  align-items:start;
+  padding-bottom:var(--space-2xl);
+}
+.post-content {
+  max-width:780px;
+  font-size:clamp(1rem,2vw,1.1rem);
+  line-height:1.85; color:var(--text2);
+}
+.post-content h2, .post-content h3 {
+  font-family:var(--font-display); color:var(--text);
+  margin:2rem 0 0.85rem;
+}
+.post-content h2 { font-size:var(--text-3xl); font-weight:800; }
+.post-content h3 { font-size:var(--text-2xl); font-weight:700; }
+.post-content p { margin-bottom:1.25rem; }
+.post-content strong { color:var(--text); font-weight:600; }
+.post-content a { color:var(--accent2); text-decoration:underline; text-underline-offset:3px; }
+.post-content code {
+  font-family:var(--font-mono); font-size:0.85em;
+  background:var(--bg3); border:1px solid var(--border2);
+  padding:0.15em 0.45em; border-radius:5px; color:var(--accent3);
+}
+.post-content pre {
+  background:var(--bg2); border:1px solid var(--border2);
+  border-radius:var(--r2); padding:1.5rem; overflow-x:auto;
+  margin:1.5rem 0;
+}
+.post-content pre code {
+  background:none; border:none; padding:0; font-size:var(--text-sm);
+  color:var(--text2);
+}
+.post-content ul, .post-content ol {
+  list-style:revert; padding-left:1.5rem; margin-bottom:1.25rem;
+}
+.post-content li { margin-bottom:0.5rem; }
+.post-content blockquote {
+  border-left:3px solid var(--accent); padding:1rem 1.25rem;
+  background:rgba(99,102,241,0.06); border-radius:0 var(--r) var(--r) 0;
+  margin:1.5rem 0; font-style:italic; color:var(--text);
+}
+.post-content img {
+  border-radius:var(--r2); border:1px solid var(--border2);
+  margin:1.5rem 0; width:100%;
+}
+
+/* Post sidebar (sticky ToC / actions) */
+.post-sidebar {
+  position:sticky; top:calc(80px + 1.5rem);
+  display:flex; flex-direction:column; gap:1.5rem;
+}
+.toc-card {
+  background:var(--bg2); border:1px solid var(--border);
+  border-radius:var(--r2); padding:1.25rem;
+}
+.toc-title {
+  font-family:var(--font-mono); font-size:var(--text-xs);
+  color:var(--accent2); text-transform:uppercase;
+  letter-spacing:0.12em; margin-bottom:0.85rem;
+}
+.toc-list { display:flex; flex-direction:column; gap:0.5rem; }
+.toc-link {
+  font-size:var(--text-xs); color:var(--text3);
+  transition:color 0.2s; cursor:pointer; line-height:1.4;
+}
+.toc-link:hover, .toc-link.active { color:var(--accent2); }
+.toc-link.h3 { padding-left:0.8rem; font-size:calc(var(--text-xs) - 0.05rem); }
+
+.sidebar-actions { display:flex; flex-direction:column; gap:0.5rem; }
+.sidebar-btn {
+  display:flex; align-items:center; gap:0.5rem;
+  font-size:var(--text-xs); font-weight:600; color:var(--text2);
+  background:var(--bg2); border:1px solid var(--border2);
+  border-radius:var(--r); padding:0.6rem 0.9rem; cursor:pointer;
+  transition:var(--t);
+}
+.sidebar-btn:hover { border-color:var(--accent); color:var(--accent2); }
+
+/* Comments section */
+.comments-section { padding:var(--space-xl) 0; border-top:1px solid var(--border); }
+.comments-title {
+  font-family:var(--font-display); font-size:var(--text-3xl); font-weight:800;
+  margin-bottom:2rem;
+}
+.comment-card {
+  background:var(--bg2); border:1px solid var(--border);
+  border-radius:var(--r2); padding:1.5rem;
+  margin-bottom:1rem;
+}
+.comment-header {
+  display:flex; align-items:center; gap:0.75rem; margin-bottom:0.75rem;
+}
+.comment-avatar {
+  width:36px; height:36px; border-radius:50%;
+  background:linear-gradient(135deg,var(--accent),var(--accent2));
+  display:flex; align-items:center; justify-content:center;
+  font-weight:700; font-size:0.85rem; color:#fff; flex-shrink:0;
+}
+.comment-author { font-weight:600; font-size:var(--text-sm); }
+.comment-date { font-family:var(--font-mono); font-size:var(--text-xs); color:var(--text3); }
+.comment-body { font-size:var(--text-sm); color:var(--text2); line-height:1.7; }
+
+/* ── Empty / Error States ──────────────────────────────────────── */
+.empty-state {
+  text-align:center; padding:5rem 2rem;
+  color:var(--text3);
+}
+.empty-icon { font-size:3rem; margin-bottom:1rem; }
+.empty-title { font-size:var(--text-xl); font-weight:700; color:var(--text2); margin-bottom:0.5rem; }
+.empty-sub { font-size:var(--text-sm); }
+
+/* ── Back button ───────────────────────────────────────────────── */
+.back-btn {
+  display:inline-flex; align-items:center; gap:0.5rem;
+  font-size:var(--text-sm); font-weight:600; color:var(--text2);
+  cursor:pointer; transition:color 0.2s; background:none; border:none;
+  font-family:var(--font-body);
+  margin-bottom:1.5rem;
+}
+.back-btn:hover { color:var(--accent2); }
+
+/* ── Responsive ────────────────────────────────────────────────── */
+@media(max-width:1024px) {
+  .masonry { columns:2; }
+  .post-layout { grid-template-columns:1fr; }
+  .post-sidebar { position:static; flex-direction:row; flex-wrap:wrap; }
+  .toc-card { flex:1; min-width:200px; }
+}
+@media(max-width:640px) {
+  .masonry { columns:1; }
+  .filter-bar { gap:0.4rem; }
+  .search-wrap { margin-left:0; width:100%; }
+  .search-wrap input { width:100%; }
+  .post-meta-row { gap:0.65rem; }
+}
 </style>
 </head>
 <body>
 
-<div class="mob-nav" id="mobNav">
-  <button class="mob-close" onclick="closeMob()">&#x2715;</button>
-  <a href="index.html" onclick="closeMob()">Home</a>
-  <a href="index.html#about" onclick="closeMob()">About</a>
-  <a href="index.html#projects" onclick="closeMob()">Projects</a>
-  <a href="blog.html" onclick="closeMob()" style="color:var(--accent2)">Blog</a>
-  <a href="tutoring.html" onclick="closeMob()">Tutoring</a>
-  <a href="shop.html" onclick="closeMob()">Shop</a>
-  <a href="index.html#contact" onclick="closeMob()">Contact</a>
+<!-- Skip link -->
+<a href="#main" class="skip-link">Skip to content</a>
+
+<!-- Reading progress bar -->
+<div class="read-progress" id="readProgress" role="progressbar" aria-label="Reading progress" aria-valuenow="0"></div>
+
+<!-- Mobile nav -->
+<div class="mob-nav" id="mobNav" role="dialog" aria-label="Navigation menu">
+  <button class="mob-close" onclick="closeMob()" aria-label="Close menu">✕</button>
+  <a href="index.html">Home</a>
+  <a href="index.html#about">About</a>
+  <a href="blog.html" aria-current="page">Blog</a>
+  <a href="services.html">Services</a>
+  <a href="shop.html">Shop</a>
+  <a href="index.html#contact">Contact</a>
 </div>
 
-<nav class="nav" id="mainNav">
+<!-- Navigation -->
+<nav class="nav" id="mainNav" role="navigation" aria-label="Main navigation">
   <div class="nav-inner">
-    <a href="index.html" class="nav-logo">
-      <svg width="34" height="34" viewBox="0 0 36 36" fill="none"><rect width="36" height="36" rx="9" fill="#6366f1"/><path d="M21 8h5v17c0 3.9-2.4 6.5-6.5 6.5S13 28.9 13 25h4.2c0 1.7 1 2.7 2.3 2.7s2.5-1 2.5-2.7V8z" fill="white" opacity=".95"/><circle cx="28.5" cy="27.5" r="3" fill="#a5b4fc"/><path d="M8.5 19.5l-3 3 3 3M14.5 19.5l3 3-3 3" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" opacity=".45"/></svg>
-      <div class="nav-logo-text"><div class="name">James<span>.</span>dev</div><div class="role">Full-Stack &middot; Security</div></div>
+    <a href="index.html" class="nav-logo" aria-label="James Mwangi Home">
+      <svg class="nav-logo-mark" viewBox="0 0 36 36" fill="none" aria-hidden="true">
+        <rect width="36" height="36" rx="9" fill="#6366f1"/>
+        <path d="M21 8h5v17c0 3.9-2.4 6.5-6.5 6.5S13 28.9 13 25h4.2c0 1.7 1 2.7 2.3 2.7s2.5-1 2.5-2.7V8z" fill="white" opacity=".95"/>
+        <circle cx="28.5" cy="27.5" r="3" fill="#a5b4fc"/>
+      </svg>
+      <div class="nav-logo-text">
+        <div class="name">James<span>.</span>dev</div>
+        <div class="role">Full-Stack · Security</div>
+      </div>
     </a>
     <div class="nav-links">
-      <a href="index.html">Home</a><a href="index.html#about">About</a><a href="index.html#skills">Skills</a>
-      <a href="index.html#projects">Projects</a><a href="blog.html" class="active">Blog</a>
-      <div class="nav-dropdown">
-        <button class="nav-dropdown-btn" id="venturesBtn" onclick="toggleDropdown()">Ventures<svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 4l4 4 4-4"/></svg></button>
-        <div class="dropdown-menu" id="venturesMenu">
-          <a href="tutoring.html" class="dropdown-item"><span class="dropdown-item-icon">&#x1F4DA;</span><div class="dropdown-item-text"><div class="t">IT &amp; CS Tutoring</div><div class="s">Academic coaching &amp; mentorship</div></div></a>
-          <a href="shop.html" class="dropdown-item"><span class="dropdown-item-icon">&#x1F6CD;</span><div class="dropdown-item-text"><div class="t">Tech Shop</div><div class="s">Curated developer tools &amp; gadgets</div></div></a>
-        </div>
-      </div>
+      <a href="index.html">Home</a>
+      <a href="index.html#about">About</a>
+      <a href="blog.html" class="active" aria-current="page">Blog</a>
+      <a href="services.html">Services</a>
+      <a href="shop.html">Shop</a>
       <a href="index.html#contact">Contact</a>
     </div>
     <div class="nav-right">
-      <button class="theme-toggle" id="themeBtn" onclick="toggleTheme()">&#x1F319;</button>
+      <button class="theme-toggle" id="themeBtn" onclick="toggleTheme()" aria-label="Toggle colour theme">🌙</button>
       <a href="index.html#contact" class="nav-cta">Hire Me</a>
-      <button class="hamburger" onclick="openMob()"><span></span><span></span><span></span></button>
+      <button class="hamburger" onclick="openMob()" aria-label="Open navigation menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
     </div>
   </div>
 </nav>
 
-<header class="page-hero">
+<!-- ═══════════ LIST VIEW ═══════════ -->
+<main id="main">
+<div id="listView">
+
+  <!-- Hero -->
+  <header class="blog-hero">
+    <div class="container blog-hero-inner">
+      <div class="label">Technical insights</div>
+      <h1>The <em>Blog</em></h1>
+      <p>Practical deep-dives on Full-Stack engineering, cybersecurity, and building for the African market.</p>
+    </div>
+  </header>
+
   <div class="container">
-    <div class="page-hero-eyebrow">Technical Blog</div>
-    <h1>Insights &amp; <em>Articles</em></h1>
-    <p class="page-hero-sub">Practical writing on cybersecurity, full-stack development, M-Pesa integration, IoT systems, and building software in East Africa.</p>
-  </div>
-</header>
-
-<div class="breadcrumb-bar"><div class="breadcrumb-inner">
-  <a href="index.html" class="bc-crumb">Home</a><span class="bc-sep">&#x203A;</span><span class="bc-active">Blog</span>
-  <div style="flex:1"></div>
-  <a href="tutoring.html" class="bc-pill">&#x1F4DA; Tutoring</a>
-  <a href="shop.html" class="bc-pill">&#x1F6CD; Shop</a>
-  <a href="index.html#contact" class="bc-pill">&#x2709;&#xFE0F; Hire Me</a>
-</div></div>
-
-<div class="container">
-  <div id="blogIndex">
-    <div class="blog-layout">
-      <div>
-        <div class="blog-filters" id="blogFilters">
-          <button class="bf on" onclick="filterPosts(this,'all')">All Posts</button>
-          <button class="bf" onclick="filterPosts(this,'dev')">Development</button>
-          <button class="bf" onclick="filterPosts(this,'security')">Security</button>
-          <button class="bf" onclick="filterPosts(this,'agritech')">AgriTech</button>
-          <button class="bf" onclick="filterPosts(this,'healthtech')">HealthTech</button>
-          <button class="bf" onclick="filterPosts(this,'career')">Career</button>
-        </div>
-        <div class="blog-grid" id="blogGrid">
-          <div class="loading-state"><div class="spinner"></div>// Loading posts&hellip;</div>
-        </div>
+    <!-- Filter bar -->
+    <div class="filter-bar" role="toolbar" aria-label="Filter posts by category">
+      <button class="filter-btn active" data-cat="all" onclick="filterPosts('all',this)">All</button>
+      <button class="filter-btn" data-cat="Cybersecurity" onclick="filterPosts('Cybersecurity',this)">Cybersecurity</button>
+      <button class="filter-btn" data-cat="FullStack" onclick="filterPosts('FullStack',this)">Full-Stack</button>
+      <button class="filter-btn" data-cat="DevTools" onclick="filterPosts('DevTools',this)">DevTools</button>
+      <button class="filter-btn" data-cat="AgriTech" onclick="filterPosts('AgriTech',this)">AgriTech</button>
+      <div class="search-wrap">
+        <span class="search-icon" aria-hidden="true">🔍</span>
+        <input type="search" id="searchInput" placeholder="Search posts…" aria-label="Search blog posts" oninput="handleSearch(this.value)">
       </div>
-      <aside class="blog-sidebar">
-        <div class="sidebar-card">
-          <div class="sc-title">About the Author</div>
-          <div class="sc-author"><div class="sc-author-avatar">JM</div><div><div class="sc-author-name">James Mwangi</div><div class="sc-author-role">Full-Stack Developer<br>Cybersecurity Specialist</div></div></div>
-          <p style="font-size:.78rem;color:var(--text2);line-height:1.7;margin-top:.9rem;">14+ years building and securing systems &mdash; from IoT irrigation to regulated HealthTech platforms.</p>
-          <a href="index.html" style="display:inline-flex;align-items:center;gap:.4rem;margin-top:1rem;font-size:.75rem;font-weight:600;color:var(--accent2);">View Portfolio &rarr;</a>
+    </div>
+
+    <!-- Masonry grid -->
+    <div class="masonry" id="postGrid" role="list" aria-live="polite" aria-busy="true">
+      <div class="loading-state" aria-label="Loading posts">
+        <div class="spinner"></div>
+        <span>Loading posts…</span>
+      </div>
+    </div>
+  </div>
+
+</div><!-- /#listView -->
+
+<!-- ═══════════ SINGLE POST VIEW ═══════════ -->
+<div id="postView">
+
+  <div class="container" style="padding-top:5rem">
+    <button class="back-btn" onclick="showList()" aria-label="Back to all posts">
+      ← Back to all posts
+    </button>
+  </div>
+
+  <!-- Post hero -->
+  <div class="post-hero" id="postHero">
+    <img id="postCoverBg" class="post-hero-cover" src="" alt="" aria-hidden="true" loading="lazy">
+    <div class="post-hero-bg"></div>
+    <div class="container post-hero-inner">
+      <div class="post-hero-cat" id="postCat"></div>
+      <h1 class="post-hero-title" id="postTitle"></h1>
+      <div class="post-meta-row">
+        <span id="postDate"></span>
+        <span class="dot">·</span>
+        <span id="postReadTime"></span>
+        <span class="dot">·</span>
+        <span id="postViews">0 views</span>
+      </div>
+      <div class="post-share-bar" role="group" aria-label="Share this post">
+        <button class="share-btn tw" onclick="sharePost('twitter')" aria-label="Share on Twitter">
+          𝕏 Twitter
+        </button>
+        <button class="share-btn wa" onclick="sharePost('whatsapp')" aria-label="Share on WhatsApp">
+          💬 WhatsApp
+        </button>
+        <button class="share-btn cp" onclick="sharePost('copy')" aria-label="Copy link">
+          🔗 Copy Link
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Post body -->
+  <div class="container">
+    <div class="post-layout">
+      <article class="post-content" id="postBody" aria-label="Post content"></article>
+      <aside class="post-sidebar" aria-label="Post sidebar">
+        <div class="toc-card">
+          <div class="toc-title">// Contents</div>
+          <nav class="toc-list" id="tocList" aria-label="Table of contents"></nav>
         </div>
-        <div class="sidebar-card">
-          <div class="sc-title">Topics</div>
-          <div class="sc-tags" id="sidebarTags">
-            <span class="sc-tag on" onclick="filterPosts(null,'all')">All</span>
-            <span class="sc-tag" onclick="filterPosts(null,'dev')">Development</span>
-            <span class="sc-tag" onclick="filterPosts(null,'security')">Security</span>
-            <span class="sc-tag" onclick="filterPosts(null,'agritech')">AgriTech</span>
-            <span class="sc-tag" onclick="filterPosts(null,'healthtech')">HealthTech</span>
-            <span class="sc-tag" onclick="filterPosts(null,'career')">Career</span>
+        <div class="sidebar-actions">
+          <button class="sidebar-btn" id="likeBtn" onclick="likePost()" aria-label="Like this post">
+            ❤️ <span id="likesCount">0</span> Likes
+          </button>
+          <a href="https://wa.me/254711618115?text=Just read: " id="waShareBtn" target="_blank" rel="noopener" class="sidebar-btn" aria-label="Share on WhatsApp">
+            📲 Share via WhatsApp
+          </a>
+        </div>
+      </aside>
+    </div>
+
+    <!-- Comments -->
+    <section class="comments-section" id="commentsSection" aria-label="Comments">
+      <h2 class="comments-title">Discussion</h2>
+
+      <!-- Comment form -->
+      <div class="glass-card" style="padding:1.75rem;margin-bottom:2rem;background:var(--bg2);border-radius:var(--r2);border:1px solid var(--border2);">
+        <div class="label">Leave a comment</div>
+        <form id="commentForm" onsubmit="submitComment(event)" novalidate>
+          <div class="form-row" style="margin-bottom:1rem;">
+            <div class="form-group" style="margin-bottom:0">
+              <label for="cmtName">Name *</label>
+              <input id="cmtName" type="text" placeholder="Your name" required autocomplete="name">
+            </div>
+            <div class="form-group" style="margin-bottom:0">
+              <label for="cmtEmail">Email</label>
+              <input id="cmtEmail" type="email" placeholder="you@email.com (private)" autocomplete="email">
+            </div>
           </div>
-        </div>
-        <div class="sidebar-card"><div class="sc-title">Recent Posts</div><div class="sc-recent" id="recentPosts"></div></div>
-        <div class="ad-unit"><div class="ad-label">Advertisement</div></div>
-      </aside>
-    </div>
-  </div>
-
-  <div class="post-reader" id="postReader">
-    <div class="post-reader-inner">
-      <div>
-        <button class="post-back" onclick="closePost()">&larr; Back to Blog</button>
-        <div id="postContent"></div>
+          <div class="form-group">
+            <label for="cmtBody">Comment *</label>
+            <textarea id="cmtBody" rows="4" placeholder="Share your thoughts, questions, or corrections…" required></textarea>
+          </div>
+          <button type="submit" class="btn btn-primary" id="cmtSubmitBtn" style="margin-top:0.75rem;">Post Comment</button>
+          <p style="font-size:var(--text-xs);color:var(--text3);margin-top:0.6rem;">Comments are held for moderation before appearing.</p>
+        </form>
       </div>
-      <aside class="blog-sidebar">
-        <div class="sidebar-card">
-          <div class="sc-title">About the Author</div>
-          <div class="sc-author"><div class="sc-author-avatar">JM</div><div><div class="sc-author-name">James Mwangi</div><div class="sc-author-role">Full-Stack Developer<br>Cybersecurity Specialist</div></div></div>
-          <p style="font-size:.78rem;color:var(--text2);line-height:1.7;margin-top:.9rem;">14+ years building and securing systems across HealthTech, AgriTech, media, and enterprise IT.</p>
-          <a href="index.html" style="display:inline-flex;align-items:center;gap:.4rem;margin-top:1rem;font-size:.75rem;font-weight:600;color:var(--accent2);">View Portfolio &rarr;</a>
-        </div>
-        <div class="sidebar-card"><div class="sc-title">More Articles</div><div class="sc-recent" id="recentPosts2"></div></div>
-        <div class="ad-unit" style="min-height:250px;"><div class="ad-label">Advertisement</div></div>
-      </aside>
-    </div>
-  </div>
-</div>
 
-<footer class="footer"><div class="container">
-  <div class="footer-top">
-    <div>
-      <div class="fb-logo"><svg width="32" height="32" viewBox="0 0 36 36" fill="none"><rect width="36" height="36" rx="9" fill="#6366f1"/><path d="M21 8h5v17c0 3.9-2.4 6.5-6.5 6.5S13 28.9 13 25h4.2c0 1.7 1 2.7 2.3 2.7s2.5-1 2.5-2.7V8z" fill="white" opacity=".95"/><circle cx="28.5" cy="27.5" r="3" fill="#a5b4fc"/></svg><div><div class="fb-name">James<span>.</span>dev</div><div class="fb-role">Full-Stack &middot; Security</div></div></div>
-      <p class="footer-bio">Full-Stack Developer and Cybersecurity Specialist. Building secure, scalable digital products across East Africa and beyond.</p>
-    </div>
-    <div class="footer-cols">
-      <div class="footer-col"><div class="fc-title">Portfolio</div><a href="index.html#about">About</a><a href="index.html#skills">Skills</a><a href="index.html#experience">Experience</a><a href="index.html#projects">Projects</a></div>
-      <div class="footer-col"><div class="fc-title">Ventures</div><a href="blog.html">Technical Blog</a><a href="tutoring.html">IT Tutoring</a><a href="shop.html">Tech Shop</a></div>
-      <div class="footer-col"><div class="fc-title">Legal</div><a href="privacy.html">Privacy Policy</a><a href="privacy.html#cookies">Cookie Policy</a><a href="privacy.html#terms">Terms of Use</a></div>
-    </div>
+      <!-- Loaded comments -->
+      <div id="commentsList"></div>
+    </section>
   </div>
-  <div class="footer-bottom">
-    <div class="footer-copy">&copy; 2026 James Mwangi. All rights reserved.</div>
-    <div class="footer-socials">
-      <a href="https://github.com/Ruchathi2010" target="_blank" rel="noopener" class="soc-btn"><svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg></a>
-      <a href="https://wa.me/254711618115" target="_blank" rel="noopener" class="soc-btn"><svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg></a>
-      <a href="https://linkedin.com" target="_blank" rel="noopener" class="soc-btn"><svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg></a>
-      <a href="https://twitter.com" target="_blank" rel="noopener" class="soc-btn"><svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a>
-    </div>
-  </div>
-</div></footer>
 
-<a href="https://wa.me/254711618115" target="_blank" rel="noopener" class="wa-fab"><svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg></a>
-<div class="toast" id="toast"></div>
+</div><!-- /#postView -->
+
+</main>
+
+<!-- Footer -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer-bottom" style="border-top:none;padding-top:0;">
+      <div class="footer-copy">© 2025 James Mwangi. All rights reserved.</div>
+      <div style="font-family:var(--font-mono);font-size:var(--text-xs);color:var(--text3);">
+        Powered by Supabase + Cloudflare Pages
+      </div>
+    </div>
+  </div>
+</footer>
+
+<a href="https://wa.me/254711618115" target="_blank" rel="noopener" class="wa-fab" aria-label="Chat with James on WhatsApp">
+  <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+</a>
+
+<div class="toast" id="toast" role="alert" aria-live="assertive"></div>
+
+<!-- ═══════════ SUPABASE CDN ═══════════ -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
 
 <script>
-const CAT_LABELS = { dev:'Full-Stack Dev', security:'Cybersecurity', agritech:'AgriTech & IoT', career:'Career', healthtech:'HealthTech' };
-const CAT_ICONS  = { dev:'{ }', security:'&#x1F6E1;', agritech:'&#x1F331;', career:'&#x1F30D;', healthtech:'&#x1F48A;' };
+/* ══════════════════════════════════════════════════════════════
+   CONFIG — Replace with your actual Supabase project details
+   Found in: Supabase Dashboard → Settings → API
+   ══════════════════════════════════════════════════════════════ */
+const SUPABASE_URL  = 'https://abgmvftptdkrztfflxbn.supabase.co';
+const SUPABASE_ANON = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImFiZ212ZnRwdGRrcnp0ZmZseGJuIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQwODY2ODgsImV4cCI6MjA4OTY2MjY4OH0.WstNFP-z1BnaVE-LuDHx1qU-4H342t2DaU7Lud_Vvi4';
+const sb = supabase.createClient(SUPABASE_URL, SUPABASE_ANON);
 
-let allPosts     = [];
-let activeFilter = 'all';
-let shareData    = { title: '', url: '' };
+/* ══ State ══════════════════════════════════════════════════════ */
+let allPosts    = [];
+let currentPost = null;
+let currentCat  = 'all';
+let searchQuery = '';
 
-function esc(s) {
-  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
-}
-
-/* ================================================================
-   LOAD — fetches posts.json from the same server
-   No API keys. No database. Zero config.
-   To add a post: edit posts.json on GitHub, commit, done.
-================================================================ */
-async function loadPosts() {
-  const grid = document.getElementById('blogGrid');
-  if (grid) grid.innerHTML = '<div class="loading-state"><div class="spinner"></div>// Loading posts&hellip;</div>';
-
-  try {
-    const res = await fetch('posts.json?t=' + Date.now());
-    if (!res.ok) throw new Error('HTTP ' + res.status);
-    allPosts = await res.json();
-    console.log('[Blog] Loaded', allPosts.length, 'posts from posts.json');
-  } catch (err) {
-    console.error('[Blog] Failed to load posts.json:', err.message);
-    allPosts = [];
+/* ══ Theme ══════════════════════════════════════════════════════ */
+(function(){
+  const saved = localStorage.getItem('jm_theme');
+  if(saved === 'light'){
+    document.documentElement.setAttribute('data-theme','light');
+    document.getElementById('themeBtn').textContent = '☀️';
   }
-
-  renderBlog();
-  checkUrlPost();
+})();
+function toggleTheme(){
+  const html = document.documentElement;
+  const isLight = html.getAttribute('data-theme') === 'light';
+  html.setAttribute('data-theme', isLight ? 'dark' : 'light');
+  document.getElementById('themeBtn').textContent = isLight ? '🌙' : '☀️';
+  localStorage.setItem('jm_theme', isLight ? 'dark' : 'light');
 }
 
-/* ================================================================
-   RENDER
-================================================================ */
-function renderBlog() {
-  const grid = document.getElementById('blogGrid');
-  if (!grid) return;
+/* ══ Nav ════════════════════════════════════════════════════════ */
+window.addEventListener('scroll', () => {
+  document.getElementById('mainNav')?.classList.toggle('stuck', scrollY > 60);
+}, { passive:true });
+function openMob(){ document.getElementById('mobNav').classList.add('open'); }
+function closeMob(){ document.getElementById('mobNav').classList.remove('open'); }
 
-  const posts = activeFilter === 'all' ? allPosts : allPosts.filter(function(p) { return p.cat === activeFilter; });
+/* ══ Reading progress bar (single post only) ══════════════════ */
+window.addEventListener('scroll', () => {
+  if(!document.getElementById('postView').style.display
+     || document.getElementById('postView').style.display === 'none') return;
+  const scrollTop  = window.scrollY;
+  const docHeight  = document.documentElement.scrollHeight - window.innerHeight;
+  const pct = docHeight > 0 ? Math.round((scrollTop / docHeight) * 100) : 0;
+  const bar = document.getElementById('readProgress');
+  bar.style.width = pct + '%';
+  bar.setAttribute('aria-valuenow', pct);
+}, { passive:true });
 
-  if (!posts.length) {
-    grid.innerHTML = '<div class="empty-state">// No posts in this category yet.</div>';
-    renderRecent();
+/* ══ Toast ══════════════════════════════════════════════════════ */
+function showToast(msg, type=''){
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.className = 'toast show' + (type ? ' '+type : '');
+  setTimeout(() => t.classList.remove('show'), 3500);
+}
+
+/* ══ Lazy-load images ═══════════════════════════════════════════ */
+const imgObs = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if(e.isIntersecting){
+      const img = e.target;
+      if(img.dataset.src){ img.src = img.dataset.src; }
+      img.classList.add('loaded');
+      imgObs.unobserve(img);
+    }
+  });
+}, { rootMargin:'200px' });
+
+function lazyLoad(el){
+  el.classList.add('lazy');
+  imgObs.observe(el);
+}
+
+/* ══ Scroll reveal ══════════════════════════════════════════════ */
+const revObs = new IntersectionObserver(entries => {
+  entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('in'); });
+}, { threshold:0.08 });
+
+/* ═══════════════════════════════════════════════════════════════
+   FETCH POSTS FROM SUPABASE
+   ═══════════════════════════════════════════════════════════════ */
+async function loadPosts(){
+  const grid = document.getElementById('postGrid');
+  try {
+    const { data, error } = await sb
+      .from('posts')
+      .select('id, slug, title, excerpt, cat, tags, cover_url, read_time, likes, views, published, featured, created_at')
+      .eq('published', true)
+      .order('created_at', { ascending: false });
+
+    if(error) throw error;
+    allPosts = data || [];
+    renderGrid(allPosts);
+
+    // Check for ?post=slug in URL
+    const params = new URLSearchParams(window.location.search);
+    const slug   = params.get('post');
+    if(slug){
+      const post = allPosts.find(p => p.id === slug || p.slug === slug);
+      if(post) openPost(post);
+    }
+
+  } catch(err){
+    console.error(err);
+    grid.innerHTML = `
+      <div class="empty-state">
+        <div class="empty-icon">⚠️</div>
+        <div class="empty-title">Couldn't load posts</div>
+        <div class="empty-sub">Check your Supabase config or connection.</div>
+      </div>`;
+    // --- FALLBACK: built-in demo posts if Supabase isn't configured ---
+    allPosts = DEMO_POSTS;
+    renderGrid(allPosts);
+  }
+}
+
+/* Demo posts (shown when Supabase URL is unconfigured) */
+const DEMO_POSTS = [
+  {
+    id:'1', slug:'owasp-top-10-node-django',
+    title:'OWASP Top 10 in Practice: Hardening Node.js & Django APIs',
+    excerpt:'A practical walkthrough of the OWASP Top 10 vulnerabilities with real code patches — from injection flaws to security misconfiguration.',
+    cat:'Cybersecurity', tags:['OWASP','Node.js','Django','Security'],
+    read_time:'11 min read', likes:47, views:1240, featured:true,
+    cover_url:'https://images.unsplash.com/photo-1614064641938-3bbee52942c7?w=800&q=80',
+    created_at:'2025-03-01T10:00:00Z',
+    content:`## Introduction\n\nThe OWASP Top 10 represents the most critical security risks to web applications. In this guide we'll patch each one in real Node.js and Django code.\n\n## 1. Injection\n\nAlways use parameterised queries. Never concatenate user input into SQL strings.\n\n\`\`\`js\n// BAD\ndb.query("SELECT * FROM users WHERE id = " + req.params.id);\n\n// GOOD\ndb.query("SELECT * FROM users WHERE id = $1", [req.params.id]);\n\`\`\`\n\n## 2. Broken Authentication\n\nUse bcrypt with ≥ 12 salt rounds. Implement rate-limiting on login endpoints.\n\n## 3. Sensitive Data Exposure\n\nEnable HTTPS everywhere. Use AES-256 for data at rest. Never log passwords or tokens.\n\n## 4. XML External Entities (XXE)\n\nDisable XML external entity processing in your parsers.\n\n## 5. Broken Access Control\n\nEnforce RBAC on every API route. Never rely on client-supplied role claims without server verification.\n\n## Conclusion\n\nSecurity is not a checklist — it's a mindset. Integrate these checks into your CI/CD pipeline.`
+  },
+  {
+    id:'2', slug:'mpesa-daraja-api-node',
+    title:'Integrating M-Pesa Daraja API with Node.js: A Complete Guide',
+    excerpt:'OAuth tokens, STK Push, callback handling, and production gotchas — everything needed to accept M-Pesa payments in Node.js.',
+    cat:'FullStack', tags:['M-Pesa','Node.js','Payments','FinTech'],
+    read_time:'14 min read', likes:89, views:3410, featured:false,
+    cover_url:'https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=800&q=80',
+    created_at:'2025-02-14T10:00:00Z',
+    content:`## Prerequisites\n\nYou will need a Safaricom Developer account at developer.safaricom.co.ke, and a registered app with Consumer Key and Consumer Secret.\n\n## Step 1: Get Access Token\n\n\`\`\`js\nconst getToken = async () => {\n  const auth = Buffer.from(\`\${consumerKey}:\${consumerSecret}\`).toString('base64');\n  const res = await fetch('https://api.safaricom.co.ke/oauth/v1/generate?grant_type=client_credentials',\n    { headers: { Authorization: \`Basic \${auth}\` } });\n  const { access_token } = await res.json();\n  return access_token;\n};\n\`\`\`\n\n## Step 2: STK Push\n\nThe STK Push sends a payment prompt to the customer's phone.\n\n\`\`\`js\nconst stkPush = async (phone, amount, token) => {\n  const timestamp = new Date().toISOString().replace(/[^0-9]/g,'').slice(0,14);\n  const password  = Buffer.from(shortcode + passkey + timestamp).toString('base64');\n  return fetch('https://api.safaricom.co.ke/mpesa/stkpush/v1/processrequest',{\n    method:'POST',\n    headers:{ Authorization:\`Bearer \${token}\`, 'Content-Type':'application/json' },\n    body: JSON.stringify({ BusinessShortCode:shortcode, Password:password,\n      Timestamp:timestamp, TransactionType:'CustomerPayBillOnline',\n      Amount:amount, PartyA:phone, PartyB:shortcode,\n      PhoneNumber:phone, CallBackURL:callbackUrl,\n      AccountReference:'JamesDev', TransactionDesc:'Payment' })\n  }).then(r=>r.json());\n};\n\`\`\`\n\n## Step 3: Handle Callback\n\nSafaricom will POST to your callback URL with the transaction result.\n\n## Production Tips\n\n- Always validate the callback with HMAC\n- Store pending transactions in your DB before STK push\n- Implement idempotency keys to handle duplicates`
+  },
+  {
+    id:'3', slug:'supabase-vs-firebase-2024',
+    title:'Supabase vs Firebase: An Honest Comparison for African Developers',
+    excerpt:'Pricing, latency from Nairobi, offline support, SQL vs NoSQL — a data-driven comparison to help you choose the right backend.',
+    cat:'DevTools', tags:['Supabase','Firebase','Backend','Comparison'],
+    read_time:'9 min read', likes:61, views:2180, featured:false,
+    cover_url:'https://images.unsplash.com/photo-1633356122544-f134324a6cee?w=800&q=80',
+    created_at:'2025-01-28T10:00:00Z',
+    content:`## Overview\n\nBoth Supabase and Firebase offer generous free tiers and make backend development fast. But they are quite different tools.\n\n## Database Model\n\n**Firebase Firestore** is a NoSQL document store. Great for hierarchical data and real-time listeners. Schemaless means fast iteration but can lead to messy data at scale.\n\n**Supabase** uses PostgreSQL. Full SQL power: JOINs, foreign keys, triggers, RLS. Better for relational data (orders → products → users).\n\n## Pricing (March 2025)\n\nFor African startups, pricing in USD can hurt once you scale. Both have free tiers but pricing models differ significantly at scale. Supabase tends to be cheaper for data-heavy apps.\n\n## Latency from Nairobi\n\nBoth route through European data centres for African users. Latency is comparable (~180ms). Neither has an African region yet.\n\n## My Recommendation\n\n- **New projects with relational data**: Supabase every time\n- **Real-time apps, quick prototypes**: Firebase still has an edge\n- **HealthTech / FinTech (regulated)**: Supabase (RLS, SQL audit trails, HIPAA BAA available)`
+  }
+];
+
+/* ═══════════════════════════════════════════════════════════════
+   RENDER GRID
+   ═══════════════════════════════════════════════════════════════ */
+function renderGrid(posts){
+  const grid = document.getElementById('postGrid');
+  grid.setAttribute('aria-busy','false');
+
+  const filtered = posts.filter(p => {
+    const matchCat  = currentCat === 'all' || p.cat === currentCat;
+    const matchSearch = !searchQuery || [p.title,p.excerpt,(p.tags||[]).join(' ')].join(' ').toLowerCase().includes(searchQuery);
+    return matchCat && matchSearch;
+  });
+
+  if(!filtered.length){
+    grid.innerHTML = `
+      <div class="empty-state">
+        <div class="empty-icon">📭</div>
+        <div class="empty-title">No posts found</div>
+        <div class="empty-sub">Try a different category or search term.</div>
+      </div>`;
     return;
   }
 
-  var html = '';
-  for (var i = 0; i < posts.length; i++) {
-    var p     = posts[i];
-    var label = CAT_LABELS[p.cat] || p.cat;
-    var icon  = CAT_ICONS[p.cat]  || '&#x1F4DD;';
-    var feat  = i === 0 ? ' featured' : '';
-    html += '<article class="blog-card' + feat + '" onclick="openPost(' + "'" + esc(p.id) + "'" + ')" role="button" tabindex="0">';
-    html += '<div class="bc-icon">' + icon + '</div>';
-    html += '<div style="flex:1">';
-    html += '<span class="bc-badge">' + esc(label) + '</span>';
-    html += '<h2 class="bc-title">' + esc(p.title) + '</h2>';
-    html += '<p class="bc-excerpt">' + esc(p.excerpt || '') + '</p>';
-    html += '<div class="bc-meta">';
-    html += '<span class="bc-date">' + esc(p.date || '') + '</span>';
-    html += '<span class="bc-read">' + esc(p.readTime || '5 min read') + ' &rarr;</span>';
-    html += '</div></div></article>';
+  grid.innerHTML = filtered.map((p,i) => `
+    <article class="blog-card ${p.featured?'featured':''} reveal"
+             role="listitem"
+             tabindex="0"
+             onclick="openPost(${JSON.stringify(p).replace(/"/g,'&quot;')})"
+             onkeydown="if(event.key==='Enter')openPost(${JSON.stringify(p).replace(/"/g,'&quot;')})"
+             aria-label="${esc(p.title)}">
+      ${p.cover_url ? `
+        <div class="bc-cover-wrap">
+          <img class="bc-cover lazy" data-src="${esc(p.cover_url)}" alt="${esc(p.title)} cover" width="800" height="450" loading="lazy">
+        </div>` : ''}
+      <div class="bc-body">
+        ${p.featured ? '<div class="feat-badge">⭐ Featured</div>' : ''}
+        <div class="bc-cat">${esc(p.cat||'')}</div>
+        <h2 class="bc-title">${esc(p.title)}</h2>
+        <p class="bc-excerpt">${esc(p.excerpt||'')}</p>
+        ${(p.tags||[]).length ? `<div class="bc-tags">${p.tags.slice(0,4).map(t=>`<span class="bc-tag">${esc(t)}</span>`).join('')}</div>` : ''}
+        <div class="bc-meta">
+          <span class="bc-date">${formatDate(p.created_at)}</span>
+          <div style="display:flex;align-items:center;gap:0.75rem;">
+            <button class="bc-likes ${likedPosts().includes(p.id)?'liked':''}"
+                    onclick="event.stopPropagation();handleLike(event,${JSON.stringify(p).replace(/"/g,'&quot;')})"
+                    aria-label="Like this post">
+              ❤ ${p.likes||0}
+            </button>
+            <span class="bc-read">${esc(p.read_time||'5 min')} →</span>
+          </div>
+        </div>
+      </div>
+    </article>`).join('');
+
+  // Lazy-load cover images
+  grid.querySelectorAll('img.lazy').forEach(lazyLoad);
+  // Scroll reveal
+  grid.querySelectorAll('.reveal').forEach((el,i)=>{
+    el.style.transitionDelay = (i*0.05)+'s';
+    revObs.observe(el);
+  });
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   OPEN SINGLE POST
+   ═══════════════════════════════════════════════════════════════ */
+async function openPost(post){
+  currentPost = post;
+
+  // Fetch full content if not loaded yet
+  if(!post.content && !DEMO_POSTS.find(p=>p.id===post.id)){
+    const { data } = await sb.from('posts').select('content').eq('id',post.id).single();
+    if(data) post.content = data.content;
   }
-  grid.innerHTML = html;
-  grid.querySelectorAll('.blog-card').forEach(function(el) { el.classList.add('reveal'); revObs.observe(el); });
-  renderRecent();
+
+  // Update URL
+  history.pushState({ postId:post.id }, '', '?post='+post.slug);
+
+  // Populate
+  document.getElementById('postCat').textContent      = post.cat || '';
+  document.getElementById('postTitle').textContent    = post.title;
+  document.getElementById('postDate').textContent     = formatDate(post.created_at);
+  document.getElementById('postReadTime').textContent = post.read_time || '5 min read';
+  document.getElementById('postViews').textContent    = (post.views || 0) + ' views';
+  document.getElementById('likesCount').textContent   = post.likes || 0;
+
+  const bgImg = document.getElementById('postCoverBg');
+  if(post.cover_url){ bgImg.src = post.cover_url; bgImg.style.display='block'; }
+  else { bgImg.style.display='none'; }
+
+  // WhatsApp share
+  document.getElementById('waShareBtn').href =
+    `https://wa.me/?text=${encodeURIComponent(post.title+' — '+window.location.href)}`;
+
+  // Render markdown-like content
+  document.getElementById('postBody').innerHTML = renderContent(post.content || '');
+
+  // Build ToC
+  buildToC();
+
+  // Show/hide views
+  document.getElementById('listView').style.display = 'none';
+  document.getElementById('postView').style.display = 'block';
+  document.getElementById('readProgress').style.display = 'block';
+  window.scrollTo({ top:0, behavior:'instant' });
+  document.title = post.title + ' — James Mwangi';
+
+  // Load comments
+  loadComments(post.id);
+
+  // Increment view (fire and forget)
+  incrementViews(post.id);
 }
 
-function renderRecent() {
-  var posts = allPosts.slice(0, 5);
-  var html  = '';
-  for (var i = 0; i < posts.length; i++) {
-    var p = posts[i];
-    html += '<div class="sc-recent-item" onclick="openPost(' + "'" + esc(p.id) + "'" + ')">';
-    html += '<span class="sc-recent-num">0' + (i + 1) + '</span>';
-    html += '<span class="sc-recent-title">' + esc(p.title) + '</span></div>';
+function showList(){
+  document.getElementById('postView').style.display  = 'none';
+  document.getElementById('listView').style.display  = 'block';
+  document.getElementById('readProgress').style.width = '0%';
+  document.getElementById('readProgress').style.display = 'none';
+  history.pushState({}, '', window.location.pathname);
+  document.title = 'Technical Blog — James Mwangi';
+  currentPost = null;
+}
+
+/* ── Back button in browser ─────────────────────────────────── */
+window.addEventListener('popstate', () => {
+  const params = new URLSearchParams(window.location.search);
+  if(params.get('post')) {
+    const post = allPosts.find(p=>p.slug===params.get('post')||p.id===params.get('post'));
+    if(post) openPost(post);
+  } else {
+    showList();
   }
-  ['recentPosts','recentPosts2'].forEach(function(id) {
-    var el = document.getElementById(id);
-    if (el) el.innerHTML = html;
-  });
-}
-
-function filterPosts(btn, cat) {
-  activeFilter = cat;
-  document.querySelectorAll('#blogFilters .bf').forEach(function(b) {
-    b.classList.toggle('on', b === btn || (b.getAttribute('onclick') || '').indexOf("'" + cat + "'") !== -1);
-  });
-  document.querySelectorAll('#sidebarTags .sc-tag').forEach(function(t) {
-    t.classList.toggle('on', (t.getAttribute('onclick') || '').indexOf("'" + cat + "'") !== -1);
-  });
-  renderBlog();
-}
-
-/* ================================================================
-   READ POST
-================================================================ */
-function openPost(id) {
-  var p = null;
-  for (var i = 0; i < allPosts.length; i++) { if (allPosts[i].id === id) { p = allPosts[i]; break; } }
-  if (!p) return;
-
-  var label   = CAT_LABELS[p.cat] || p.cat;
-  var pageUrl = location.origin + location.pathname + '?post=' + encodeURIComponent(id);
-  shareData   = { title: p.title, url: pageUrl };
-
-  var html = '';
-  html += '<div class="post-cat">' + esc(label) + '</div>';
-  html += '<h1 class="post-title-h">' + esc(p.title) + '</h1>';
-  html += '<div class="post-meta-bar">';
-  html += '<span>&#x1F4C5; ' + esc(p.date || '') + '</span>';
-  html += '<span>&#x23F1; ' + esc(p.readTime || '5 min read') + '</span>';
-  html += '<span>&#x270D;&#xFE0F; James Mwangi</span></div>';
-  html += '<div class="post-body">' + (p.body || '') + '</div>';
-  html += '<div class="share-strip"><div class="share-label">Share this article</div><div class="share-btns">';
-  html += '<button class="sh sh-wa" onclick="doShare(\'wa\')">&#x1F4F2; WhatsApp</button>';
-  html += '<button class="sh sh-tw" onclick="doShare(\'tw\')">Twitter</button>';
-  html += '<button class="sh sh-li" onclick="doShare(\'li\')">LinkedIn</button>';
-  html += '<button class="sh sh-cp" onclick="doShare(\'cp\')">&#x1F4CB; Copy Link</button>';
-  html += '</div></div>';
-  html += '<div style="margin-top:3rem;padding-top:2rem;border-top:1px solid var(--border2)">';
-  html += '<div style="font-family:\'JetBrains Mono\',monospace;font-size:.62rem;color:var(--accent2);letter-spacing:.15em;text-transform:uppercase;margin-bottom:1.5rem">// Comments</div>';
-  html += '<div id="disqus_thread"></div></div>';
-
-  document.getElementById('postContent').innerHTML = html;
-  document.getElementById('blogIndex').style.display = 'none';
-  document.getElementById('postReader').classList.add('open');
-  window.scrollTo({ top: 0, behavior: 'smooth' });
-  history.pushState({ postId: id }, '', '?post=' + id);
-  loadDisqus(id, p.title, pageUrl);
-  renderRecent();
-}
-
-function closePost() {
-  document.getElementById('blogIndex').style.display = '';
-  document.getElementById('postReader').classList.remove('open');
-  window.scrollTo({ top: 0, behavior: 'smooth' });
-  history.pushState({}, '', location.pathname);
-  if (window.DISQUS) window.DISQUS.reset({ reload: false });
-}
-
-window.addEventListener('popstate', function(e) {
-  if (e.state && e.state.postId) openPost(e.state.postId);
-  else { document.getElementById('blogIndex').style.display = ''; document.getElementById('postReader').classList.remove('open'); }
 });
 
-function checkUrlPost() {
-  var id = new URLSearchParams(location.search).get('post');
-  if (id) openPost(id);
+/* ═══════════════════════════════════════════════════════════════
+   FILTER & SEARCH
+   ═══════════════════════════════════════════════════════════════ */
+function filterPosts(cat, btn){
+  currentCat = cat;
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  renderGrid(allPosts);
 }
 
-function doShare(type) {
-  var t = encodeURIComponent(shareData.title);
-  var u = encodeURIComponent(shareData.url);
-  if (type === 'wa') window.open('https://wa.me/?text=' + t + '%0A' + u, '_blank');
-  else if (type === 'tw') window.open('https://twitter.com/intent/tweet?text=' + t + '&url=' + u, '_blank');
-  else if (type === 'li') window.open('https://linkedin.com/sharing/share-offsite/?url=' + u, '_blank');
-  else if (type === 'cp') navigator.clipboard.writeText(shareData.url).then(function() { showToast('Link copied!'); });
+let searchTimer;
+function handleSearch(val){
+  clearTimeout(searchTimer);
+  searchTimer = setTimeout(() => {
+    searchQuery = val.toLowerCase().trim();
+    renderGrid(allPosts);
+  }, 280);
 }
 
-function loadDisqus(id, title, url) {
-  window.disqus_config = function() { this.page.url = url; this.page.identifier = 'post-' + id; this.page.title = title; };
-  if (window.DISQUS) { window.DISQUS.reset({ reload: true, config: window.disqus_config }); }
-  else { var s = document.createElement('script'); s.src = 'https://jamesmwangi.disqus.com/embed.js'; s.async = true; document.head.appendChild(s); }
-}
+/* ═══════════════════════════════════════════════════════════════
+   LIKES
+   ═══════════════════════════════════════════════════════════════ */
+function likedPosts(){ return JSON.parse(localStorage.getItem('jm_liked')||'[]'); }
+function saveLiked(arr){ localStorage.setItem('jm_liked', JSON.stringify(arr)); }
 
-/* ================================================================
-   THEME / NAV
-================================================================ */
-(function() {
-  if (localStorage.getItem('jm_theme') === 'light') {
-    document.documentElement.setAttribute('data-theme','light');
-    var b = document.getElementById('themeBtn'); if (b) b.textContent = '\u2600\uFE0F';
+async function handleLike(e, post){
+  const liked = likedPosts();
+  if(liked.includes(post.id)){
+    showToast('Already liked!', '');
+    return;
   }
-})();
-function toggleTheme() {
-  var html = document.documentElement, l = html.getAttribute('data-theme') === 'light';
-  html.setAttribute('data-theme', l ? 'dark' : 'light');
-  var b = document.getElementById('themeBtn'); if (b) b.textContent = l ? '\uD83C\uDF19' : '\u2600\uFE0F';
-  localStorage.setItem('jm_theme', l ? 'dark' : 'light');
-}
-window.addEventListener('scroll', function() { document.getElementById('mainNav').classList.toggle('stuck', window.scrollY > 60); }, { passive: true });
-function openMob()  { document.getElementById('mobNav').classList.add('open'); }
-function closeMob() { document.getElementById('mobNav').classList.remove('open'); }
-function toggleDropdown() {
-  var btn = document.getElementById('venturesBtn'), menu = document.getElementById('venturesMenu');
-  if (!btn || !menu) return;
-  var open = menu.classList.toggle('open'); btn.classList.toggle('open', open);
-}
-document.addEventListener('click', function(e) {
-  var btn = document.getElementById('venturesBtn'), menu = document.getElementById('venturesMenu');
-  if (btn && menu && !btn.contains(e.target) && !menu.contains(e.target)) { menu.classList.remove('open'); btn.classList.remove('open'); }
-});
-var revObs = new IntersectionObserver(function(entries) { entries.forEach(function(e) { if (e.isIntersecting) e.target.classList.add('in'); }); }, { threshold: 0.08 });
-document.querySelectorAll('.reveal').forEach(function(el) { revObs.observe(el); });
-function showToast(msg) {
-  var t = document.getElementById('toast'); if (!t) return;
-  t.textContent = msg; t.classList.add('show');
-  setTimeout(function() { t.classList.remove('show'); }, 3500);
+  liked.push(post.id);
+  saveLiked(liked);
+  post.likes = (post.likes||0)+1;
+
+  // Update in Supabase
+  await sb.from('posts').update({ likes: post.likes }).eq('id', post.id);
+
+  // Update UI button
+  const btn = e.target;
+  btn.classList.add('liked');
+  btn.innerHTML = `❤ ${post.likes}`;
+  showToast('Liked!', 'success');
 }
 
-/* ================================================================
+async function likePost(){
+  if(!currentPost) return;
+  await handleLike({ target: document.getElementById('likeBtn').querySelector('span')?.parentElement||{} }, currentPost);
+  document.getElementById('likesCount').textContent = currentPost.likes;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   VIEWS
+   ═══════════════════════════════════════════════════════════════ */
+async function incrementViews(postId){
+  try {
+    const viewed = JSON.parse(sessionStorage.getItem('jm_viewed')||'[]');
+    if(viewed.includes(postId)) return;
+    viewed.push(postId);
+    sessionStorage.setItem('jm_viewed', JSON.stringify(viewed));
+    const post = allPosts.find(p=>p.id===postId);
+    const newViews = (post?.views||0)+1;
+    await sb.from('posts').update({ views: newViews }).eq('id', postId);
+    document.getElementById('postViews').textContent = newViews + ' views';
+  } catch{}
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   SHARE
+   ═══════════════════════════════════════════════════════════════ */
+function sharePost(platform){
+  const url   = window.location.href;
+  const title = currentPost?.title || document.title;
+  if(platform==='twitter'){
+    window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent(title)}&url=${encodeURIComponent(url)}`,'_blank');
+  } else if(platform==='whatsapp'){
+    window.open(`https://wa.me/?text=${encodeURIComponent(title+' '+url)}`,'_blank');
+  } else if(platform==='copy'){
+    navigator.clipboard.writeText(url).then(()=>showToast('Link copied!','success'));
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   TABLE OF CONTENTS
+   ═══════════════════════════════════════════════════════════════ */
+function buildToC(){
+  const body    = document.getElementById('postBody');
+  const tocList = document.getElementById('tocList');
+  const headings = body.querySelectorAll('h2, h3');
+  if(!headings.length){ tocList.innerHTML='<span style="color:var(--text3);font-size:var(--text-xs);">No sections</span>'; return; }
+
+  tocList.innerHTML = Array.from(headings).map((h,i)=>{
+    const id = 'heading-'+i;
+    h.id = id;
+    return `<a class="toc-link ${h.tagName==='H3'?'h3':''}" onclick="scrollToHeading('${id}')">${h.textContent}</a>`;
+  }).join('');
+
+  // Highlight active heading
+  const hdObs = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      const link = tocList.querySelector(`[onclick*="${e.target.id}"]`);
+      if(link) link.classList.toggle('active', e.isIntersecting);
+    });
+  }, { rootMargin:'-20% 0px -70% 0px' });
+  headings.forEach(h => hdObs.observe(h));
+}
+
+function scrollToHeading(id){
+  const el = document.getElementById(id);
+  if(el) el.scrollIntoView({ behavior:'smooth', block:'start' });
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   COMMENTS
+   ═══════════════════════════════════════════════════════════════ */
+async function loadComments(postId){
+  const list = document.getElementById('commentsList');
+  list.innerHTML = '<div class="loading-state"><div class="spinner"></div></div>';
+
+  try {
+    const { data } = await sb
+      .from('comments')
+      .select('id, author_name, body, created_at')
+      .eq('post_id', postId)
+      .eq('approved', true)
+      .order('created_at', { ascending:true });
+
+    if(!data || !data.length){
+      list.innerHTML = `<div class="empty-state" style="padding:2rem;">
+        <div class="empty-icon">💬</div>
+        <div class="empty-sub">Be the first to comment!</div>
+      </div>`;
+      return;
+    }
+
+    list.innerHTML = data.map(c=>`
+      <div class="comment-card">
+        <div class="comment-header">
+          <div class="comment-avatar" aria-hidden="true">${(c.author_name||'?')[0].toUpperCase()}</div>
+          <div>
+            <div class="comment-author">${esc(c.author_name)}</div>
+            <div class="comment-date">${formatDate(c.created_at)}</div>
+          </div>
+        </div>
+        <p class="comment-body">${esc(c.body)}</p>
+      </div>`).join('');
+  } catch {
+    list.innerHTML = '';
+  }
+}
+
+async function submitComment(e){
+  e.preventDefault();
+  if(!currentPost) return;
+  const btn  = document.getElementById('cmtSubmitBtn');
+  const name = document.getElementById('cmtName').value.trim();
+  const email= document.getElementById('cmtEmail').value.trim();
+  const body = document.getElementById('cmtBody').value.trim();
+
+  if(!name || !body){ showToast('Name and comment are required.','error'); return; }
+
+  btn.disabled = true; btn.textContent = 'Posting…';
+
+  const { error } = await sb.from('comments').insert({
+    post_id: currentPost.id,
+    author_name: name,
+    author_email: email || null,
+    body,
+    approved: false
+  });
+
+  btn.disabled = false; btn.textContent = 'Post Comment';
+
+  if(error){
+    showToast('Failed to post comment.','error');
+  } else {
+    document.getElementById('commentForm').reset();
+    showToast('Comment submitted — pending moderation ✓','success');
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   CONTENT RENDERER (Markdown-lite → HTML)
+   ═══════════════════════════════════════════════════════════════ */
+function renderContent(md){
+  if(!md) return '<p style="color:var(--text3)">Content coming soon.</p>';
+  return md
+    .replace(/```(\w*)\n([\s\S]*?)```/g, (_,lang,code)=>
+      `<pre><code class="lang-${lang}">${esc(code.trim())}</code></pre>`)
+    .replace(/`([^`]+)`/g, '<code>$1</code>')
+    .replace(/^## (.+)$/gm,  '<h2>$1</h2>')
+    .replace(/^### (.+)$/gm, '<h3>$1</h3>')
+    .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
+    .replace(/\*(.+?)\*/g,     '<em>$1</em>')
+    .replace(/\[(.+?)\]\((.+?)\)/g, '<a href="$2" target="_blank" rel="noopener">$1</a>')
+    .replace(/^> (.+)$/gm, '<blockquote>$1</blockquote>')
+    .replace(/^- (.+)$/gm, '<li>$1</li>')
+    .replace(/(<li>[\s\S]+?<\/li>)/g, '<ul>$1</ul>')
+    .replace(/\n{2,}/g, '</p><p>')
+    .replace(/^(?!<[hupbco])/gm, '')
+    .replace(/<\/p><p>(<[hupbc])/g, '$1');
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   UTILITIES
+   ═══════════════════════════════════════════════════════════════ */
+function formatDate(iso){
+  if(!iso) return '';
+  return new Date(iso).toLocaleDateString('en-GB',{day:'numeric',month:'short',year:'numeric'});
+}
+function esc(s){
+  return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+/* ═══════════════════════════════════════════════════════════════
    INIT
-================================================================ */
-document.addEventListener('DOMContentLoaded', loadPosts);
+   ═══════════════════════════════════════════════════════════════ */
+loadPosts();
 </script>
 </body>
 </html>

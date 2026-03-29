@@ -1,22 +1,7 @@
 [
-  [
   {
     "id": "b1",
-    "title": "James is so much rich",
-    "cat": "dev",
-    "date": "March 2026",
-    "readTime": "3 min read",
-    "excerpt": "A short 1-2 sentence summary shown on the blog card.",
-    "body": "<h2>Introduction</h2><p>Your full post content here. Use HTML tags.</p>"
-    yjeyeheyeheyeheeeeheheheheheeheheh
-  },
-  ...existing posts below...
-]
-  
-  
-  {
-    "id": "b1",
-    "title": "Building a Production-Ready Online Pharmacy from Scratch.....this my story",
+    "title": "Building a Production-Ready Online Pharmacy from Scratch",
     "cat": "dev",
     "date": "December 2024",
     "readTime": "8 min read",
