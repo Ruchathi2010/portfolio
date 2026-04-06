@@ -2,7 +2,6 @@
 ## Cloudflare Pages + Supabase Stack
 
 ---
-
 ## 🗂 Files Delivered
 
 | File | Purpose |
