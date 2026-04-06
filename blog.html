@@ -652,6 +652,12 @@
     <div class="container post-hero-inner">
       <div class="post-hero-cat" id="postCat"></div>
       <h1 class="post-hero-title" id="postTitle"></h1>
+      <!-- Direct post URL — visible below title so users can copy & share the exact link -->
+      <div id="postDirectUrl" style="display:none;align-items:center;gap:.5rem;flex-wrap:wrap;margin-bottom:.85rem;">
+        <span style="font-family:var(--font-mono);font-size:var(--text-xs);opacity:.5">🔗 Share this post:</span>
+        <span id="postDirectUrlText" style="font-family:var(--font-mono);font-size:var(--text-xs);background:rgba(99,102,241,.12);border:1px solid rgba(99,102,241,.25);border-radius:5px;padding:.2rem .65rem;color:var(--accent2);word-break:break-all;"></span>
+        <button onclick="copyDirectUrl()" style="font-family:var(--font-mono);font-size:var(--text-xs);background:rgba(99,102,241,.15);border:1px solid rgba(99,102,241,.3);border-radius:5px;color:var(--accent2);padding:.2rem .7rem;cursor:pointer;transition:var(--t);" aria-label="Copy direct link to post">Copy</button>
+      </div>
       <div class="post-meta-row">
         <span id="postDate"></span>
         <span class="sep">·</span>
@@ -985,6 +991,18 @@ function showToast(msg, type = ''){
 /* [utilities moved to top of script — see below] */
 
 /* ══════════════════════════════════════════════════════════════
+   COPY DIRECT POST URL
+   Called by the URL strip below the post title hero.
+   ══════════════════════════════════════════════════════════════ */
+function copyDirectUrl(){
+  if(!currentPost) return;
+  const url = `https://jamesmainamwangi.com/blog.html?post=${encodeURIComponent(currentPost.slug)}`;
+  navigator.clipboard.writeText(url)
+    .then(()  => showToast('✅ Post link copied! Paste anywhere to share.', 'success'))
+    .catch(()  => showToast('Could not copy — select the URL above and copy manually.', 'error'));
+}
+
+/* ══════════════════════════════════════════════════════════════
    COPY CODE BLOCK
    ══════════════════════════════════════════════════════════════ */
 function copyCode(uid){
@@ -1092,10 +1110,18 @@ function renderGrid(posts){
   grid.innerHTML = filtered.map((p, i) => `
     <article class="blog-card ${p.featured?'featured':''} reveal"
              role="listitem" tabindex="0"
-             onclick="openPostById('${escHtml(p.id)}')"
-             onkeydown="if(event.key==='Enter')openPostById('${escHtml(p.id)}')"
              aria-label="Read: ${escHtml(p.title)}"
              style="transition-delay:${i*0.05}s">
+      <!--
+        Real <a> wrapping the entire card — two benefits:
+        1. Crawlable by Google/bots without JS
+        2. Right-click "Open in new tab" works for users
+        onclick intercepts to use SPA navigation (no full page reload)
+      -->
+      <a href="blog.html?post=${escHtml(p.slug)}"
+         onclick="event.preventDefault();openPostById('${escHtml(p.id)}')"
+         style="display:contents;color:inherit;text-decoration:none"
+         aria-label="Read: ${escHtml(p.title)}">
       ${p.cover_url ? `
         <div class="bc-cover-wrap">
           <img class="bc-cover lazy" data-src="${escHtml(p.cover_url)}"
@@ -1123,6 +1149,7 @@ function renderGrid(posts){
           </div>
         </div>
       </div>
+      </a><!-- /.card-link -->
     </article>`).join('');
 
   grid.querySelectorAll('img.lazy').forEach(img => imgObs.observe(img));
@@ -1178,8 +1205,19 @@ async function openPost(post){
 
   currentPost = post;
 
-  // pushState FIRST — so window.location.href is the post URL when OG tags are set
-  history.pushState({ postId: post.id }, '', '?post=' + post.slug);
+  // Canonical post URL — always slug-based, used everywhere below
+  const canonicalPostUrl = `https://jamesmainamwangi.com/blog.html?post=${encodeURIComponent(post.slug)}`;
+
+  // pushState — updates browser address bar to the post URL
+  history.pushState({ postId: post.id }, '', `?post=${encodeURIComponent(post.slug)}`);
+
+  // ── Show the direct URL strip below the post title ──────────
+  const urlStrip = document.getElementById('postDirectUrl');
+  const urlText  = document.getElementById('postDirectUrlText');
+  if(urlStrip && urlText){
+    urlText.textContent    = canonicalPostUrl;
+    urlStrip.style.display = 'flex';
+  }
 
   // ── RENDER MARKDOWN ──────────────────────────────────────────
   const body = document.getElementById('postBody');
@@ -1187,27 +1225,25 @@ async function openPost(post){
     ? marked.parse(post.content)
     : '<p style="color:var(--text3)">Content coming soon — check back shortly.</p>';
 
-  // ── Page title = post title only (no site name appended) ──
-  document.title = post.title || 'Blog Post';
-
-  // ── OG / Twitter meta: set per-post values so sharing sends the post,
-  //    not the homepage. URL is captured AFTER pushState above. ──
-  const postUrl  = window.location.href;   // now = blog.html?post=slug
+  // ── SEO meta: title + all OG/Twitter tags ───────────────────
+  const postUrl  = canonicalPostUrl;
   const postDesc = post.excerpt
     ? post.excerpt.slice(0, 160) + (post.excerpt.length > 160 ? '…' : '')
     : '';
   const postImg  = post.cover_url || '';
 
+  document.title = `${post.title} — James Maina Mwangi`;
+
   const setMeta = (id, val) => { const el = document.getElementById(id); if(el) el.setAttribute('content', val); };
   setMeta('ogTitle',  post.title);
   setMeta('ogDesc',   postDesc);
-  setMeta('ogUrl',    postUrl);
-  setMeta('ogImage',  postImg);
+  setMeta('ogUrl',    canonicalPostUrl);
+  setMeta('ogImage',  postImg || 'https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=1200&q=80');
   setMeta('ogType',   'article');
   setMeta('twTitle',  post.title);
   setMeta('twDesc',   postDesc);
-  setMeta('twImage',  postImg);
-  setMeta('twCard',   postImg ? 'summary_large_image' : 'summary');
+  setMeta('twImage',  postImg || 'https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=1200&q=80');
+  setMeta('twCard',   'summary_large_image');
 
   // Populate hero
   document.getElementById('postCat').textContent      = post.cat || '';
@@ -1257,17 +1293,23 @@ function showList(){
   document.getElementById('readProgress').style.display = 'none';
   document.getElementById('readProgress').style.width   = '0%';
 
-  // Restore title and OG tags to blog defaults when returning to the list
-  document.title = 'Technical Blog — James Mwangi';
+  // Hide the direct URL strip
+  const urlStrip = document.getElementById('postDirectUrl');
+  if(urlStrip) urlStrip.style.display = 'none';
+
+  // Restore title and OG tags to blog defaults
+  const DEFAULT_IMG = 'https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=1200&q=80';
+  document.title = 'Engineering Blog — James Maina Mwangi | Full-Stack & Cybersecurity';
   const setMeta = (id, val) => document.getElementById(id)?.setAttribute('content', val);
-  setMeta('ogTitle', 'Technical Blog — James Mwangi');
-  setMeta('ogDesc',  'Practical deep-dives on Full-Stack engineering, cybersecurity, and building for the African market.');
-  setMeta('ogUrl',   window.location.origin + window.location.pathname);
-  setMeta('ogImage', '');
-  setMeta('ogType',  'website');
-  setMeta('twTitle', 'Technical Blog — James Mwangi');
-  setMeta('twDesc',  'Practical engineering insights for African developers.');
-  setMeta('twImage', '');
+  setMeta('ogTitle',  'Engineering Blog — James Maina Mwangi');
+  setMeta('ogDesc',   '14+ years of engineering insights on Full-Stack development, cybersecurity, M-Pesa integrations, and scalable global architecture.');
+  setMeta('ogUrl',    'https://jamesmainamwangi.com/blog.html');
+  setMeta('ogImage',  DEFAULT_IMG);
+  setMeta('ogType',   'website');
+  setMeta('twTitle',  'Engineering Blog — James Maina Mwangi');
+  setMeta('twDesc',   '14+ years of engineering insights on Full-Stack development and cybersecurity.');
+  setMeta('twImage',  DEFAULT_IMG);
+  setMeta('twCard',   'summary_large_image');
   history.pushState({}, '', window.location.pathname);
 }
 
@@ -1418,7 +1460,7 @@ async function nativeShare(){
     text:  currentPost.excerpt
       ? currentPost.excerpt.slice(0, 140) + (currentPost.excerpt.length > 140 ? '…' : '')
       : '',
-    url:   window.location.href   // direct link: blog.html?post=my-slug
+    url:   `https://jamesmainamwangi.com/blog.html?post=${encodeURIComponent(currentPost.slug)}`
   };
 
   try {
@@ -1435,7 +1477,10 @@ async function nativeShare(){
 function sharePost(platform){
   if(!currentPost) return;
 
-  const postUrl  = window.location.href;   // direct post URL: blog.html?post=slug
+  // Always build the URL from the slug — never window.location.href —
+  // so the shared link always contains ?post=slug even if the user
+  // somehow lands on this page without pushState having fired.
+  const postUrl  = `https://jamesmainamwangi.com/blog.html?post=${encodeURIComponent(currentPost.slug)}`;
   const title    = currentPost.title || '';
   const excerpt  = currentPost.excerpt
     ? currentPost.excerpt.slice(0, 120) + (currentPost.excerpt.length > 120 ? '…' : '')
