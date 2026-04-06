@@ -1,6 +1,5 @@
 # James Mwangi Portfolio — jamesmainamwangi.com
 ## Cloudflare Pages + Supabase Stack
-
 ---
 ## 🗂 Files Delivered
 
