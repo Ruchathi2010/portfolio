@@ -5,364 +5,560 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Technical Blog — James Mwangi | Full-Stack & Cybersecurity</title>
 <meta name="description" content="Practical deep-dives on Full-Stack development, cybersecurity, M-Pesa integrations, and building for the African market.">
-<meta property="og:title" content="James Mwangi — Technical Blog">
-<meta property="og:description" content="Practical engineering insights for African developers.">
-<meta property="og:type" content="website">
-<meta name="robots" content="index, follow">
+<!--
+  ═══════════════════════════════════════════════════════════════
+  STATIC OG/TWITTER META TAGS
+  ───────────────────────────────────────────────────────────────
+  WHY THESE HAVE REAL VALUES (not empty strings):
+  Social media crawlers (Facebook, X, LinkedIn, WhatsApp) are
+  HTTP-only scrapers — they never execute JavaScript. These tags
+  MUST have valid content baked into the HTML before any JS runs.
+
+  For per-post values, deploy og-worker.js as a Cloudflare Worker
+  or Pages Function — it rewrites these tags server-side per slug.
+  ═══════════════════════════════════════════════════════════════
+-->
+<meta property="og:title"       id="ogTitle"
+      content="Engineering Blog — James Maina Mwangi | Full-Stack & Cybersecurity">
+<meta property="og:description" id="ogDesc"
+      content="14+ years of engineering insights on Full-Stack development, cybersecurity, M-Pesa integrations, and scalable global architecture by James Maina Mwangi, BBIT (JKUAT).">
+<meta property="og:type"        id="ogType"   content="website">
+<meta property="og:url"         id="ogUrl"    content="https://jamesmainamwangi.com/blog.html">
+<meta property="og:image"       id="ogImage"
+      content="https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=1200&q=80">
+<meta property="og:image:width"               content="1200">
+<meta property="og:image:height"              content="630">
+<meta property="og:image:alt"   id="ogImageAlt"
+      content="James Maina Mwangi — Full-Stack Developer & Cybersecurity Specialist">
+<meta property="og:site_name"                 content="James Maina Mwangi — Engineering Blog">
+<meta property="og:locale"                    content="en_GB">
+
+<!-- Twitter / X Card — summary_large_image forces the big thumbnail row -->
+<meta name="twitter:card"        id="twCard"  content="summary_large_image">
+<meta name="twitter:title"       id="twTitle"
+      content="Engineering Blog — James Maina Mwangi">
+<meta name="twitter:description" id="twDesc"
+      content="14+ years of engineering insights on Full-Stack development and cybersecurity.">
+<meta name="twitter:image"       id="twImage"
+      content="https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=1200&q=80">
+<meta name="twitter:image:alt"   id="twImageAlt"
+      content="James Maina Mwangi — Full-Stack Developer & Cybersecurity Specialist">
+<meta name="twitter:site"                     content="@JamesMwangi">
+<meta name="twitter:creator"                  content="@JamesMwangi">
+<meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large">
+
+<!-- Favicon -->
+<link rel="icon"             href="favicon.png" type="image/png">
+<link rel="shortcut icon"    href="favicon.png" type="image/png">
+<link rel="apple-touch-icon" href="favicon.png">
+
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;0,9..40,800;0,9..40,900;1,9..40,400&family=DM+Mono:wght@400;500;600&family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,600;0,9..144,700;0,9..144,900;1,9..144,400&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
 
+<!-- marked.js — full Markdown renderer (GFM, tables, images, links) -->
+<script src="https://cdn.jsdelivr.net/npm/marked@12.0.0/marked.min.js"></script>
+
+<!-- highlight.js — syntax highlighting for code blocks -->
+<link  rel="stylesheet" id="hlThemeLink"
+       href="https://cdn.jsdelivr.net/npm/highlight.js@11.9.0/styles/github-dark.min.css">
+<script src="https://cdn.jsdelivr.net/npm/highlight.js@11.9.0/highlight.min.js"></script>
+
 <style>
 /* ═══════════════════════════════════════════════════════════════
-   BLOG-SPECIFIC STYLES
+   BLOG PAGE — LOCAL STYLES  (globals live in style.css)
    ═══════════════════════════════════════════════════════════════ */
 
-/* ── Blog Hero ─────────────────────────────────────────────────── */
+/* ── Hero ──────────────────────────────────────────────────────── */
 .blog-hero {
   padding: clamp(6rem,14vw,10rem) 0 clamp(3rem,6vw,5rem);
-  position: relative; overflow: hidden;
+  position:relative; overflow:hidden;
 }
 .blog-hero::before {
   content:''; position:absolute; inset:0; pointer-events:none;
-  background: radial-gradient(ellipse 60% 50% at 80% 30%, rgba(99,102,241,0.12) 0%, transparent 70%);
+  background: radial-gradient(ellipse 60% 50% at 80% 30%,rgba(99,102,241,.12) 0%,transparent 70%);
 }
 .blog-hero-inner { position:relative; z-index:1; }
 .blog-hero h1 {
-  font-family: var(--font-display);
-  font-size: var(--text-5xl); font-weight:900;
-  letter-spacing:-0.04em; line-height:1.0;
-  margin-bottom:1rem;
+  font-family:var(--font-display); font-size:var(--text-5xl);
+  font-weight:900; letter-spacing:-.04em; line-height:1.0; margin-bottom:1rem;
 }
-.blog-hero h1 em {
-  font-style:italic; color:var(--accent);
-}
-.blog-hero p {
-  font-size:var(--text-lg); color:var(--text2);
-  max-width:520px; line-height:1.7;
-}
+.blog-hero h1 em { font-style:italic; color:var(--accent); }
+.blog-hero p { font-size:var(--text-lg); color:var(--text2); max-width:520px; line-height:1.7; }
 
-/* ── Filter Bar ────────────────────────────────────────────────── */
+/* ── Filter + Search bar ───────────────────────────────────────── */
 .filter-bar {
-  display:flex; align-items:center; gap:0.5rem;
-  flex-wrap:wrap; margin-bottom: clamp(2rem,4vw,3rem);
-  padding-bottom: 1.5rem;
-  border-bottom: 1px solid var(--border);
+  display:flex; align-items:center; gap:.5rem; flex-wrap:wrap;
+  margin-bottom:clamp(2rem,4vw,3rem);
+  padding-bottom:1.5rem; border-bottom:1px solid var(--border);
 }
 .filter-btn {
-  font-family: var(--font-mono); font-size:var(--text-xs);
-  letter-spacing:0.08em; text-transform:uppercase;
-  padding:0.4rem 1rem; border-radius:100px;
+  font-family:var(--font-mono); font-size:var(--text-xs); letter-spacing:.08em;
+  text-transform:uppercase; padding:.4rem 1rem; border-radius:100px;
   border:1px solid var(--border2); color:var(--text3);
   background:transparent; cursor:pointer; transition:var(--t);
 }
 .filter-btn:hover { border-color:var(--accent2); color:var(--accent2); }
-.filter-btn.active {
-  background:var(--accent); border-color:var(--accent);
-  color:#fff;
-}
-.search-wrap {
-  margin-left:auto;
-  position:relative;
-}
+.filter-btn.active { background:var(--accent); border-color:var(--accent); color:#fff; }
+.search-wrap { margin-left:auto; position:relative; }
 .search-wrap input {
-  background:var(--bg2); border:1px solid var(--border2);
-  color:var(--text); border-radius:100px;
-  padding:0.45rem 1rem 0.45rem 2.5rem;
+  background:var(--bg2); border:1px solid var(--border2); color:var(--text);
+  border-radius:100px; padding:.45rem 1rem .45rem 2.5rem;
   font-size:var(--text-sm); font-family:var(--font-body);
   width:clamp(160px,20vw,240px); outline:none;
-  transition:border-color 0.2s, width 0.3s;
+  transition:border-color .2s,width .3s;
 }
-.search-wrap input:focus {
-  border-color:var(--accent); width:clamp(200px,26vw,300px);
-}
-.search-icon {
-  position:absolute; left:0.85rem; top:50%;
-  transform:translateY(-50%); color:var(--text3);
-  font-size:0.85rem; pointer-events:none;
-}
+.search-wrap input:focus { border-color:var(--accent); width:clamp(200px,26vw,300px); }
+.search-icon { position:absolute; left:.85rem; top:50%; transform:translateY(-50%); color:var(--text3); font-size:.85rem; pointer-events:none; }
 
-/* ── Masonry Grid ──────────────────────────────────────────────── */
-.masonry {
-  columns: 3; column-gap: 1.5rem;
-  /* JS fallback — pure CSS masonry via columns */
-}
-.masonry .blog-card { break-inside: avoid; margin-bottom:1.5rem; }
+/* ── Masonry grid (CSS columns) ────────────────────────────────── */
+.masonry { columns:3; column-gap:1.5rem; }
+.masonry .blog-card { break-inside:avoid; margin-bottom:1.5rem; }
 
-/* ── Blog Card ─────────────────────────────────────────────────── */
+/* ── Blog card ─────────────────────────────────────────────────── */
 .blog-card {
-  background: var(--bg2); border:1px solid var(--border);
-  border-radius: var(--r2); overflow:hidden;
-  transition: var(--t); display:flex; flex-direction:column;
-  cursor:pointer;
+  background:var(--bg2); border:1px solid var(--border); border-radius:var(--r2);
+  overflow:hidden; transition:var(--t); display:flex; flex-direction:column; cursor:pointer;
 }
-.blog-card:hover {
-  border-color:rgba(99,102,241,0.35);
-  transform:translateY(-4px); box-shadow:var(--shadow2);
-}
-.blog-card:focus-within {
-  outline:2px solid var(--accent); outline-offset:3px;
-}
-.bc-cover {
-  width:100%; aspect-ratio:16/9; object-fit:cover;
-  display:block; transition:transform 0.5s;
-}
-.blog-card:hover .bc-cover { transform:scale(1.04); }
+.blog-card:hover { border-color:rgba(99,102,241,.35); transform:translateY(-4px); box-shadow:var(--shadow2); }
+.blog-card:focus-visible { outline:2px solid var(--accent); outline-offset:3px; }
 .bc-cover-wrap { overflow:hidden; }
+.bc-cover { width:100%; aspect-ratio:16/9; object-fit:cover; display:block; transition:transform .5s; }
+.blog-card:hover .bc-cover { transform:scale(1.05); }
 .bc-body { padding:1.5rem; flex:1; display:flex; flex-direction:column; }
-.bc-cat {
-  font-family:var(--font-mono); font-size:var(--text-xs);
-  color:var(--accent2); letter-spacing:0.12em; text-transform:uppercase;
-  margin-bottom:0.5rem;
-}
-.bc-title {
-  font-family:var(--font-display); font-size:var(--text-xl);
-  font-weight:700; line-height:1.25; margin-bottom:0.65rem;
-  color:var(--text); transition:color 0.2s;
-}
+.bc-cat { font-family:var(--font-mono); font-size:var(--text-xs); color:var(--accent2); letter-spacing:.12em; text-transform:uppercase; margin-bottom:.5rem; }
+.bc-title { font-family:var(--font-display); font-size:var(--text-xl); font-weight:700; line-height:1.25; margin-bottom:.65rem; color:var(--text); transition:color .2s; }
 .blog-card:hover .bc-title { color:var(--accent2); }
-.bc-excerpt {
-  font-size:var(--text-sm); color:var(--text2);
-  line-height:1.7; flex:1; margin-bottom:1.1rem;
-}
-.bc-tags { display:flex; flex-wrap:wrap; gap:0.4rem; margin-bottom:1rem; }
-.bc-tag {
-  font-family:var(--font-mono); font-size:var(--text-xs);
-  padding:0.18rem 0.55rem; border-radius:5px;
-  background:rgba(99,102,241,0.1); color:var(--accent2);
-  border:1px solid rgba(99,102,241,0.15);
-}
-.bc-meta {
-  display:flex; justify-content:space-between; align-items:center;
-  padding-top:1rem; border-top:1px solid var(--border);
-  margin-top:auto;
-}
-.bc-date {
-  font-family:var(--font-mono); font-size:var(--text-xs); color:var(--text3);
-}
-.bc-read {
-  font-size:var(--text-xs); font-weight:600; color:var(--accent2);
-  display:flex; align-items:center; gap:0.35rem;
-}
+.bc-excerpt { font-size:var(--text-sm); color:var(--text2); line-height:1.7; flex:1; margin-bottom:1.1rem; }
+.bc-tags { display:flex; flex-wrap:wrap; gap:.4rem; margin-bottom:1rem; }
+.bc-tag { font-family:var(--font-mono); font-size:var(--text-xs); padding:.18rem .55rem; border-radius:5px; background:rgba(99,102,241,.1); color:var(--accent2); border:1px solid rgba(99,102,241,.15); }
+.bc-meta { display:flex; justify-content:space-between; align-items:center; padding-top:1rem; border-top:1px solid var(--border); margin-top:auto; }
+.bc-date { font-family:var(--font-mono); font-size:var(--text-xs); color:var(--text3); }
+.bc-read { font-size:var(--text-xs); font-weight:600; color:var(--accent2); display:flex; align-items:center; gap:.35rem; }
 .bc-likes {
-  display:flex; align-items:center; gap:0.3rem;
+  display:inline-flex; align-items:center; gap:.32rem;
   font-family:var(--font-mono); font-size:var(--text-xs); color:var(--text3);
-  cursor:pointer; transition:color 0.2s;
+  cursor:pointer; transition:color .2s; background:none; border:none; padding:0;
 }
-.bc-likes:hover { color:var(--rose); }
-.bc-likes.liked { color:var(--rose); }
+.bc-likes:hover, .bc-likes.liked { color:var(--rose); }
+.blog-card.featured { border-color:rgba(99,102,241,.25); background:linear-gradient(135deg,var(--bg2),rgba(99,102,241,.05)); }
+.feat-badge { display:inline-flex; align-items:center; gap:.4rem; font-family:var(--font-mono); font-size:var(--text-xs); padding:.25rem .7rem; border-radius:100px; background:rgba(99,102,241,.15); color:var(--accent2); border:1px solid rgba(99,102,241,.2); margin-bottom:.7rem; }
 
-/* Featured card */
-.blog-card.featured {
-  border-color:rgba(99,102,241,0.25);
-  background:linear-gradient(135deg, var(--bg2) 0%, rgba(99,102,241,0.05) 100%);
-}
-.feat-badge {
-  display:inline-flex; align-items:center; gap:0.4rem;
-  font-family:var(--font-mono); font-size:var(--text-xs);
-  padding:0.25rem 0.7rem; border-radius:100px;
-  background:rgba(99,102,241,0.15); color:var(--accent2);
-  border:1px solid rgba(99,102,241,0.2); margin-bottom:0.7rem;
-}
+/* ── Empty state ───────────────────────────────────────────────── */
+.empty-state { text-align:center; padding:5rem 2rem; color:var(--text3); }
+.empty-icon { font-size:3rem; margin-bottom:1rem; }
+.empty-title { font-size:var(--text-xl); font-weight:700; color:var(--text2); margin-bottom:.5rem; }
+.empty-sub { font-size:var(--text-sm); }
 
-/* ── Single Post Layout ────────────────────────────────────────── */
+/* ══════════════════════════════════════════════════════════════════
+   SINGLE POST VIEW
+   ══════════════════════════════════════════════════════════════════ */
 #postView { display:none; }
-.post-hero {
-  padding: clamp(5.5rem,12vw,9rem) 0 clamp(2rem,5vw,4rem);
-  position:relative; overflow:hidden;
-}
-.post-hero-bg {
-  position:absolute; inset:0;
-  background:linear-gradient(to bottom, rgba(15,23,42,0) 0%, var(--bg) 100%);
-  z-index:1;
-}
-.post-hero-cover {
-  position:absolute; inset:0;
-  width:100%; height:100%; object-fit:cover; opacity:0.15;
-}
-.post-hero-inner { position:relative; z-index:2; max-width:800px; }
-.post-hero-cat {
-  font-family:var(--font-mono); font-size:var(--text-xs);
-  color:var(--accent2); letter-spacing:0.15em; text-transform:uppercase;
-  margin-bottom:1rem;
-}
-.post-hero-title {
-  font-family: var(--font-display);
-  font-size: clamp(2rem,5.5vw,3.75rem);
-  font-weight:900; letter-spacing:-0.04em; line-height:1.05;
-  margin-bottom:1.25rem;
-}
-.post-meta-row {
-  display:flex; align-items:center; gap:1.25rem; flex-wrap:wrap;
-  font-family:var(--font-mono); font-size:var(--text-xs); color:var(--text3);
-}
-.post-meta-row .dot { color:var(--border2); }
-.post-share-bar {
-  display:flex; align-items:center; gap:0.65rem; margin-top:1.5rem;
-}
-.share-btn {
-  display:flex; align-items:center; gap:0.4rem;
-  font-size:var(--text-xs); font-weight:600;
-  padding:0.42rem 0.9rem; border-radius:7px;
-  border:1px solid var(--border2); color:var(--text2);
-  background:transparent; cursor:pointer; transition:var(--t);
-}
-.share-btn:hover { border-color:var(--accent); color:var(--accent2); }
-.share-btn.tw:hover { border-color:#1d9bf0; color:#1d9bf0; }
-.share-btn.wa:hover { border-color:#25d366; color:#25d366; }
-.share-btn.cp:hover { border-color:var(--green); color:var(--green); }
 
-/* Post content typography */
+/* Post hero */
+.post-hero { padding:clamp(5.5rem,12vw,9rem) 0 clamp(2rem,5vw,3.5rem); position:relative; overflow:hidden; }
+.post-hero-cover { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; opacity:.15; }
+.post-hero-fade  { position:absolute; inset:0; background:linear-gradient(to bottom,rgba(15,23,42,0) 0%,var(--bg) 100%); z-index:1; }
+.post-hero-inner { position:relative; z-index:2; max-width:840px; }
+.post-hero-cat   { font-family:var(--font-mono); font-size:var(--text-xs); color:var(--accent2); letter-spacing:.15em; text-transform:uppercase; margin-bottom:1rem; }
+.post-hero-title {
+  font-family:var(--font-display);
+  font-size:clamp(1.9rem,5.5vw,3.6rem); font-weight:900;
+  letter-spacing:-.04em; line-height:1.05; margin-bottom:1.25rem;
+}
+.post-meta-row { display:flex; align-items:center; gap:1.1rem; flex-wrap:wrap; font-family:var(--font-mono); font-size:var(--text-xs); color:var(--text3); margin-bottom:1.75rem; }
+.post-meta-row .sep { color:var(--border2); }
+
+/* ── Action bar (share + like) ─────────────────────────────────── */
+.post-action-bar {
+  display:flex; align-items:center; gap:.6rem; flex-wrap:wrap;
+  padding:1rem 1.25rem;
+  background:var(--glass); backdrop-filter:blur(16px); -webkit-backdrop-filter:blur(16px);
+  border:1px solid var(--glass-border); border-radius:var(--r2);
+  margin-bottom:2.75rem;
+}
+.bar-label { font-family:var(--font-mono); font-size:var(--text-xs); color:var(--text3); flex-shrink:0; }
+.action-btn {
+  display:inline-flex; align-items:center; gap:.4rem;
+  font-size:var(--text-xs); font-weight:600; padding:.45rem 1rem; border-radius:8px;
+  border:1px solid var(--border2); color:var(--text2);
+  background:transparent; cursor:pointer; transition:var(--t); font-family:var(--font-body);
+}
+.action-btn:hover               { border-color:var(--accent);  color:var(--accent2);  transform:translateY(-1px); }
+.action-btn.wa:hover            { border-color:#25d366; color:#25d366; }
+.action-btn.tw:hover            { border-color:#1d9bf0; color:#1d9bf0; }
+.action-btn.fb:hover            { border-color:#1877f2; color:#1877f2; }
+.action-btn.li:hover            { border-color:#0a66c2; color:#0a66c2; }
+.action-btn.cp:hover            { border-color:var(--green); color:var(--green); }
+.like-action-btn {
+  display:inline-flex; align-items:center; gap:.45rem;
+  font-size:var(--text-sm); font-weight:700; padding:.5rem 1.15rem; border-radius:8px;
+  border:1px solid rgba(244,63,94,.3); color:var(--text2);
+  background:transparent; cursor:pointer; transition:var(--t); font-family:var(--font-body);
+  margin-left:auto;
+}
+.like-action-btn:hover,
+.like-action-btn.liked { border-color:var(--rose); color:var(--rose); background:rgba(244,63,94,.07); }
+.like-action-btn .heart { font-size:1rem; transition:transform .25s; display:inline-block; }
+.like-action-btn:hover .heart,
+.like-action-btn.liked  .heart { transform:scale(1.3); }
+
+/* ── Post layout: content + sidebar ───────────────────────────── */
 .post-layout {
   display:grid;
-  grid-template-columns:1fr clamp(60px,200px,220px);
-  gap:clamp(2rem,5vw,4rem);
-  align-items:start;
+  grid-template-columns:1fr clamp(175px,210px,230px);
+  gap:clamp(2rem,5vw,4rem); align-items:start;
   padding-bottom:var(--space-2xl);
 }
-.post-content {
-  max-width:780px;
-  font-size:clamp(1rem,2vw,1.1rem);
-  line-height:1.85; color:var(--text2);
-}
-.post-content h2, .post-content h3 {
-  font-family:var(--font-display); color:var(--text);
-  margin:2rem 0 0.85rem;
-}
-.post-content h2 { font-size:var(--text-3xl); font-weight:800; }
-.post-content h3 { font-size:var(--text-2xl); font-weight:700; }
-.post-content p { margin-bottom:1.25rem; }
-.post-content strong { color:var(--text); font-weight:600; }
-.post-content a { color:var(--accent2); text-decoration:underline; text-underline-offset:3px; }
-.post-content code {
-  font-family:var(--font-mono); font-size:0.85em;
-  background:var(--bg3); border:1px solid var(--border2);
-  padding:0.15em 0.45em; border-radius:5px; color:var(--accent3);
-}
-.post-content pre {
-  background:var(--bg2); border:1px solid var(--border2);
-  border-radius:var(--r2); padding:1.5rem; overflow-x:auto;
-  margin:1.5rem 0;
-}
-.post-content pre code {
-  background:none; border:none; padding:0; font-size:var(--text-sm);
-  color:var(--text2);
-}
-.post-content ul, .post-content ol {
-  list-style:revert; padding-left:1.5rem; margin-bottom:1.25rem;
-}
-.post-content li { margin-bottom:0.5rem; }
-.post-content blockquote {
-  border-left:3px solid var(--accent); padding:1rem 1.25rem;
-  background:rgba(99,102,241,0.06); border-radius:0 var(--r) var(--r) 0;
-  margin:1.5rem 0; font-style:italic; color:var(--text);
-}
-.post-content img {
-  border-radius:var(--r2); border:1px solid var(--border2);
-  margin:1.5rem 0; width:100%;
-}
-
-/* Post sidebar (sticky ToC / actions) */
-.post-sidebar {
-  position:sticky; top:calc(80px + 1.5rem);
-  display:flex; flex-direction:column; gap:1.5rem;
-}
-.toc-card {
-  background:var(--bg2); border:1px solid var(--border);
-  border-radius:var(--r2); padding:1.25rem;
-}
-.toc-title {
-  font-family:var(--font-mono); font-size:var(--text-xs);
-  color:var(--accent2); text-transform:uppercase;
-  letter-spacing:0.12em; margin-bottom:0.85rem;
-}
-.toc-list { display:flex; flex-direction:column; gap:0.5rem; }
-.toc-link {
-  font-size:var(--text-xs); color:var(--text3);
-  transition:color 0.2s; cursor:pointer; line-height:1.4;
-}
-.toc-link:hover, .toc-link.active { color:var(--accent2); }
-.toc-link.h3 { padding-left:0.8rem; font-size:calc(var(--text-xs) - 0.05rem); }
-
-.sidebar-actions { display:flex; flex-direction:column; gap:0.5rem; }
-.sidebar-btn {
-  display:flex; align-items:center; gap:0.5rem;
-  font-size:var(--text-xs); font-weight:600; color:var(--text2);
-  background:var(--bg2); border:1px solid var(--border2);
-  border-radius:var(--r); padding:0.6rem 0.9rem; cursor:pointer;
-  transition:var(--t);
-}
-.sidebar-btn:hover { border-color:var(--accent); color:var(--accent2); }
-
-/* Comments section */
-.comments-section { padding:var(--space-xl) 0; border-top:1px solid var(--border); }
-.comments-title {
-  font-family:var(--font-display); font-size:var(--text-3xl); font-weight:800;
-  margin-bottom:2rem;
-}
-.comment-card {
-  background:var(--bg2); border:1px solid var(--border);
-  border-radius:var(--r2); padding:1.5rem;
-  margin-bottom:1rem;
-}
-.comment-header {
-  display:flex; align-items:center; gap:0.75rem; margin-bottom:0.75rem;
-}
-.comment-avatar {
-  width:36px; height:36px; border-radius:50%;
-  background:linear-gradient(135deg,var(--accent),var(--accent2));
-  display:flex; align-items:center; justify-content:center;
-  font-weight:700; font-size:0.85rem; color:#fff; flex-shrink:0;
-}
-.comment-author { font-weight:600; font-size:var(--text-sm); }
-.comment-date { font-family:var(--font-mono); font-size:var(--text-xs); color:var(--text3); }
-.comment-body { font-size:var(--text-sm); color:var(--text2); line-height:1.7; }
-
-/* ── Empty / Error States ──────────────────────────────────────── */
-.empty-state {
-  text-align:center; padding:5rem 2rem;
-  color:var(--text3);
-}
-.empty-icon { font-size:3rem; margin-bottom:1rem; }
-.empty-title { font-size:var(--text-xl); font-weight:700; color:var(--text2); margin-bottom:0.5rem; }
-.empty-sub { font-size:var(--text-sm); }
 
 /* ── Back button ───────────────────────────────────────────────── */
 .back-btn {
-  display:inline-flex; align-items:center; gap:0.5rem;
+  display:inline-flex; align-items:center; gap:.5rem;
   font-size:var(--text-sm); font-weight:600; color:var(--text2);
-  cursor:pointer; transition:color 0.2s; background:none; border:none;
-  font-family:var(--font-body);
-  margin-bottom:1.5rem;
+  cursor:pointer; transition:color .2s; background:none; border:none;
+  font-family:var(--font-body); margin-bottom:1.5rem;
 }
 .back-btn:hover { color:var(--accent2); }
 
+/* ══════════════════════════════════════════════════════════════════
+   MARKDOWN CONTENT TYPOGRAPHY
+   Styles everything that marked.js outputs inside .post-content
+   ══════════════════════════════════════════════════════════════════ */
+.post-content {
+  font-size:clamp(.97rem,1.8vw,1.08rem);
+  line-height:1.92; color:var(--text2); word-break:break-word;
+}
+
+/* — Heading hierarchy — */
+.post-content h1 {
+  font-family:var(--font-display); color:var(--text);
+  font-size:clamp(1.7rem,4vw,2.4rem); font-weight:900;
+  letter-spacing:-.035em; line-height:1.1;
+  margin:3rem 0 1.1rem; padding-bottom:.65rem;
+  border-bottom:2px solid var(--border2);
+}
+.post-content h2 {
+  font-family:var(--font-display); color:var(--text);
+  font-size:clamp(1.35rem,3vw,1.85rem); font-weight:800;
+  letter-spacing:-.025em; line-height:1.15;
+  margin:2.5rem 0 .9rem; padding-top:.25rem;
+}
+.post-content h2::before {
+  content:'# '; color:var(--accent); font-family:var(--font-mono);
+  font-size:.72em; font-weight:600; opacity:.65;
+}
+.post-content h3 {
+  font-family:var(--font-display); color:var(--text);
+  font-size:clamp(1.05rem,2.2vw,1.35rem); font-weight:700;
+  letter-spacing:-.02em; margin:2rem 0 .7rem;
+}
+.post-content h3::before {
+  content:'## '; color:var(--accent2); font-family:var(--font-mono);
+  font-size:.68em; font-weight:600; opacity:.55;
+}
+.post-content h4 {
+  font-size:1.05rem; font-weight:700; color:var(--text); margin:1.5rem 0 .5rem;
+}
+
+/* — Paragraphs — */
+.post-content p { margin-bottom:1.35rem; }
+
+/* — Emphasis — */
+.post-content strong { color:var(--text); font-weight:700; }
+.post-content em     { color:var(--accent3); font-style:italic; }
+.post-content del    { color:var(--text3); text-decoration:line-through; }
+
+/* — Links — */
+.post-content a {
+  color:var(--accent2); text-decoration:underline;
+  text-underline-offset:3px; text-decoration-thickness:1px; transition:color .2s;
+}
+.post-content a:hover { color:var(--accent3); }
+
+/* — Inline code — */
+.post-content :not(pre) > code {
+  font-family:var(--font-mono); font-size:.84em;
+  background:rgba(99,102,241,.1); border:1px solid rgba(99,102,241,.2);
+  padding:.15em .45em; border-radius:5px; color:var(--accent3);
+}
+
+/* — Code blocks (highlight.js) — */
+.post-content pre {
+  background:var(--bg2); border:1px solid var(--border2); border-radius:var(--r2);
+  margin:1.85rem 0; overflow:hidden; box-shadow:var(--shadow2);
+}
+.code-header {
+  display:flex; justify-content:space-between; align-items:center;
+  padding:.6rem 1rem; border-bottom:1px solid var(--border2);
+  background:rgba(255,255,255,.03);
+}
+.lang-label { font-family:var(--font-mono); font-size:var(--text-xs); color:var(--accent2); text-transform:uppercase; letter-spacing:.1em; }
+.copy-btn {
+  font-family:var(--font-mono); font-size:var(--text-xs); color:var(--text3);
+  background:none; border:1px solid var(--border2); border-radius:5px;
+  padding:.2rem .65rem; cursor:pointer; transition:var(--t);
+}
+.copy-btn:hover { border-color:var(--accent2); color:var(--accent2); }
+.post-content pre code {
+  display:block; padding:1.25rem 1.5rem; overflow-x:auto;
+  background:none !important; border:none; border-radius:0;
+  font-size:var(--text-sm); line-height:1.75; color:var(--text2);
+}
+
+/* — Images — properly padded, rounded, centered — */
+.post-content img {
+  display:block; max-width:100%; height:auto;
+  border-radius:var(--r2); border:1px solid var(--border2);
+  margin:2.25rem auto; box-shadow:var(--shadow2);
+  transition:transform .35s;
+}
+.post-content img:hover { transform:scale(1.015); cursor:zoom-in; }
+
+/* — Blockquotes — */
+.post-content blockquote {
+  position:relative; border-left:3px solid var(--accent);
+  padding:1.1rem 1.5rem 1.1rem 2rem; margin:1.85rem 0;
+  background:rgba(99,102,241,.06); border-radius:0 var(--r) var(--r) 0;
+  font-style:italic; color:var(--text);
+}
+.post-content blockquote::before {
+  content:'"'; position:absolute; top:-.5rem; left:.6rem;
+  font-size:3.5rem; color:var(--accent); opacity:.25;
+  font-family:var(--font-display); line-height:1; pointer-events:none;
+}
+.post-content blockquote p { margin-bottom:0; }
+
+/* — Lists — */
+.post-content ul, .post-content ol { padding-left:1.6rem; margin-bottom:1.35rem; }
+.post-content li { margin-bottom:.55rem; line-height:1.78; }
+.post-content ul > li::marker { color:var(--accent); }
+.post-content ol > li::marker { color:var(--accent2); font-family:var(--font-mono); font-size:.88em; }
+.post-content li > ul, .post-content li > ol { margin-top:.35rem; margin-bottom:.35rem; }
+
+/* — Tables — */
+.post-content table { width:100%; border-collapse:collapse; margin:1.85rem 0; border-radius:var(--r); overflow:hidden; font-size:var(--text-sm); }
+.post-content thead th { background:var(--bg3); color:var(--text); font-weight:700; padding:.75rem 1rem; text-align:left; border-bottom:2px solid var(--border2); }
+.post-content tbody td { padding:.65rem 1rem; border-bottom:1px solid var(--border); color:var(--text2); }
+.post-content tbody tr:last-child td { border-bottom:none; }
+.post-content tbody tr:nth-child(even) td { background:rgba(255,255,255,.02); }
+
+/* — Horizontal rule — */
+.post-content hr { border:none; border-top:1px solid var(--border2); margin:2.25rem 0; }
+
+/* ── Post sidebar ──────────────────────────────────────────────── */
+.post-sidebar { position:sticky; top:calc(80px + 1.5rem); display:flex; flex-direction:column; gap:1.25rem; }
+.toc-card { background:var(--bg2); border:1px solid var(--border); border-radius:var(--r2); padding:1.25rem; }
+.toc-card-title { font-family:var(--font-mono); font-size:var(--text-xs); color:var(--accent2); text-transform:uppercase; letter-spacing:.12em; margin-bottom:.9rem; }
+.toc-list { display:flex; flex-direction:column; gap:.45rem; max-height:60vh; overflow-y:auto; padding-right:.25rem; }
+.toc-list::-webkit-scrollbar { width:3px; }
+.toc-list::-webkit-scrollbar-thumb { background:var(--bg4); border-radius:2px; }
+.toc-link { font-size:var(--text-xs); color:var(--text3); transition:color .2s; cursor:pointer; line-height:1.4; text-decoration:none; display:block; }
+.toc-link:hover, .toc-link.active { color:var(--accent2); }
+.toc-link.h3 { padding-left:.75rem; }
+.toc-link.h4 { padding-left:1.4rem; font-size:calc(var(--text-xs) - .06rem); }
+.sidebar-like-btn {
+  display:flex; align-items:center; justify-content:center; gap:.5rem;
+  width:100%; padding:.72rem; border-radius:var(--r);
+  font-size:var(--text-sm); font-weight:700;
+  border:1px solid rgba(244,63,94,.3); color:var(--text2);
+  background:transparent; cursor:pointer; transition:var(--t); font-family:var(--font-body);
+}
+.sidebar-like-btn:hover, .sidebar-like-btn.liked { border-color:var(--rose); color:var(--rose); background:rgba(244,63,94,.07); }
+
+/* ══════════════════════════════════════════════════════════════════
+   CUSTOM SECURE COMMENT SYSTEM
+   ══════════════════════════════════════════════════════════════════ */
+.comments-section {
+  padding: var(--space-xl) 0;
+  border-top: 1px solid var(--border);
+  max-width: 840px;
+}
+.comments-heading {
+  font-family: var(--font-display);
+  font-size: var(--text-3xl); font-weight: 800;
+  margin-bottom: 0.35rem; display: inline-flex; align-items: center; gap: 0.5rem;
+}
+.comments-subhead {
+  font-family: var(--font-mono); font-size: var(--text-xs);
+  color: var(--text3); margin-bottom: 2.5rem;
+}
+.comments-count {
+  display: inline-flex; align-items: center; gap: 0.3rem;
+  background: rgba(99,102,241,.12); border: 1px solid rgba(99,102,241,.2);
+  border-radius: 100px; padding: 0.18rem 0.65rem;
+  font-family: var(--font-mono); font-size: var(--text-xs); color: var(--accent2);
+  margin-left: 0.5rem; vertical-align: middle;
+}
+
+/* ── Form wrapper ───────────────────────────────────────────────── */
+.comment-form-wrap {
+  background: var(--glass);
+  backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--r2); padding: 1.75rem; margin-bottom: 2.5rem;
+}
+.comment-form-title { font-size: var(--text-lg); font-weight: 700; margin-bottom: 0.25rem; }
+.comment-form-note  {
+  font-family: var(--font-mono); font-size: var(--text-xs);
+  color: var(--text3); margin-bottom: 1.5rem;
+}
+.comment-fields {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1rem;
+}
+.comment-field            { display: flex; flex-direction: column; gap: 0.3rem; }
+.comment-field.full       { grid-column: 1 / -1; }
+.comment-field label {
+  font-family: var(--font-mono); font-size: var(--text-xs);
+  color: var(--text2); text-transform: uppercase; letter-spacing: 0.07em; font-weight: 600;
+}
+.comment-field input,
+.comment-field textarea {
+  background: var(--bg3); border: 1px solid var(--border2);
+  color: var(--text); border-radius: var(--r);
+  padding: 0.75rem 1rem; font-size: var(--text-sm); font-family: var(--font-body);
+  outline: none; transition: border-color 0.2s, box-shadow 0.2s; width: 100%;
+}
+.comment-field input:focus,
+.comment-field textarea:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(99,102,241,0.14);
+}
+.comment-field textarea { height: 110px; resize: vertical; }
+.char-counter {
+  font-family: var(--font-mono); font-size: var(--text-xs);
+  color: var(--text3); text-align: right; transition: color 0.2s;
+}
+.char-counter.warn { color: var(--amber); }
+.char-counter.over { color: var(--rose);  }
+.comment-submit-row {
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 1rem; flex-wrap: wrap; margin-top: 1rem;
+}
+.comment-privacy {
+  display: flex; align-items: center; gap: 0.4rem;
+  font-family: var(--font-mono); font-size: var(--text-xs); color: var(--text3);
+}
+.btn-comment-submit {
+  display: inline-flex; align-items: center; gap: 0.5rem;
+  background: var(--accent); color: #fff;
+  font-size: var(--text-sm); font-weight: 700; border: none;
+  border-radius: var(--r); padding: 0.75rem 1.6rem;
+  cursor: pointer; font-family: var(--font-body); transition: var(--t);
+}
+.btn-comment-submit:hover:not(:disabled) {
+  background: var(--accent2); transform: translateY(-1px); box-shadow: var(--shadow-glow);
+}
+.btn-comment-submit:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
+.btn-spinner-sm {
+  width: 14px; height: 14px;
+  border: 2px solid rgba(255,255,255,0.35); border-top-color: #fff;
+  border-radius: 50%; animation: spin 0.6s linear infinite; display: none;
+}
+.btn-comment-submit.loading .btn-label  { display: none; }
+.btn-comment-submit.loading .btn-spinner-sm { display: block; }
+
+/* Success banner */
+.comment-success {
+  display: none; align-items: center; gap: 0.75rem;
+  background: rgba(34,211,165,.08); border: 1px solid rgba(34,211,165,.22);
+  border-radius: var(--r); padding: 0.9rem 1.2rem; margin-top: 1rem;
+  font-size: var(--text-sm); color: var(--green);
+}
+.comment-success.show { display: flex; }
+
+/* Field validation */
+@keyframes fieldShake {
+  0%,100% { transform:translateX(0); }
+  25%,75% { transform:translateX(-5px); }
+  50%     { transform:translateX(5px); }
+}
+.field-invalid { border-color: var(--rose) !important; animation: fieldShake 0.35s ease; }
+.field-error-msg {
+  font-family: var(--font-mono); font-size: var(--text-xs);
+  color: var(--rose); margin-top: 0.2rem;
+}
+
+/* ── Comment cards ──────────────────────────────────────────────── */
+.comments-list { display: flex; flex-direction: column; gap: 1rem; }
+.comment-card {
+  background: var(--bg2); border: 1px solid var(--border);
+  border-radius: var(--r2); padding: 1.35rem 1.5rem;
+  transition: border-color 0.2s;
+  animation: cmtFadeIn 0.4s ease both;
+}
+.comment-card:hover { border-color: var(--border2); }
+@keyframes cmtFadeIn {
+  from { opacity:0; transform:translateY(10px); }
+  to   { opacity:1; transform:none; }
+}
+.comment-header {
+  display: flex; align-items: center; gap: 0.75rem; margin-bottom: 0.85rem;
+}
+.comment-avatar {
+  width: 38px; height: 38px; border-radius: 50%; flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center;
+  font-weight: 800; font-size: 0.88rem; color: #fff;
+}
+.comment-meta  { display: flex; flex-direction: column; }
+.comment-name  { font-size: var(--text-sm); font-weight: 700; color: var(--text); line-height: 1.2; }
+.comment-date  { font-family: var(--font-mono); font-size: var(--text-xs); color: var(--text3); margin-top: 0.1rem; }
+.comment-body  {
+  font-size: var(--text-sm); color: var(--text2);
+  line-height: 1.78; white-space: pre-wrap; word-break: break-word;
+}
+
+/* Loading / empty states */
+.comments-loading {
+  display: flex; align-items: center; justify-content: center; gap: 0.75rem;
+  padding: 2.5rem; color: var(--text3);
+  font-size: var(--text-sm); font-family: var(--font-mono);
+}
+.comments-empty {
+  text-align: center; padding: 3rem 1.5rem;
+  background: var(--bg2); border: 1px dashed var(--border2); border-radius: var(--r2);
+}
+.comments-empty .ei { font-size: 2.25rem; margin-bottom: 0.75rem; }
+.comments-empty p   { font-size: var(--text-sm); color: var(--text3); }
+
+@media(max-width:520px){
+  .comment-fields { grid-template-columns: 1fr; }
+  .comment-submit-row { flex-direction: column; align-items: flex-start; }
+  .btn-comment-submit { width: 100%; justify-content: center; }
+}
+
 /* ── Responsive ────────────────────────────────────────────────── */
-@media(max-width:1024px) {
+@media(max-width:1024px){
   .masonry { columns:2; }
   .post-layout { grid-template-columns:1fr; }
   .post-sidebar { position:static; flex-direction:row; flex-wrap:wrap; }
-  .toc-card { flex:1; min-width:200px; }
+  .toc-card { flex:1; min-width:180px; }
 }
-@media(max-width:640px) {
+@media(max-width:640px){
   .masonry { columns:1; }
-  .filter-bar { gap:0.4rem; }
+  .filter-bar { gap:.4rem; }
   .search-wrap { margin-left:0; width:100%; }
   .search-wrap input { width:100%; }
-  .post-meta-row { gap:0.65rem; }
+  .post-action-bar { gap:.4rem; }
+  .like-action-btn { margin-left:0; width:100%; justify-content:center; }
+  .post-hero-title { font-size:clamp(1.6rem,8vw,2.4rem); }
 }
+
+/* highlight.js light override */
+[data-theme="light"] .post-content pre { background:#f6f8fa; border-color:#e2e8f0; }
+[data-theme="light"] .code-header { background:rgba(0,0,0,.03); border-color:#e2e8f0; }
 </style>
 </head>
 <body>
 
 <!-- Skip link -->
-<a href="#main" class="skip-link">Skip to content</a>
+<a href="#main" class="skip-link">Skip to main content</a>
 
 <!-- Reading progress bar -->
-<div class="read-progress" id="readProgress" role="progressbar" aria-label="Reading progress" aria-valuenow="0"></div>
+<div class="read-progress" id="readProgress" role="progressbar"
+     aria-label="Reading progress" aria-valuenow="0" style="display:none"></div>
 
 <!-- Mobile nav -->
-<div class="mob-nav" id="mobNav" role="dialog" aria-label="Navigation menu">
+<div class="mob-nav" id="mobNav" role="dialog" aria-modal="true" aria-label="Navigation">
   <button class="mob-close" onclick="closeMob()" aria-label="Close menu">✕</button>
   <a href="index.html">Home</a>
   <a href="index.html#about">About</a>
@@ -397,18 +593,17 @@
     <div class="nav-right">
       <button class="theme-toggle" id="themeBtn" onclick="toggleTheme()" aria-label="Toggle colour theme">🌙</button>
       <a href="index.html#contact" class="nav-cta">Hire Me</a>
-      <button class="hamburger" onclick="openMob()" aria-label="Open navigation menu" aria-expanded="false">
+      <button class="hamburger" onclick="openMob()" aria-label="Open menu">
         <span></span><span></span><span></span>
       </button>
     </div>
   </div>
 </nav>
 
-<!-- ═══════════ LIST VIEW ═══════════ -->
+<!-- ══════════════ LIST VIEW ══════════════ -->
 <main id="main">
 <div id="listView">
 
-  <!-- Hero -->
   <header class="blog-hero">
     <div class="container blog-hero-inner">
       <div class="label">Technical insights</div>
@@ -418,20 +613,19 @@
   </header>
 
   <div class="container">
-    <!-- Filter bar -->
     <div class="filter-bar" role="toolbar" aria-label="Filter posts by category">
-      <button class="filter-btn active" data-cat="all" onclick="filterPosts('all',this)">All</button>
-      <button class="filter-btn" data-cat="Cybersecurity" onclick="filterPosts('Cybersecurity',this)">Cybersecurity</button>
-      <button class="filter-btn" data-cat="FullStack" onclick="filterPosts('FullStack',this)">Full-Stack</button>
-      <button class="filter-btn" data-cat="DevTools" onclick="filterPosts('DevTools',this)">DevTools</button>
-      <button class="filter-btn" data-cat="AgriTech" onclick="filterPosts('AgriTech',this)">AgriTech</button>
+      <button class="filter-btn active" onclick="filterPosts('all',this)">All</button>
+      <button class="filter-btn" onclick="filterPosts('Cybersecurity',this)">Cybersecurity</button>
+      <button class="filter-btn" onclick="filterPosts('FullStack',this)">Full-Stack</button>
+      <button class="filter-btn" onclick="filterPosts('DevTools',this)">DevTools</button>
+      <button class="filter-btn" onclick="filterPosts('AgriTech',this)">AgriTech</button>
       <div class="search-wrap">
         <span class="search-icon" aria-hidden="true">🔍</span>
-        <input type="search" id="searchInput" placeholder="Search posts…" aria-label="Search blog posts" oninput="handleSearch(this.value)">
+        <input type="search" id="searchInput" placeholder="Search posts…"
+               aria-label="Search blog posts" oninput="handleSearch(this.value)">
       </div>
     </div>
 
-    <!-- Masonry grid -->
     <div class="masonry" id="postGrid" role="list" aria-live="polite" aria-busy="true">
       <div class="loading-state" aria-label="Loading posts">
         <div class="spinner"></div>
@@ -442,7 +636,7 @@
 
 </div><!-- /#listView -->
 
-<!-- ═══════════ SINGLE POST VIEW ═══════════ -->
+<!-- ══════════════ SINGLE POST VIEW ══════════════ -->
 <div id="postView">
 
   <div class="container" style="padding-top:5rem">
@@ -451,273 +645,435 @@
     </button>
   </div>
 
-  <!-- Post hero -->
+  <!-- Hero -->
   <div class="post-hero" id="postHero">
     <img id="postCoverBg" class="post-hero-cover" src="" alt="" aria-hidden="true" loading="lazy">
-    <div class="post-hero-bg"></div>
+    <div class="post-hero-fade"></div>
     <div class="container post-hero-inner">
       <div class="post-hero-cat" id="postCat"></div>
       <h1 class="post-hero-title" id="postTitle"></h1>
       <div class="post-meta-row">
         <span id="postDate"></span>
-        <span class="dot">·</span>
+        <span class="sep">·</span>
         <span id="postReadTime"></span>
-        <span class="dot">·</span>
+        <span class="sep">·</span>
         <span id="postViews">0 views</span>
       </div>
-      <div class="post-share-bar" role="group" aria-label="Share this post">
-        <button class="share-btn tw" onclick="sharePost('twitter')" aria-label="Share on Twitter">
-          𝕏 Twitter
+
+      <!-- ── ACTION BAR: Share this post + Like ── -->
+      <div class="post-action-bar" role="group" aria-label="Share and like">
+        <span class="bar-label">Share this post:</span>
+
+        <!-- Native Web Share API (Android, iOS, modern desktop) -->
+        <!-- Shows the OS share sheet with title + excerpt + URL -->
+        <button class="action-btn" id="nativeShareBtn"
+                onclick="nativeShare()"
+                style="display:none"
+                title="Share this post"
+                aria-label="Share this post">
+          📤 Share Post
         </button>
-        <button class="share-btn wa" onclick="sharePost('whatsapp')" aria-label="Share on WhatsApp">
-          💬 WhatsApp
-        </button>
-        <button class="share-btn cp" onclick="sharePost('copy')" aria-label="Copy link">
-          🔗 Copy Link
+
+        <!-- Desktop / fallback: platform-specific buttons -->
+        <div id="manualShareBtns" style="display:flex;gap:.5rem;flex-wrap:wrap;">
+
+          <!-- WhatsApp: sends *Post Title* + excerpt + direct link -->
+          <button class="action-btn wa"
+                  onclick="sharePost('whatsapp')"
+                  title="Send to WhatsApp — shares the post title, excerpt and direct link"
+                  aria-label="Share on WhatsApp">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+            WhatsApp
+          </button>
+
+          <!-- X/Twitter: tweet the post title + link (OG image loads automatically) -->
+          <button class="action-btn tw"
+                  onclick="sharePost('twitter')"
+                  title="Tweet this post"
+                  aria-label="Share on X / Twitter">
+            𝕏 Tweet
+          </button>
+
+          <!-- Facebook: URL only — FB reads OG tags for title + image preview -->
+          <button class="action-btn fb"
+                  onclick="sharePost('facebook')"
+                  title="Share on Facebook — Facebook will show the post title and cover image"
+                  aria-label="Share on Facebook">
+            f Facebook
+          </button>
+
+          <!-- LinkedIn: URL only — LinkedIn reads OG tags -->
+          <button class="action-btn li"
+                  onclick="sharePost('linkedin')"
+                  title="Share on LinkedIn"
+                  aria-label="Share on LinkedIn">
+            in LinkedIn
+          </button>
+
+          <!-- Copy the direct post URL -->
+          <button class="action-btn cp"
+                  onclick="sharePost('copy')"
+                  title="Copy direct link to this post"
+                  aria-label="Copy link to post">
+            🔗 Copy Link
+          </button>
+        </div>
+
+        <!-- Like counter -->
+        <button class="like-action-btn" id="likeActionBtn"
+                onclick="likePost()" aria-label="Like this post">
+          <span class="heart" aria-hidden="true">❤</span>
+          <span id="likeActionCount">0</span> Likes
         </button>
       </div>
     </div>
   </div>
 
-  <!-- Post body -->
+  <!-- Post content -->
   <div class="container">
     <div class="post-layout">
+
+      <!-- Rendered Markdown -->
       <article class="post-content" id="postBody" aria-label="Post content"></article>
+
+      <!-- Sidebar -->
       <aside class="post-sidebar" aria-label="Post sidebar">
         <div class="toc-card">
-          <div class="toc-title">// Contents</div>
+          <div class="toc-card-title">// Contents</div>
           <nav class="toc-list" id="tocList" aria-label="Table of contents"></nav>
         </div>
-        <div class="sidebar-actions">
-          <button class="sidebar-btn" id="likeBtn" onclick="likePost()" aria-label="Like this post">
-            ❤️ <span id="likesCount">0</span> Likes
-          </button>
-          <a href="https://wa.me/254711618115?text=Just read: " id="waShareBtn" target="_blank" rel="noopener" class="sidebar-btn" aria-label="Share on WhatsApp">
-            📲 Share via WhatsApp
-          </a>
-        </div>
+        <button class="sidebar-like-btn" id="sidebarLikeBtn"
+                onclick="likePost()" aria-label="Like this post">
+          ❤ <span id="sidebarLikeCount">0</span> Likes
+        </button>
       </aside>
+
     </div>
 
-    <!-- Comments -->
-    <section class="comments-section" id="commentsSection" aria-label="Comments">
-      <h2 class="comments-title">Discussion</h2>
+    <!-- ══ CUSTOM COMMENT SYSTEM ══════════════════════════════════ -->
+    <section class="comments-section" id="commentsSection"
+             style="display:none" aria-label="Post comments">
 
-      <!-- Comment form -->
-      <div class="glass-card" style="padding:1.75rem;margin-bottom:2rem;background:var(--bg2);border-radius:var(--r2);border:1px solid var(--border2);">
-        <div class="label">Leave a comment</div>
-        <form id="commentForm" onsubmit="submitComment(event)" novalidate>
-          <div class="form-row" style="margin-bottom:1rem;">
-            <div class="form-group" style="margin-bottom:0">
+      <h2 class="comments-heading">
+        Discussion
+        <span class="comments-count" id="commentsCount" aria-live="polite">0</span>
+      </h2>
+      <p class="comments-subhead">// All comments are reviewed before appearing</p>
+
+      <!-- Submission form -->
+      <div class="comment-form-wrap">
+        <div class="comment-form-title">Leave a comment</div>
+        <p class="comment-form-note">// Your comment will appear after moderation. Max 1000 characters.</p>
+        <form id="commentForm" onsubmit="submitComment(event)" novalidate autocomplete="off">
+          <div class="comment-fields">
+            <div class="comment-field full">
               <label for="cmtName">Name *</label>
-              <input id="cmtName" type="text" placeholder="Your name" required autocomplete="name">
+              <input id="cmtName" type="text" placeholder="Your name"
+                     maxlength="60" required autocomplete="name" spellcheck="false">
             </div>
-            <div class="form-group" style="margin-bottom:0">
-              <label for="cmtEmail">Email</label>
-              <input id="cmtEmail" type="email" placeholder="you@email.com (private)" autocomplete="email">
+            <div class="comment-field full">
+              <label for="cmtBody">Comment * <span class="char-counter" id="charCounter">0 / 1000</span></label>
+              <textarea id="cmtBody" placeholder="Share your thoughts, questions, or corrections…"
+                        maxlength="1000" required rows="4"
+                        oninput="updateCharCount(this)"></textarea>
             </div>
           </div>
-          <div class="form-group">
-            <label for="cmtBody">Comment *</label>
-            <textarea id="cmtBody" rows="4" placeholder="Share your thoughts, questions, or corrections…" required></textarea>
+          <div class="comment-submit-row">
+            <span class="comment-privacy">🔒 Stored securely · never sold · no tracking</span>
+            <button type="submit" class="btn-comment-submit" id="cmtSubmitBtn" aria-label="Post comment">
+              <span class="btn-label">Post Comment</span>
+              <div class="btn-spinner-sm" aria-hidden="true"></div>
+            </button>
           </div>
-          <button type="submit" class="btn btn-primary" id="cmtSubmitBtn" style="margin-top:0.75rem;">Post Comment</button>
-          <p style="font-size:var(--text-xs);color:var(--text3);margin-top:0.6rem;">Comments are held for moderation before appearing.</p>
+          <div class="comment-success" id="cmtSuccess" role="status">
+            <span>✅</span>
+            <span>Comment submitted — it will appear once approved. Thank you!</span>
+          </div>
         </form>
       </div>
 
-      <!-- Loaded comments -->
-      <div id="commentsList"></div>
+      <!-- Approved comments list -->
+      <div id="commentsList">
+        <div class="comments-loading" id="commentsLoading" aria-label="Loading comments">
+          <div class="spinner" style="width:20px;height:20px"></div>
+          Loading comments…
+        </div>
+      </div>
+
     </section>
+
   </div>
-
 </div><!-- /#postView -->
-
 </main>
 
-<!-- Footer -->
 <footer class="footer">
   <div class="container">
-    <div class="footer-bottom" style="border-top:none;padding-top:0;">
+    <div class="footer-bottom" style="border-top:none;padding-top:0">
       <div class="footer-copy">© 2025 James Mwangi. All rights reserved.</div>
-      <div style="font-family:var(--font-mono);font-size:var(--text-xs);color:var(--text3);">
-        Powered by Supabase + Cloudflare Pages
+      <div style="font-family:var(--font-mono);font-size:var(--text-xs);color:var(--text3)">
+        Powered by Supabase · Cloudflare Pages
       </div>
     </div>
   </div>
 </footer>
 
-<a href="https://wa.me/254711618115" target="_blank" rel="noopener" class="wa-fab" aria-label="Chat with James on WhatsApp">
+<a href="https://wa.me/254711618115" target="_blank" rel="noopener" class="wa-fab" aria-label="Chat on WhatsApp">
   <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
 </a>
 
 <div class="toast" id="toast" role="alert" aria-live="assertive"></div>
 
-<!-- ═══════════ SUPABASE CDN ═══════════ -->
+<!-- ═══════════════ EXTERNAL SCRIPTS ═══════════════ -->
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
 
 <script>
+'use strict';
+
 /* ══════════════════════════════════════════════════════════════
-   CONFIG — Replace with your actual Supabase project details
-   Found in: Supabase Dashboard → Settings → API
+   UTILITIES  — defined FIRST so they are available everywhere,
+   including inside the marked.js renderer setup below.
+   ══════════════════════════════════════════════════════════════ */
+function escHtml(s){
+  return String(s || '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+function formatDate(iso){
+  return iso ? new Date(iso).toLocaleDateString('en-GB',{ day:'numeric', month:'long', year:'numeric' }) : '';
+}
+function likedSet(){ return new Set(JSON.parse(localStorage.getItem('jm_liked') || '[]')); }
+function addLiked(id){ const s = likedSet(); s.add(id); localStorage.setItem('jm_liked', JSON.stringify([...s])); }
+function removeLiked(id){ const s = likedSet(); s.delete(id); localStorage.setItem('jm_liked', JSON.stringify([...s])); }
+
+/* ══════════════════════════════════════════════════════════════
+   SUPABASE
    ══════════════════════════════════════════════════════════════ */
 const SUPABASE_URL  = 'https://abgmvftptdkrztfflxbn.supabase.co';
 const SUPABASE_ANON = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImFiZ212ZnRwdGRrcnp0ZmZseGJuIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQwODY2ODgsImV4cCI6MjA4OTY2MjY4OH0.WstNFP-z1BnaVE-LuDHx1qU-4H342t2DaU7Lud_Vvi4';
 const sb = supabase.createClient(SUPABASE_URL, SUPABASE_ANON);
 
-/* ══ State ══════════════════════════════════════════════════════ */
-let allPosts    = [];
-let currentPost = null;
-let currentCat  = 'all';
-let searchQuery = '';
+/* ══════════════════════════════════════════════════════════════
+   COMMENT SYSTEM CONFIG
+   ══════════════════════════════════════════════════════════════ */
+const MAX_COMMENT_CHARS = 1000;  // enforced client + DB (check constraint)
 
-/* ══ Theme ══════════════════════════════════════════════════════ */
-(function(){
+/* ══════════════════════════════════════════════════════════════
+   MARKED.JS — configure with custom renderer
+   Supports: # headings, **bold**, *italic*, [links](url),
+             ![images](url), ```code```, > blockquotes,
+             - lists, | tables |, --- hr, ~~strikethrough~~
+   ══════════════════════════════════════════════════════════════ */
+const renderer = new marked.Renderer();
+
+/* Code blocks — add header bar with language label + copy button */
+renderer.code = function(token) {
+  // marked v12 passes a token object
+  const code     = typeof token === 'object' ? token.text : token;
+  const langRaw  = typeof token === 'object' ? (token.lang || '') : '';
+  const lang     = langRaw.toLowerCase().trim();
+  const validLang = hljs.getLanguage(lang) ? lang : 'plaintext';
+  const highlighted = hljs.highlight(code, { language: validLang }).value;
+  const uid = 'cb' + Math.random().toString(36).slice(2,8);
+  return [
+    '<pre>',
+    '<div class="code-header">',
+    `<span class="lang-label">${escHtml(validLang)}</span>`,
+    `<button class="copy-btn" onclick="copyCode('${uid}')" aria-label="Copy code">Copy</button>`,
+    '</div>',
+    `<code id="${uid}" class="hljs language-${escHtml(validLang)}">${highlighted}</code>`,
+    '</pre>'
+  ].join('');
+};
+
+/* Images — lazy-loaded, with alt and optional title */
+renderer.image = function(token) {
+  const href  = typeof token === 'object' ? token.href  : token;
+  const title = typeof token === 'object' ? token.title : '';
+  const text  = typeof token === 'object' ? token.text  : '';
+  const titleAttr = title ? ` title="${escHtml(title)}"` : '';
+  return `<img src="${escHtml(href)}" alt="${escHtml(text)}"${titleAttr} loading="lazy" decoding="async">`;
+};
+
+/* Links — external links open in new tab */
+renderer.link = function(token) {
+  const href  = typeof token === 'object' ? token.href  : token;
+  const title = typeof token === 'object' ? token.title : '';
+  const text  = typeof token === 'object' ? token.text  : '';
+  const isExt = href && (href.startsWith('http') || href.startsWith('//'));
+  const titleAttr = title ? ` title="${escHtml(title)}"` : '';
+  const external  = isExt ? ' target="_blank" rel="noopener noreferrer"' : '';
+  return `<a href="${escHtml(href)}"${titleAttr}${external}>${text}</a>`;
+};
+
+marked.use({
+  renderer,
+  breaks:   true,
+  gfm:      true,
+  pedantic: false
+});
+
+/* ══════════════════════════════════════════════════════════════
+   STATE
+   ══════════════════════════════════════════════════════════════ */
+let allPosts     = [];
+let currentPost  = null;
+let currentCat   = 'all';
+let searchQuery  = '';
+let commentsPostId = null;  // tracks which post's comments are loaded
+
+/* ══════════════════════════════════════════════════════════════
+   THEME (dark / light + highlight.js stylesheet swap)
+   ══════════════════════════════════════════════════════════════ */
+(function initTheme(){
   const saved = localStorage.getItem('jm_theme');
   if(saved === 'light'){
     document.documentElement.setAttribute('data-theme','light');
-    document.getElementById('themeBtn').textContent = '☀️';
+    const btn = document.getElementById('themeBtn');
+    if(btn) btn.textContent = '☀️';
+    setHlTheme('light');
   }
 })();
+
 function toggleTheme(){
-  const html = document.documentElement;
+  const html    = document.documentElement;
   const isLight = html.getAttribute('data-theme') === 'light';
   html.setAttribute('data-theme', isLight ? 'dark' : 'light');
   document.getElementById('themeBtn').textContent = isLight ? '🌙' : '☀️';
   localStorage.setItem('jm_theme', isLight ? 'dark' : 'light');
+  setHlTheme(isLight ? 'dark' : 'light');
 }
 
-/* ══ Nav ════════════════════════════════════════════════════════ */
-window.addEventListener('scroll', () => {
-  document.getElementById('mainNav')?.classList.toggle('stuck', scrollY > 60);
-}, { passive:true });
-function openMob(){ document.getElementById('mobNav').classList.add('open'); }
-function closeMob(){ document.getElementById('mobNav').classList.remove('open'); }
+function setHlTheme(theme){
+  const link = document.getElementById('hlThemeLink');
+  if(!link) return;
+  link.href = theme === 'light'
+    ? 'https://cdn.jsdelivr.net/npm/highlight.js@11.9.0/styles/github.min.css'
+    : 'https://cdn.jsdelivr.net/npm/highlight.js@11.9.0/styles/github-dark.min.css';
+}
 
-/* ══ Reading progress bar (single post only) ══════════════════ */
+/* ══════════════════════════════════════════════════════════════
+   NAV
+   ══════════════════════════════════════════════════════════════ */
 window.addEventListener('scroll', () => {
-  if(!document.getElementById('postView').style.display
-     || document.getElementById('postView').style.display === 'none') return;
-  const scrollTop  = window.scrollY;
-  const docHeight  = document.documentElement.scrollHeight - window.innerHeight;
-  const pct = docHeight > 0 ? Math.round((scrollTop / docHeight) * 100) : 0;
-  const bar = document.getElementById('readProgress');
+  document.getElementById('mainNav')?.classList.toggle('stuck', window.scrollY > 60);
+}, { passive:true });
+function openMob(){ document.getElementById('mobNav')?.classList.add('open'); }
+function closeMob(){ document.getElementById('mobNav')?.classList.remove('open'); }
+
+/* ══════════════════════════════════════════════════════════════
+   READING PROGRESS BAR (single-post view only)
+   ══════════════════════════════════════════════════════════════ */
+window.addEventListener('scroll', () => {
+  const postView = document.getElementById('postView');
+  if(!postView || postView.style.display === 'none') return;
+  const total = document.documentElement.scrollHeight - window.innerHeight;
+  const pct   = total > 0 ? Math.round((window.scrollY / total) * 100) : 0;
+  const bar   = document.getElementById('readProgress');
+  if(!bar) return;
   bar.style.width = pct + '%';
   bar.setAttribute('aria-valuenow', pct);
 }, { passive:true });
 
-/* ══ Toast ══════════════════════════════════════════════════════ */
-function showToast(msg, type=''){
+/* ══════════════════════════════════════════════════════════════
+   TOAST
+   ══════════════════════════════════════════════════════════════ */
+function showToast(msg, type = ''){
   const t = document.getElementById('toast');
   t.textContent = msg;
-  t.className = 'toast show' + (type ? ' '+type : '');
+  t.className   = 'toast show' + (type ? ' ' + type : '');
   setTimeout(() => t.classList.remove('show'), 3500);
 }
 
-/* ══ Lazy-load images ═══════════════════════════════════════════ */
-const imgObs = new IntersectionObserver((entries) => {
+/* [utilities moved to top of script — see below] */
+
+/* ══════════════════════════════════════════════════════════════
+   COPY CODE BLOCK
+   ══════════════════════════════════════════════════════════════ */
+function copyCode(uid){
+  const el  = document.getElementById(uid);
+  if(!el) return;
+  const btn = el.closest('pre')?.querySelector('.copy-btn');
+  navigator.clipboard.writeText(el.textContent).then(() => {
+    if(btn){ btn.textContent = 'Copied ✓'; setTimeout(() => btn.textContent = 'Copy', 2000); }
+    showToast('Code copied!', 'success');
+  }).catch(() => showToast('Could not copy.', 'error'));
+}
+
+/* ══════════════════════════════════════════════════════════════
+   SCROLL REVEAL + LAZY-LOAD
+   ══════════════════════════════════════════════════════════════ */
+const revObs = new IntersectionObserver(entries => {
+  entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('in'); });
+}, { threshold: 0.08 });
+
+const imgObs = new IntersectionObserver(entries => {
   entries.forEach(e => {
     if(e.isIntersecting){
       const img = e.target;
-      if(img.dataset.src){ img.src = img.dataset.src; }
+      if(img.dataset.src) img.src = img.dataset.src;
       img.classList.add('loaded');
       imgObs.unobserve(img);
     }
   });
-}, { rootMargin:'200px' });
+}, { rootMargin: '200px' });
 
-function lazyLoad(el){
-  el.classList.add('lazy');
-  imgObs.observe(el);
-}
-
-/* ══ Scroll reveal ══════════════════════════════════════════════ */
-const revObs = new IntersectionObserver(entries => {
-  entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('in'); });
-}, { threshold:0.08 });
-
-/* ═══════════════════════════════════════════════════════════════
-   FETCH POSTS FROM SUPABASE
-   ═══════════════════════════════════════════════════════════════ */
+/* ══════════════════════════════════════════════════════════════
+   LOAD POSTS FROM SUPABASE
+   ══════════════════════════════════════════════════════════════ */
 async function loadPosts(){
-  const grid = document.getElementById('postGrid');
   try {
+    // Query the 'posts' table — .neq('published', false) shows
+    // published=TRUE and published=NULL, only hides published=FALSE
     const { data, error } = await sb
       .from('posts')
-      .select('id, slug, title, excerpt, cat, tags, cover_url, read_time, likes, views, published, featured, created_at')
-      .eq('published', true)
+      .select('id,slug,title,excerpt,cat,tags,cover_url,read_time,likes,views,published,featured,created_at')
+      .neq('published', false)
       .order('created_at', { ascending: false });
 
     if(error) throw error;
-    allPosts = data || [];
-    renderGrid(allPosts);
-
-    // Check for ?post=slug in URL
-    const params = new URLSearchParams(window.location.search);
-    const slug   = params.get('post');
-    if(slug){
-      const post = allPosts.find(p => p.id === slug || p.slug === slug);
-      if(post) openPost(post);
-    }
+    allPosts = (data && data.length) ? data : DEMO_POSTS;
 
   } catch(err){
-    console.error(err);
-    grid.innerHTML = `
-      <div class="empty-state">
-        <div class="empty-icon">⚠️</div>
-        <div class="empty-title">Couldn't load posts</div>
-        <div class="empty-sub">Check your Supabase config or connection.</div>
-      </div>`;
-    // --- FALLBACK: built-in demo posts if Supabase isn't configured ---
+    console.warn('[Blog] Load failed, using demo posts:', err.message);
     allPosts = DEMO_POSTS;
-    renderGrid(allPosts);
+  }
+
+  renderGrid(allPosts);
+
+  // Direct link: blog.html?post=my-slug
+  const slug = new URLSearchParams(window.location.search).get('post');
+  if(slug){
+    const post = allPosts.find(p => p.slug === slug || p.id === slug);
+    if(post){
+      openPost(post);
+    } else {
+      // Slug in URL matched nothing — show a clear "not found" message
+      const grid = document.getElementById('postGrid');
+      if(grid) grid.innerHTML = `
+        <div class="empty-state">
+          <div class="empty-icon">🔍</div>
+          <div class="empty-title">Post Not Found</div>
+          <div class="empty-sub">The post you're looking for doesn't exist or may have been moved.<br>
+            <a href="blog.html" style="color:var(--accent2);text-decoration:underline">← Back to all posts</a>
+          </div>
+        </div>`;
+    }
   }
 }
 
-/* Demo posts (shown when Supabase URL is unconfigured) */
-const DEMO_POSTS = [
-  {
-    id:'1', slug:'owasp-top-10-node-django',
-    title:'OWASP Top 10 in Practice: Hardening Node.js & Django APIs',
-    excerpt:'A practical walkthrough of the OWASP Top 10 vulnerabilities with real code patches — from injection flaws to security misconfiguration.',
-    cat:'Cybersecurity', tags:['OWASP','Node.js','Django','Security'],
-    read_time:'11 min read', likes:47, views:1240, featured:true,
-    cover_url:'https://images.unsplash.com/photo-1614064641938-3bbee52942c7?w=800&q=80',
-    created_at:'2025-03-01T10:00:00Z',
-    content:`## Introduction\n\nThe OWASP Top 10 represents the most critical security risks to web applications. In this guide we'll patch each one in real Node.js and Django code.\n\n## 1. Injection\n\nAlways use parameterised queries. Never concatenate user input into SQL strings.\n\n\`\`\`js\n// BAD\ndb.query("SELECT * FROM users WHERE id = " + req.params.id);\n\n// GOOD\ndb.query("SELECT * FROM users WHERE id = $1", [req.params.id]);\n\`\`\`\n\n## 2. Broken Authentication\n\nUse bcrypt with ≥ 12 salt rounds. Implement rate-limiting on login endpoints.\n\n## 3. Sensitive Data Exposure\n\nEnable HTTPS everywhere. Use AES-256 for data at rest. Never log passwords or tokens.\n\n## 4. XML External Entities (XXE)\n\nDisable XML external entity processing in your parsers.\n\n## 5. Broken Access Control\n\nEnforce RBAC on every API route. Never rely on client-supplied role claims without server verification.\n\n## Conclusion\n\nSecurity is not a checklist — it's a mindset. Integrate these checks into your CI/CD pipeline.`
-  },
-  {
-    id:'2', slug:'mpesa-daraja-api-node',
-    title:'Integrating M-Pesa Daraja API with Node.js: A Complete Guide',
-    excerpt:'OAuth tokens, STK Push, callback handling, and production gotchas — everything needed to accept M-Pesa payments in Node.js.',
-    cat:'FullStack', tags:['M-Pesa','Node.js','Payments','FinTech'],
-    read_time:'14 min read', likes:89, views:3410, featured:false,
-    cover_url:'https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=800&q=80',
-    created_at:'2025-02-14T10:00:00Z',
-    content:`## Prerequisites\n\nYou will need a Safaricom Developer account at developer.safaricom.co.ke, and a registered app with Consumer Key and Consumer Secret.\n\n## Step 1: Get Access Token\n\n\`\`\`js\nconst getToken = async () => {\n  const auth = Buffer.from(\`\${consumerKey}:\${consumerSecret}\`).toString('base64');\n  const res = await fetch('https://api.safaricom.co.ke/oauth/v1/generate?grant_type=client_credentials',\n    { headers: { Authorization: \`Basic \${auth}\` } });\n  const { access_token } = await res.json();\n  return access_token;\n};\n\`\`\`\n\n## Step 2: STK Push\n\nThe STK Push sends a payment prompt to the customer's phone.\n\n\`\`\`js\nconst stkPush = async (phone, amount, token) => {\n  const timestamp = new Date().toISOString().replace(/[^0-9]/g,'').slice(0,14);\n  const password  = Buffer.from(shortcode + passkey + timestamp).toString('base64');\n  return fetch('https://api.safaricom.co.ke/mpesa/stkpush/v1/processrequest',{\n    method:'POST',\n    headers:{ Authorization:\`Bearer \${token}\`, 'Content-Type':'application/json' },\n    body: JSON.stringify({ BusinessShortCode:shortcode, Password:password,\n      Timestamp:timestamp, TransactionType:'CustomerPayBillOnline',\n      Amount:amount, PartyA:phone, PartyB:shortcode,\n      PhoneNumber:phone, CallBackURL:callbackUrl,\n      AccountReference:'JamesDev', TransactionDesc:'Payment' })\n  }).then(r=>r.json());\n};\n\`\`\`\n\n## Step 3: Handle Callback\n\nSafaricom will POST to your callback URL with the transaction result.\n\n## Production Tips\n\n- Always validate the callback with HMAC\n- Store pending transactions in your DB before STK push\n- Implement idempotency keys to handle duplicates`
-  },
-  {
-    id:'3', slug:'supabase-vs-firebase-2024',
-    title:'Supabase vs Firebase: An Honest Comparison for African Developers',
-    excerpt:'Pricing, latency from Nairobi, offline support, SQL vs NoSQL — a data-driven comparison to help you choose the right backend.',
-    cat:'DevTools', tags:['Supabase','Firebase','Backend','Comparison'],
-    read_time:'9 min read', likes:61, views:2180, featured:false,
-    cover_url:'https://images.unsplash.com/photo-1633356122544-f134324a6cee?w=800&q=80',
-    created_at:'2025-01-28T10:00:00Z',
-    content:`## Overview\n\nBoth Supabase and Firebase offer generous free tiers and make backend development fast. But they are quite different tools.\n\n## Database Model\n\n**Firebase Firestore** is a NoSQL document store. Great for hierarchical data and real-time listeners. Schemaless means fast iteration but can lead to messy data at scale.\n\n**Supabase** uses PostgreSQL. Full SQL power: JOINs, foreign keys, triggers, RLS. Better for relational data (orders → products → users).\n\n## Pricing (March 2025)\n\nFor African startups, pricing in USD can hurt once you scale. Both have free tiers but pricing models differ significantly at scale. Supabase tends to be cheaper for data-heavy apps.\n\n## Latency from Nairobi\n\nBoth route through European data centres for African users. Latency is comparable (~180ms). Neither has an African region yet.\n\n## My Recommendation\n\n- **New projects with relational data**: Supabase every time\n- **Real-time apps, quick prototypes**: Firebase still has an edge\n- **HealthTech / FinTech (regulated)**: Supabase (RLS, SQL audit trails, HIPAA BAA available)`
-  }
-];
-
-/* ═══════════════════════════════════════════════════════════════
-   RENDER GRID
-   ═══════════════════════════════════════════════════════════════ */
+/* ══════════════════════════════════════════════════════════════
+   RENDER MASONRY GRID
+   ══════════════════════════════════════════════════════════════ */
 function renderGrid(posts){
   const grid = document.getElementById('postGrid');
   grid.setAttribute('aria-busy','false');
 
+  // Explicitly hide the initial loading spinner before rendering content
+  const loadingEl = grid.querySelector('.loading-state');
+  if(loadingEl) loadingEl.style.display = 'none';
+
   const filtered = posts.filter(p => {
-    const matchCat  = currentCat === 'all' || p.cat === currentCat;
-    const matchSearch = !searchQuery || [p.title,p.excerpt,(p.tags||[]).join(' ')].join(' ').toLowerCase().includes(searchQuery);
+    const matchCat    = currentCat === 'all' || p.cat === currentCat;
+    const matchSearch = !searchQuery ||
+      [p.title, p.excerpt, (p.tags||[]).join(' ')].join(' ').toLowerCase().includes(searchQuery);
     return matchCat && matchSearch;
   });
 
@@ -726,126 +1082,56 @@ function renderGrid(posts){
       <div class="empty-state">
         <div class="empty-icon">📭</div>
         <div class="empty-title">No posts found</div>
-        <div class="empty-sub">Try a different category or search term.</div>
+        <div class="empty-sub">Try a different category or clear your search.</div>
       </div>`;
     return;
   }
 
-  grid.innerHTML = filtered.map((p,i) => `
+  const liked = likedSet();
+
+  grid.innerHTML = filtered.map((p, i) => `
     <article class="blog-card ${p.featured?'featured':''} reveal"
-             role="listitem"
-             tabindex="0"
-             onclick="openPost(${JSON.stringify(p).replace(/"/g,'&quot;')})"
-             onkeydown="if(event.key==='Enter')openPost(${JSON.stringify(p).replace(/"/g,'&quot;')})"
-             aria-label="${esc(p.title)}">
+             role="listitem" tabindex="0"
+             onclick="openPostById('${escHtml(p.id)}')"
+             onkeydown="if(event.key==='Enter')openPostById('${escHtml(p.id)}')"
+             aria-label="Read: ${escHtml(p.title)}"
+             style="transition-delay:${i*0.05}s">
       ${p.cover_url ? `
         <div class="bc-cover-wrap">
-          <img class="bc-cover lazy" data-src="${esc(p.cover_url)}" alt="${esc(p.title)} cover" width="800" height="450" loading="lazy">
+          <img class="bc-cover lazy" data-src="${escHtml(p.cover_url)}"
+               alt="${escHtml(p.title)} cover" width="800" height="450" loading="lazy">
         </div>` : ''}
       <div class="bc-body">
         ${p.featured ? '<div class="feat-badge">⭐ Featured</div>' : ''}
-        <div class="bc-cat">${esc(p.cat||'')}</div>
-        <h2 class="bc-title">${esc(p.title)}</h2>
-        <p class="bc-excerpt">${esc(p.excerpt||'')}</p>
-        ${(p.tags||[]).length ? `<div class="bc-tags">${p.tags.slice(0,4).map(t=>`<span class="bc-tag">${esc(t)}</span>`).join('')}</div>` : ''}
+        <div class="bc-cat">${escHtml(p.cat||'')}</div>
+        <h2 class="bc-title">${escHtml(p.title)}</h2>
+        <p class="bc-excerpt">${escHtml(p.excerpt||'')}</p>
+        ${(p.tags||[]).length ? `
+          <div class="bc-tags">
+            ${p.tags.slice(0,4).map(t=>`<span class="bc-tag">${escHtml(t)}</span>`).join('')}
+          </div>` : ''}
         <div class="bc-meta">
           <span class="bc-date">${formatDate(p.created_at)}</span>
-          <div style="display:flex;align-items:center;gap:0.75rem;">
-            <button class="bc-likes ${likedPosts().includes(p.id)?'liked':''}"
-                    onclick="event.stopPropagation();handleLike(event,${JSON.stringify(p).replace(/"/g,'&quot;')})"
-                    aria-label="Like this post">
-              ❤ ${p.likes||0}
+          <div style="display:flex;align-items:center;gap:.75rem">
+            <button class="bc-likes ${liked.has(p.id)?'liked':''}"
+                    id="cl-${escHtml(p.id)}"
+                    onclick="event.stopPropagation();likePostById('${escHtml(p.id)}')"
+                    aria-label="Like — ${p.likes||0} likes">
+              ❤ <span class="lnum">${p.likes||0}</span>
             </button>
-            <span class="bc-read">${esc(p.read_time||'5 min')} →</span>
+            <span class="bc-read">${escHtml(p.read_time||'5 min')} →</span>
           </div>
         </div>
       </div>
     </article>`).join('');
 
-  // Lazy-load cover images
-  grid.querySelectorAll('img.lazy').forEach(lazyLoad);
-  // Scroll reveal
-  grid.querySelectorAll('.reveal').forEach((el,i)=>{
-    el.style.transitionDelay = (i*0.05)+'s';
-    revObs.observe(el);
-  });
+  grid.querySelectorAll('img.lazy').forEach(img => imgObs.observe(img));
+  grid.querySelectorAll('.reveal').forEach(el => revObs.observe(el));
 }
 
-/* ═══════════════════════════════════════════════════════════════
-   OPEN SINGLE POST
-   ═══════════════════════════════════════════════════════════════ */
-async function openPost(post){
-  currentPost = post;
-
-  // Fetch full content if not loaded yet
-  if(!post.content && !DEMO_POSTS.find(p=>p.id===post.id)){
-    const { data } = await sb.from('posts').select('content').eq('id',post.id).single();
-    if(data) post.content = data.content;
-  }
-
-  // Update URL
-  history.pushState({ postId:post.id }, '', '?post='+post.slug);
-
-  // Populate
-  document.getElementById('postCat').textContent      = post.cat || '';
-  document.getElementById('postTitle').textContent    = post.title;
-  document.getElementById('postDate').textContent     = formatDate(post.created_at);
-  document.getElementById('postReadTime').textContent = post.read_time || '5 min read';
-  document.getElementById('postViews').textContent    = (post.views || 0) + ' views';
-  document.getElementById('likesCount').textContent   = post.likes || 0;
-
-  const bgImg = document.getElementById('postCoverBg');
-  if(post.cover_url){ bgImg.src = post.cover_url; bgImg.style.display='block'; }
-  else { bgImg.style.display='none'; }
-
-  // WhatsApp share
-  document.getElementById('waShareBtn').href =
-    `https://wa.me/?text=${encodeURIComponent(post.title+' — '+window.location.href)}`;
-
-  // Render markdown-like content
-  document.getElementById('postBody').innerHTML = renderContent(post.content || '');
-
-  // Build ToC
-  buildToC();
-
-  // Show/hide views
-  document.getElementById('listView').style.display = 'none';
-  document.getElementById('postView').style.display = 'block';
-  document.getElementById('readProgress').style.display = 'block';
-  window.scrollTo({ top:0, behavior:'instant' });
-  document.title = post.title + ' — James Mwangi';
-
-  // Load comments
-  loadComments(post.id);
-
-  // Increment view (fire and forget)
-  incrementViews(post.id);
-}
-
-function showList(){
-  document.getElementById('postView').style.display  = 'none';
-  document.getElementById('listView').style.display  = 'block';
-  document.getElementById('readProgress').style.width = '0%';
-  document.getElementById('readProgress').style.display = 'none';
-  history.pushState({}, '', window.location.pathname);
-  document.title = 'Technical Blog — James Mwangi';
-  currentPost = null;
-}
-
-/* ── Back button in browser ─────────────────────────────────── */
-window.addEventListener('popstate', () => {
-  const params = new URLSearchParams(window.location.search);
-  if(params.get('post')) {
-    const post = allPosts.find(p=>p.slug===params.get('post')||p.id===params.get('post'));
-    if(post) openPost(post);
-  } else {
-    showList();
-  }
-});
-
-/* ═══════════════════════════════════════════════════════════════
+/* ══════════════════════════════════════════════════════════════
    FILTER & SEARCH
-   ═══════════════════════════════════════════════════════════════ */
+   ══════════════════════════════════════════════════════════════ */
 function filterPosts(cat, btn){
   currentCat = cat;
   document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
@@ -862,205 +1148,803 @@ function handleSearch(val){
   }, 280);
 }
 
-/* ═══════════════════════════════════════════════════════════════
-   LIKES
-   ═══════════════════════════════════════════════════════════════ */
-function likedPosts(){ return JSON.parse(localStorage.getItem('jm_liked')||'[]'); }
-function saveLiked(arr){ localStorage.setItem('jm_liked', JSON.stringify(arr)); }
+/* ══════════════════════════════════════════════════════════════
+   OPEN SINGLE POST
+   ══════════════════════════════════════════════════════════════ */
 
-async function handleLike(e, post){
-  const liked = likedPosts();
-  if(liked.includes(post.id)){
-    showToast('Already liked!', '');
+// Safe wrappers — look up by ID so no JSON lives in HTML attributes
+function openPostById(id){
+  const post = allPosts.find(p => p.id === id);
+  if(post) openPost(post);
+}
+
+function likePostById(id){
+  const post = allPosts.find(p => p.id === id);
+  if(post) likePost(post);
+}
+
+async function openPost(post){
+  // Lazy-fetch full content from Supabase if not cached
+  if(!post.content){
+    try {
+      const { data, error } = await sb
+        .from('posts').select('content').eq('id', post.id).single();
+      if(error) throw error;
+      post.content = data.content;
+      const idx = allPosts.findIndex(p => p.id === post.id);
+      if(idx > -1) allPosts[idx].content = post.content;
+    } catch(e){ console.warn('Content fetch error:', e.message); }
+  }
+
+  currentPost = post;
+
+  // pushState FIRST — so window.location.href is the post URL when OG tags are set
+  history.pushState({ postId: post.id }, '', '?post=' + post.slug);
+
+  // ── RENDER MARKDOWN ──────────────────────────────────────────
+  const body = document.getElementById('postBody');
+  body.innerHTML = post.content
+    ? marked.parse(post.content)
+    : '<p style="color:var(--text3)">Content coming soon — check back shortly.</p>';
+
+  // ── Page title = post title only (no site name appended) ──
+  document.title = post.title || 'Blog Post';
+
+  // ── OG / Twitter meta: set per-post values so sharing sends the post,
+  //    not the homepage. URL is captured AFTER pushState above. ──
+  const postUrl  = window.location.href;   // now = blog.html?post=slug
+  const postDesc = post.excerpt
+    ? post.excerpt.slice(0, 160) + (post.excerpt.length > 160 ? '…' : '')
+    : '';
+  const postImg  = post.cover_url || '';
+
+  const setMeta = (id, val) => { const el = document.getElementById(id); if(el) el.setAttribute('content', val); };
+  setMeta('ogTitle',  post.title);
+  setMeta('ogDesc',   postDesc);
+  setMeta('ogUrl',    postUrl);
+  setMeta('ogImage',  postImg);
+  setMeta('ogType',   'article');
+  setMeta('twTitle',  post.title);
+  setMeta('twDesc',   postDesc);
+  setMeta('twImage',  postImg);
+  setMeta('twCard',   postImg ? 'summary_large_image' : 'summary');
+
+  // Populate hero
+  document.getElementById('postCat').textContent      = post.cat || '';
+  document.getElementById('postTitle').textContent    = post.title;
+  document.getElementById('postDate').textContent     = formatDate(post.created_at);
+  document.getElementById('postReadTime').textContent = post.read_time || '5 min read';
+  document.getElementById('postViews').textContent    = (post.views || 0) + ' views';
+
+  const coverBg = document.getElementById('postCoverBg');
+  if(post.cover_url){ coverBg.src = post.cover_url; coverBg.style.display = 'block'; }
+  else { coverBg.style.display = 'none'; }
+
+  // Like button state
+  const liked = likedSet();
+  syncLikeUI(post.likes || 0, liked.has(post.id));
+
+  // Share buttons — prefer native Web Share API (works great on Android/iOS)
+  if(navigator.share){
+    document.getElementById('nativeShareBtn').style.display  = 'inline-flex';
+    document.getElementById('manualShareBtns').style.display = 'none';
+  } else {
+    document.getElementById('nativeShareBtn').style.display  = 'none';
+    document.getElementById('manualShareBtns').style.display = 'flex';
+  }
+
+  // Build table of contents from rendered headings
+  buildToC(body);
+
+  // Switch views
+  document.getElementById('listView').style.display     = 'none';
+  document.getElementById('postView').style.display     = 'block';
+  document.getElementById('readProgress').style.display = 'block';
+  window.scrollTo({ top: 0, behavior: 'instant' });
+
+  // ── LOAD COMMENTS ───────────────────────────────────────────
+  loadComments(post.id);
+
+  // Increment view counter (once per browser session per post)
+  bumpViews(post.id, post.views);
+}
+
+/* ── Show list view ────────────────────────────────────────────── */
+function showList(){
+  currentPost = null;
+  document.getElementById('postView').style.display     = 'none';
+  document.getElementById('listView').style.display     = 'block';
+  document.getElementById('readProgress').style.display = 'none';
+  document.getElementById('readProgress').style.width   = '0%';
+
+  // Restore title and OG tags to blog defaults when returning to the list
+  document.title = 'Technical Blog — James Mwangi';
+  const setMeta = (id, val) => document.getElementById(id)?.setAttribute('content', val);
+  setMeta('ogTitle', 'Technical Blog — James Mwangi');
+  setMeta('ogDesc',  'Practical deep-dives on Full-Stack engineering, cybersecurity, and building for the African market.');
+  setMeta('ogUrl',   window.location.origin + window.location.pathname);
+  setMeta('ogImage', '');
+  setMeta('ogType',  'website');
+  setMeta('twTitle', 'Technical Blog — James Mwangi');
+  setMeta('twDesc',  'Practical engineering insights for African developers.');
+  setMeta('twImage', '');
+  history.pushState({}, '', window.location.pathname);
+}
+
+window.addEventListener('popstate', () => {
+  const slug = new URLSearchParams(window.location.search).get('post');
+  if(slug){
+    const post = allPosts.find(p => p.slug === slug || p.id === slug);
+    if(post) openPost(post);
+  } else {
+    showList();
+  }
+});
+
+/* ══════════════════════════════════════════════════════════════
+   TABLE OF CONTENTS — built from headings rendered by marked.js
+   ══════════════════════════════════════════════════════════════ */
+function buildToC(body){
+  const tocList = document.getElementById('tocList');
+  const headings = Array.from(body.querySelectorAll('h1,h2,h3,h4'));
+
+  if(!headings.length){
+    tocList.innerHTML = '<span style="color:var(--text3);font-size:var(--text-xs)">No sections</span>';
     return;
   }
-  liked.push(post.id);
-  saveLiked(liked);
-  post.likes = (post.likes||0)+1;
 
-  // Update in Supabase
-  await sb.from('posts').update({ likes: post.likes }).eq('id', post.id);
+  headings.forEach((h, i) => { h.id = 'sec-' + i; });
 
-  // Update UI button
-  const btn = e.target;
-  btn.classList.add('liked');
-  btn.innerHTML = `❤ ${post.likes}`;
-  showToast('Liked!', 'success');
+  tocList.innerHTML = headings.map(h => {
+    const cls = { H1:'', H2:'', H3:'h3', H4:'h4' }[h.tagName] || '';
+    return `<a class="toc-link ${cls}" href="#${h.id}"
+               onclick="goToSection(event,'${h.id}')">${escHtml(h.textContent)}</a>`;
+  }).join('');
+
+  // Highlight active section on scroll
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      const link = tocList.querySelector(`[href="#${e.target.id}"]`);
+      if(link) link.classList.toggle('active', e.isIntersecting);
+    });
+  }, { rootMargin: '-20% 0px -70% 0px' });
+  headings.forEach(h => obs.observe(h));
 }
 
-async function likePost(){
-  if(!currentPost) return;
-  await handleLike({ target: document.getElementById('likeBtn').querySelector('span')?.parentElement||{} }, currentPost);
-  document.getElementById('likesCount').textContent = currentPost.likes;
+function goToSection(e, id){
+  e.preventDefault();
+  document.getElementById(id)?.scrollIntoView({ behavior:'smooth', block:'start' });
 }
 
-/* ═══════════════════════════════════════════════════════════════
-   VIEWS
-   ═══════════════════════════════════════════════════════════════ */
-async function incrementViews(postId){
+/* ══════════════════════════════════════════════════════════════
+   ✦ LIVE LIKES
+   Updates Supabase `likes` column and refreshes UI immediately.
+   No page reload. Optimistic UI with rollback on error.
+   Accepts optional `postArg` (called from grid card);
+   if omitted, uses `currentPost` (called from post view).
+   ══════════════════════════════════════════════════════════════ */
+async function likePost(postArg){
+  const post = postArg || currentPost;
+  if(!post) return;
+
+  const liked = likedSet();
+  if(liked.has(post.id)){
+    showToast('You already liked this post ❤', '');
+    return;
+  }
+
+  // ── Optimistic update ─────────────────────────────────────
+  const newCount = (post.likes || 0) + 1;
+  post.likes = newCount;
+  addLiked(post.id);
+
+  // Update card button (always, in case grid is behind)
+  const cardBtn = document.getElementById('cl-' + post.id);
+  if(cardBtn){
+    cardBtn.classList.add('liked');
+    const numEl = cardBtn.querySelector('.lnum');
+    if(numEl) numEl.textContent = newCount;
+  }
+
+  // Update post-view buttons if we're reading the post
+  if(!postArg) syncLikeUI(newCount, true);
+
+  showToast('Liked! ❤', 'success');
+
+  // ── Persist to Supabase ───────────────────────────────────
   try {
-    const viewed = JSON.parse(sessionStorage.getItem('jm_viewed')||'[]');
-    if(viewed.includes(postId)) return;
-    viewed.push(postId);
-    sessionStorage.setItem('jm_viewed', JSON.stringify(viewed));
-    const post = allPosts.find(p=>p.id===postId);
-    const newViews = (post?.views||0)+1;
-    await sb.from('posts').update({ views: newViews }).eq('id', postId);
-    document.getElementById('postViews').textContent = newViews + ' views';
-  } catch{}
-}
-
-/* ═══════════════════════════════════════════════════════════════
-   SHARE
-   ═══════════════════════════════════════════════════════════════ */
-function sharePost(platform){
-  const url   = window.location.href;
-  const title = currentPost?.title || document.title;
-  if(platform==='twitter'){
-    window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent(title)}&url=${encodeURIComponent(url)}`,'_blank');
-  } else if(platform==='whatsapp'){
-    window.open(`https://wa.me/?text=${encodeURIComponent(title+' '+url)}`,'_blank');
-  } else if(platform==='copy'){
-    navigator.clipboard.writeText(url).then(()=>showToast('Link copied!','success'));
+    const { error } = await sb
+      .from('posts')
+      .update({ likes: newCount })
+      .eq('id', post.id);
+    if(error) throw error;
+  } catch(err){
+    // Rollback
+    console.warn('Like save failed:', err.message);
+    post.likes = newCount - 1;
+    removeLiked(post.id);
+    if(cardBtn){
+      cardBtn.classList.remove('liked');
+      const numEl = cardBtn.querySelector('.lnum');
+      if(numEl) numEl.textContent = post.likes;
+    }
+    if(!postArg) syncLikeUI(post.likes, false);
+    showToast('Could not save like — try again.', 'error');
   }
 }
 
-/* ═══════════════════════════════════════════════════════════════
-   TABLE OF CONTENTS
-   ═══════════════════════════════════════════════════════════════ */
-function buildToC(){
-  const body    = document.getElementById('postBody');
-  const tocList = document.getElementById('tocList');
-  const headings = body.querySelectorAll('h2, h3');
-  if(!headings.length){ tocList.innerHTML='<span style="color:var(--text3);font-size:var(--text-xs);">No sections</span>'; return; }
-
-  tocList.innerHTML = Array.from(headings).map((h,i)=>{
-    const id = 'heading-'+i;
-    h.id = id;
-    return `<a class="toc-link ${h.tagName==='H3'?'h3':''}" onclick="scrollToHeading('${id}')">${h.textContent}</a>`;
-  }).join('');
-
-  // Highlight active heading
-  const hdObs = new IntersectionObserver(entries => {
-    entries.forEach(e => {
-      const link = tocList.querySelector(`[onclick*="${e.target.id}"]`);
-      if(link) link.classList.toggle('active', e.isIntersecting);
-    });
-  }, { rootMargin:'-20% 0px -70% 0px' });
-  headings.forEach(h => hdObs.observe(h));
+function syncLikeUI(count, isLiked){
+  const ab = document.getElementById('likeActionBtn');
+  const sb2 = document.getElementById('sidebarLikeBtn');
+  if(ab){
+    ab.classList.toggle('liked', isLiked);
+    document.getElementById('likeActionCount').textContent = count;
+  }
+  if(sb2){
+    sb2.classList.toggle('liked', isLiked);
+    document.getElementById('sidebarLikeCount').textContent = count;
+  }
 }
 
-function scrollToHeading(id){
-  const el = document.getElementById(id);
-  if(el) el.scrollIntoView({ behavior:'smooth', block:'start' });
+/* ══════════════════════════════════════════════════════════════
+   VIEW COUNTER (once per session per post)
+   ══════════════════════════════════════════════════════════════ */
+async function bumpViews(postId, currentViews){
+  try {
+    const seen = new Set(JSON.parse(sessionStorage.getItem('jm_seen') || '[]'));
+    if(seen.has(postId)) return;
+    seen.add(postId);
+    sessionStorage.setItem('jm_seen', JSON.stringify([...seen]));
+    const next = (currentViews || 0) + 1;
+    await sb.from('posts').update({ views: next }).eq('id', postId);
+    const el = document.getElementById('postViews');
+    if(el) el.textContent = next + ' views';
+  } catch{ /* non-critical */ }
 }
 
-/* ═══════════════════════════════════════════════════════════════
-   COMMENTS
-   ═══════════════════════════════════════════════════════════════ */
-async function loadComments(postId){
-  const list = document.getElementById('commentsList');
-  list.innerHTML = '<div class="loading-state"><div class="spinner"></div></div>';
+/* ══════════════════════════════════════════════════════════════
+   ✦ NATIVE WEB SHARE API
+   On mobile: triggers the OS share sheet (WhatsApp, X, etc.)
+   On desktop: falls back to individual share buttons
+   ══════════════════════════════════════════════════════════════ */
+async function nativeShare(){
+  if(!currentPost) return;
+
+  // The OS share sheet shows:  title (big) + text (small) + URL
+  // We send ONLY the post title and excerpt — no "James Mwangi" branding in the message.
+  // The recipient sees the post title and a short excerpt, then the direct post URL.
+  const shareData = {
+    title: currentPost.title,
+    text:  currentPost.excerpt
+      ? currentPost.excerpt.slice(0, 140) + (currentPost.excerpt.length > 140 ? '…' : '')
+      : '',
+    url:   window.location.href   // direct link: blog.html?post=my-slug
+  };
 
   try {
-    const { data } = await sb
-      .from('comments')
-      .select('id, author_name, body, created_at')
-      .eq('post_id', postId)
-      .eq('approved', true)
-      .order('created_at', { ascending:true });
+    await navigator.share(shareData);
+  } catch(e){
+    // AbortError = user dismissed the share sheet — that's fine
+    if(e.name !== 'AbortError') showToast('Share not supported on this browser.', '');
+  }
+}
 
-    if(!data || !data.length){
-      list.innerHTML = `<div class="empty-state" style="padding:2rem;">
-        <div class="empty-icon">💬</div>
-        <div class="empty-sub">Be the first to comment!</div>
+/* ══════════════════════════════════════════════════════════════
+   ✦ PLATFORM SHARE BUTTONS (desktop fallbacks)
+   ══════════════════════════════════════════════════════════════ */
+function sharePost(platform){
+  if(!currentPost) return;
+
+  const postUrl  = window.location.href;   // direct post URL: blog.html?post=slug
+  const title    = currentPost.title || '';
+  const excerpt  = currentPost.excerpt
+    ? currentPost.excerpt.slice(0, 120) + (currentPost.excerpt.length > 120 ? '…' : '')
+    : '';
+
+  // ── Copy link ─────────────────────────────────────────────────
+  if(platform === 'copy'){
+    navigator.clipboard.writeText(postUrl)
+      .then(()  => showToast('Post link copied! 🔗', 'success'))
+      .catch(()  => showToast('Could not copy — please copy the URL bar manually.', 'error'));
+    return;
+  }
+
+  // ── Build platform-specific share URLs ────────────────────────
+  // Each message shows:  [Post Title] / [Excerpt] / [URL]
+  // — no "James Mwangi" name added to the message itself.
+  // The platform will pull the author from the OG meta tags we set.
+
+  const encodedUrl     = encodeURIComponent(postUrl);
+  const encodedTitle   = encodeURIComponent(title);
+  const encodedExcerpt = encodeURIComponent(excerpt);
+
+  // WhatsApp — formatted message with title bold (using *bold*) + excerpt + link
+  const waText = encodeURIComponent(
+    '*' + title + '*' +
+    (excerpt ? '\n\n' + excerpt : '') +
+    '\n\n' + postUrl
+  );
+
+  // Twitter/X — title + link (Twitter auto-unfurls the link with OG image)
+  // Keep under 280 chars: title (max 200) + URL
+  const twText = encodeURIComponent(
+    title.slice(0, 200) + (title.length > 200 ? '…' : '')
+  );
+
+  // LinkedIn — just the URL; LinkedIn reads OG tags for title + description + image
+  // Adding text to LinkedIn share URL is deprecated — URL is enough
+
+  const platformUrls = {
+    whatsapp: `https://wa.me/?text=${waText}`,
+    twitter:  `https://twitter.com/intent/tweet?text=${twText}&url=${encodedUrl}`,
+    facebook: `https://www.facebook.com/sharer/sharer.php?u=${encodedUrl}`,
+    linkedin: `https://www.linkedin.com/sharing/share-offsite/?url=${encodedUrl}`
+  };
+
+  if(platformUrls[platform]){
+    window.open(platformUrls[platform], '_blank', 'noopener,noreferrer,width=640,height=520');
+  }
+}
+
+/* ══════════════════════════════════════════════════════════════
+   ✦ CUSTOM SECURE COMMENT SYSTEM
+   ══════════════════════════════════════════════════════════════
+
+   SECURITY LAYERS:
+   1. sanitizeText()  — strips every HTML tag + JS protocol before
+                        anything reaches the DOM or Supabase.
+   2. escHtml()       — re-encodes when rendering, so even if
+                        something slipped past step 1 it can't execute.
+   3. white-space:pre-wrap — displays newlines without innerHTML.
+   4. Supabase RLS    — anon can INSERT; only you can SELECT unapproved.
+   5. is_approved=false — new comments are invisible until you approve
+                        them in the Supabase dashboard.
+
+   ════════════════════════════════════════════════════════════════ */
+
+/* ── XSS sanitiser ─────────────────────────────────────────────────
+   Strips ALL HTML tags, converts dangerous characters to entities,
+   and removes javascript: / data: / vbscript: protocol strings.
+   Pure regex — zero dependencies, runs client-side before submission.
+─────────────────────────────────────────────────────────────────── */
+function sanitizeText(raw){
+  if(typeof raw !== 'string') return '';
+  return raw
+    // 1. Remove every HTML tag (including encoded variants)
+    .replace(/<[^>]*>/g, '')
+    // 2. Decode common HTML entities before further processing
+    .replace(/&lt;/gi, '<').replace(/&gt;/gi, '>').replace(/&amp;/gi, '&')
+    // 3. Re-strip any tags that were hiding inside entities
+    .replace(/<[^>]*>/g, '')
+    // 4. Kill dangerous URI schemes (case-insensitive, with optional spaces)
+    .replace(/javascript\s*:/gi, '')
+    .replace(/data\s*:/gi, '')
+    .replace(/vbscript\s*:/gi, '')
+    // 5. Remove event handler patterns (onclick=, onerror=, etc.)
+    .replace(/on\w+\s*=/gi, '')
+    // 6. Trim leading/trailing whitespace
+    .trim();
+}
+
+/* ── Character counter (live feedback on textarea) ────────────────── */
+function updateCharCount(textarea){
+  const len = textarea.value.length;
+  const el  = document.getElementById('charCounter');
+  if(!el) return;
+  el.textContent = `${len} / ${MAX_COMMENT_CHARS}`;
+  el.className   = 'char-counter' + (len > MAX_COMMENT_CHARS ? ' over' : len > MAX_COMMENT_CHARS * 0.85 ? ' warn' : '');
+}
+
+/* ── Avatar colour — deterministic from name (no server needed) ──── */
+function avatarColor(name){
+  const palette = [
+    '#6366f1','#8b5cf6','#ec4899','#f43f5e',
+    '#f97316','#22d3a5','#0ea5e9','#a855f7',
+    '#14b8a6','#3b82f6','#ef4444','#eab308'
+  ];
+  let hash = 0;
+  for(let i = 0; i < name.length; i++) hash = name.charCodeAt(i) + ((hash << 5) - hash);
+  return palette[Math.abs(hash) % palette.length];
+}
+
+/* ── Format comment timestamps ─────────────────────────────────── */
+function timeAgo(iso){
+  if(!iso) return '';
+  const diff = Date.now() - new Date(iso).getTime();
+  const mins = Math.floor(diff / 60000);
+  if(mins < 2)   return 'just now';
+  if(mins < 60)  return `${mins}m ago`;
+  const hrs = Math.floor(mins / 60);
+  if(hrs  < 24)  return `${hrs}h ago`;
+  const days = Math.floor(hrs / 24);
+  if(days < 30)  return `${days}d ago`;
+  return formatDate(iso);
+}
+
+/* ── LOAD & DISPLAY APPROVED COMMENTS ──────────────────────────────
+   Fetches only approved comments (is_approved = true) for this post_id.
+   Renders with escHtml() so no stored value can ever execute as HTML.
+─────────────────────────────────────────────────────────────────── */
+async function loadComments(postId){
+  const section = document.getElementById('commentsSection');
+  const list    = document.getElementById('commentsList');
+  const loading = document.getElementById('commentsLoading');
+  const counter = document.getElementById('commentsCount');
+
+  if(!section || !list || !loading || !counter) return; // guard: post view not in DOM yet
+
+  section.style.display = 'block';
+  commentsPostId = postId;
+
+  // Show loading state
+  list.innerHTML = '';
+  list.appendChild(loading);
+  loading.style.display = 'flex';
+
+  try {
+    const { data, error } = await sb
+      // Real column names from your Supabase comments table
+      .from('comments')
+      .select('id, user_name, content, created_at')
+      .eq('post_id',     postId)
+      .eq('is_approved', true)
+      .order('created_at', { ascending: true });
+
+    if(error) throw error;
+
+    loading.style.display = 'none';
+    renderComments(data || []);
+
+  } catch(err){
+    console.warn('Comments load error:', err.message);
+    loading.style.display = 'none';
+    list.innerHTML = `
+      <div class="comments-empty">
+        <div class="ei">⚠️</div>
+        <p>Could not load comments. Please refresh to try again.</p>
       </div>`;
+    counter.textContent = '0';
+  }
+}
+
+function renderComments(comments){
+  const list    = document.getElementById('commentsList');
+  const counter = document.getElementById('commentsCount');
+  counter.textContent = comments.length;
+
+  if(!comments.length){
+    list.innerHTML = `
+      <div class="comments-empty">
+        <div class="ei">💬</div>
+        <p><strong>No comments yet.</strong><br>Be the first to share your thoughts!</p>
+      </div>`;
+    return;
+  }
+
+  list.innerHTML = comments.map((c, i) => {
+    // Read the real column names your Supabase table returns
+    const safeName = escHtml(c.user_name || 'Anonymous');
+    const safeBody = escHtml(c.content   || '');
+    const initial  = (c.user_name || 'A')[0].toUpperCase();
+    const color    = avatarColor(c.user_name || 'A');
+    const time     = timeAgo(c.created_at);
+
+    return `
+      <div class="comment-card" style="animation-delay:${i * 0.06}s" role="article">
+        <div class="comment-header">
+          <div class="comment-avatar" style="background:${color}" aria-hidden="true">${initial}</div>
+          <div class="comment-meta">
+            <div class="comment-name">${safeName}</div>
+            <time class="comment-date" datetime="${escHtml(c.created_at)}">${time}</time>
+          </div>
+        </div>
+        <p class="comment-body">${safeBody}</p>
+      </div>`;
+  }).join('');
+}
+
+/* ── SUBMIT A COMMENT ───────────────────────────────────────────────
+   Flow:
+   1. Client-side validation (length, emptiness)
+   2. sanitizeText() — strip HTML/JS from both fields
+   3. escHtml() check at render time (double defence)
+   4. Insert to Supabase with is_approved = false
+   5. Show success — user sees pending message, not the comment
+─────────────────────────────────────────────────────────────────── */
+async function submitComment(e){
+  e.preventDefault();
+  if(!commentsPostId){ showToast('No post selected.','error'); return; }
+
+  const nameInput = document.getElementById('cmtName');
+  const bodyInput = document.getElementById('cmtBody');
+  const submitBtn = document.getElementById('cmtSubmitBtn');
+  const successEl = document.getElementById('cmtSuccess');
+
+  // Clear previous errors
+  [nameInput, bodyInput].forEach(el => el.classList.remove('field-invalid'));
+  document.querySelectorAll('.field-error-msg').forEach(el => el.remove());
+
+  // ── Validate ──
+  let hasError = false;
+
+  const rawName = nameInput.value.trim();
+  const rawBody = bodyInput.value.trim();
+
+  if(!rawName){
+    markFieldInvalid(nameInput, 'Name is required.');
+    hasError = true;
+  } else if(rawName.length > 60){
+    markFieldInvalid(nameInput, 'Name must be 60 characters or fewer.');
+    hasError = true;
+  }
+
+  if(!rawBody){
+    markFieldInvalid(bodyInput, 'Comment cannot be empty.');
+    hasError = true;
+  } else if(rawBody.length > MAX_COMMENT_CHARS){
+    markFieldInvalid(bodyInput, `Comment must be ${MAX_COMMENT_CHARS} characters or fewer.`);
+    hasError = true;
+  }
+
+  if(hasError) return;
+
+  // ── Sanitize (XSS defence — step 1) ──
+  const cleanName = sanitizeText(rawName);
+  const cleanBody = sanitizeText(rawBody);
+
+  // Reject if sanitizer stripped everything meaningful
+  if(!cleanName || !cleanBody){
+    markFieldInvalid(cleanName ? bodyInput : nameInput, 'Invalid characters detected.');
+    return;
+  }
+
+  // ── Loading state ──
+  submitBtn.disabled = true;
+  submitBtn.classList.add('loading');
+  successEl.classList.remove('show');
+
+  try {
+    // Column names match your actual Supabase comments table:
+    //   user_name   — the commenter's name
+    //   content     — the comment text
+    //   is_approved — false by default; you approve in Supabase dashboard
+    // No email field — removed to make it easier for readers to comment
+    const { error } = await sb.from('comments').insert({
+      post_id:     commentsPostId,
+      user_name:   cleanName,
+      content:     cleanBody,
+      is_approved: false
+    });
+
+    if(error){
+      console.error('[Comment] Insert error:', error.message);
+      showToast('Could not save comment: ' + error.message, 'error');
       return;
     }
 
-    list.innerHTML = data.map(c=>`
-      <div class="comment-card">
-        <div class="comment-header">
-          <div class="comment-avatar" aria-hidden="true">${(c.author_name||'?')[0].toUpperCase()}</div>
-          <div>
-            <div class="comment-author">${esc(c.author_name)}</div>
-            <div class="comment-date">${formatDate(c.created_at)}</div>
-          </div>
-        </div>
-        <p class="comment-body">${esc(c.body)}</p>
-      </div>`).join('');
-  } catch {
-    list.innerHTML = '';
-  }
-}
-
-async function submitComment(e){
-  e.preventDefault();
-  if(!currentPost) return;
-  const btn  = document.getElementById('cmtSubmitBtn');
-  const name = document.getElementById('cmtName').value.trim();
-  const email= document.getElementById('cmtEmail').value.trim();
-  const body = document.getElementById('cmtBody').value.trim();
-
-  if(!name || !body){ showToast('Name and comment are required.','error'); return; }
-
-  btn.disabled = true; btn.textContent = 'Posting…';
-
-  const { error } = await sb.from('comments').insert({
-    post_id: currentPost.id,
-    author_name: name,
-    author_email: email || null,
-    body,
-    approved: false
-  });
-
-  btn.disabled = false; btn.textContent = 'Post Comment';
-
-  if(error){
-    showToast('Failed to post comment.','error');
-  } else {
+    // Success
     document.getElementById('commentForm').reset();
-    showToast('Comment submitted — pending moderation ✓','success');
+    document.getElementById('charCounter').textContent = `0 / ${MAX_COMMENT_CHARS}`;
+    successEl.classList.add('show');
+    showToast('Comment submitted — will appear after moderation ✓', 'success');
+
+  } catch(err){
+    console.error('[Comment] Error:', err.message);
+    showToast(err.message || 'Failed to post comment. Please try again.', 'error');
+  } finally {
+    submitBtn.disabled = false;
+    submitBtn.classList.remove('loading');
   }
 }
 
-/* ═══════════════════════════════════════════════════════════════
-   CONTENT RENDERER (Markdown-lite → HTML)
-   ═══════════════════════════════════════════════════════════════ */
-function renderContent(md){
-  if(!md) return '<p style="color:var(--text3)">Content coming soon.</p>';
-  return md
-    .replace(/```(\w*)\n([\s\S]*?)```/g, (_,lang,code)=>
-      `<pre><code class="lang-${lang}">${esc(code.trim())}</code></pre>`)
-    .replace(/`([^`]+)`/g, '<code>$1</code>')
-    .replace(/^## (.+)$/gm,  '<h2>$1</h2>')
-    .replace(/^### (.+)$/gm, '<h3>$1</h3>')
-    .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
-    .replace(/\*(.+?)\*/g,     '<em>$1</em>')
-    .replace(/\[(.+?)\]\((.+?)\)/g, '<a href="$2" target="_blank" rel="noopener">$1</a>')
-    .replace(/^> (.+)$/gm, '<blockquote>$1</blockquote>')
-    .replace(/^- (.+)$/gm, '<li>$1</li>')
-    .replace(/(<li>[\s\S]+?<\/li>)/g, '<ul>$1</ul>')
-    .replace(/\n{2,}/g, '</p><p>')
-    .replace(/^(?!<[hupbco])/gm, '')
-    .replace(/<\/p><p>(<[hupbc])/g, '$1');
+function markFieldInvalid(input, message){
+  input.classList.add('field-invalid');
+  const msg = document.createElement('span');
+  msg.className   = 'field-error-msg';
+  msg.textContent = message;
+  input.parentNode.appendChild(msg);
+  input.focus();
+  // Auto-clear the invalid class after animation completes
+  setTimeout(() => input.classList.remove('field-invalid'), 400);
 }
 
-/* ═══════════════════════════════════════════════════════════════
-   UTILITIES
-   ═══════════════════════════════════════════════════════════════ */
-function formatDate(iso){
-  if(!iso) return '';
-  return new Date(iso).toLocaleDateString('en-GB',{day:'numeric',month:'short',year:'numeric'});
-}
-function esc(s){
-  return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
-}
+/* ══════════════════════════════════════════════════════════════
+   DEMO POSTS (full Markdown — showcases all renderer features)
+   Shown as fallback when Supabase has no data yet.
+   ══════════════════════════════════════════════════════════════ */
+const DEMO_POSTS = [
+  {
+    id:'1', slug:'owasp-top-10-node-django',
+    title:'OWASP Top 10 in Practice: Hardening Node.js & Django APIs',
+    excerpt:'A practical walkthrough of the OWASP Top 10 with real code patches — from injection flaws to security misconfiguration.',
+    cat:'Cybersecurity', tags:['OWASP','Node.js','Django','Security'],
+    read_time:'11 min read', likes:47, views:1240, featured:true,
+    cover_url:'https://images.unsplash.com/photo-1614064641938-3bbee52942c7?w=800&q=80',
+    created_at:'2025-03-01T10:00:00Z',
+    content:`# OWASP Top 10 in Practice
 
-/* ═══════════════════════════════════════════════════════════════
-   INIT
-   ═══════════════════════════════════════════════════════════════ */
-loadPosts();
+The **OWASP Top 10** is the definitive reference for web application security risks. This guide patches each one in real Node.js and Django code.
+
+> "Security is not a feature — it is a discipline." — OWASP Foundation
+
+## 1. Injection
+
+Always use **parameterised queries**. Never concatenate user input into SQL strings.
+
+\`\`\`javascript
+// ❌ BAD — vulnerable to SQL injection
+db.query("SELECT * FROM users WHERE id = " + req.params.id);
+
+// ✅ GOOD — parameterised query
+db.query("SELECT * FROM users WHERE id = $1", [req.params.id]);
+\`\`\`
+
+In **Django**, the ORM handles this by default:
+
+\`\`\`python
+# ✅ Safe — Django ORM uses parameterised queries internally
+user = User.objects.get(id=request.GET['id'])
+\`\`\`
+
+## 2. Broken Authentication
+
+Use **bcrypt** with ≥ 12 salt rounds and add rate-limiting on login endpoints.
+
+\`\`\`javascript
+const bcrypt = require('bcrypt');
+const hash = await bcrypt.hash(plainPassword, 12);
+const match = await bcrypt.compare(plainPassword, hash);
+\`\`\`
+
+## 3. Security Misconfiguration
+
+Check your HTTP headers at [securityheaders.com](https://securityheaders.com). Minimum recommended set:
+
+| Header | Recommended Value |
+|--------|-------------------|
+| Content-Security-Policy | \`default-src 'self'\` |
+| X-Frame-Options | \`DENY\` |
+| X-Content-Type-Options | \`nosniff\` |
+| Referrer-Policy | \`strict-origin-when-cross-origin\` |
+
+## 4. Broken Access Control
+
+Enforce **RBAC** on every API route server-side. Never trust client-supplied role claims.
+
+\`\`\`javascript
+function requireAdmin(req, res, next){
+  if(req.user?.role !== 'admin')
+    return res.status(403).json({ error: 'Forbidden' });
+  next();
+}
+router.delete('/posts/:id', requireAdmin, deletePost);
+\`\`\`
+
+## Conclusion
+
+Security is not a checklist — it is a mindset. Automate OWASP checks in your **CI/CD pipeline** so every pull request is scanned.
+
+![Security workflow](https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=800&q=80)`
+  },
+  {
+    id:'2', slug:'mpesa-daraja-api-node',
+    title:'Integrating M-Pesa Daraja API with Node.js: A Complete Guide',
+    excerpt:'OAuth tokens, STK Push, callback handling, and production gotchas — everything needed to accept M-Pesa payments.',
+    cat:'FullStack', tags:['M-Pesa','Node.js','Payments','FinTech'],
+    read_time:'14 min read', likes:89, views:3410, featured:false,
+    cover_url:'https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=800&q=80',
+    created_at:'2025-02-14T10:00:00Z',
+    content:`# M-Pesa Daraja API — Node.js Complete Guide
+
+**M-Pesa** processes over **$300 billion** annually in Kenya. Here is how to integrate it cleanly.
+
+## Prerequisites
+
+- Account at [developer.safaricom.co.ke](https://developer.safaricom.co.ke)
+- **Consumer Key** and **Consumer Secret** from a registered sandbox app
+- A public HTTPS callback URL (use [ngrok](https://ngrok.com) for local development)
+
+## Step 1: Get an Access Token
+
+\`\`\`javascript
+const getToken = async () => {
+  const credentials = Buffer
+    .from(\`\${process.env.CONSUMER_KEY}:\${process.env.CONSUMER_SECRET}\`)
+    .toString('base64');
+  const res = await fetch(
+    'https://api.safaricom.co.ke/oauth/v1/generate?grant_type=client_credentials',
+    { headers: { Authorization: \`Basic \${credentials}\` } }
+  );
+  const { access_token } = await res.json();
+  return access_token;
+};
+\`\`\`
+
+> Tokens expire after **3600 seconds**. Cache them in Redis or an in-memory Map.
+
+## Step 2: STK Push
+
+\`\`\`javascript
+const stkPush = async (phone, amount) => {
+  const token     = await getToken();
+  const timestamp = new Date().toISOString().replace(/[^0-9]/g,'').slice(0,14);
+  const password  = Buffer
+    .from(process.env.SHORTCODE + process.env.PASSKEY + timestamp)
+    .toString('base64');
+
+  return fetch('https://api.safaricom.co.ke/mpesa/stkpush/v1/processrequest', {
+    method: 'POST',
+    headers: { Authorization: \`Bearer \${token}\`, 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      BusinessShortCode: process.env.SHORTCODE,
+      Password: password, Timestamp: timestamp,
+      TransactionType: 'CustomerPayBillOnline',
+      Amount: amount, PartyA: phone, PartyB: process.env.SHORTCODE,
+      PhoneNumber: phone, CallBackURL: process.env.CALLBACK_URL,
+      AccountReference: 'JamesDev', TransactionDesc: 'Payment'
+    })
+  }).then(r => r.json());
+};
+\`\`\`
+
+## Production Tips
+
+- Always **validate callbacks** — Safaricom signs requests with a secret
+- **Store pending transactions** before the STK push (prevent data loss)
+- Use **idempotency keys** to handle duplicate callbacks gracefully
+- **Never hardcode credentials** — use environment variables`
+  },
+  {
+    id:'3', slug:'supabase-vs-firebase-2024',
+    title:'Supabase vs Firebase: An Honest Comparison for African Developers',
+    excerpt:'Pricing, latency from Nairobi, SQL vs NoSQL — a data-driven comparison to help you choose the right backend.',
+    cat:'DevTools', tags:['Supabase','Firebase','Backend','Comparison'],
+    read_time:'9 min read', likes:61, views:2180, featured:false,
+    cover_url:'https://images.unsplash.com/photo-1633356122544-f134324a6cee?w=800&q=80',
+    created_at:'2025-01-28T10:00:00Z',
+    content:`# Supabase vs Firebase for African Developers
+
+Both offer generous free tiers and fast prototyping. But they are very different tools.
+
+## Database Model
+
+**Firebase Firestore** is a NoSQL document store. Great for hierarchical data and real-time listeners. Schemaless means fast iteration but messy data at scale.
+
+**Supabase** uses **PostgreSQL** — full SQL: JOINs, foreign keys, triggers, Row Level Security. Better for relational data (orders → products → users).
+
+## Pricing Comparison
+
+| Feature | Firebase Free | Supabase Free |
+|---------|--------------|---------------|
+| Reads | 50,000 / day | Unlimited |
+| Storage | 1 GB | 500 MB |
+| Auth users | Unlimited | 50,000 |
+| SQL support | ❌ | ✅ |
+| Row Level Security | ❌ | ✅ |
+
+## Latency from Nairobi
+
+Both route through **European data centres** for African users (~180ms). Neither has an African region yet, though Supabase can be self-hosted on AWS Cape Town.
+
+## My Recommendation
+
+- 🟣 **Relational data / HealthTech / FinTech** → **Supabase** (SQL, RLS, audit trails)
+- 🟠 **Real-time apps, rapid prototypes** → Firebase still holds an edge
+- 🔐 **Regulated environments** → Supabase (HIPAA BAA available)
+
+![Backend comparison](https://images.unsplash.com/photo-1544383835-bda2bc66a55d?w=800&q=80)`
+  }
+];
+
+/* ══════════════════════════════════════════════════════════════
+   INIT — wait for DOM before touching any elements or meta tags
+   ══════════════════════════════════════════════════════════════ */
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', loadPosts);
+} else {
+  // DOM already parsed (script is deferred or at bottom of body)
+  loadPosts();
+}
 </script>
 </body>
 </html>

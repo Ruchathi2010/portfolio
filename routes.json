@@ -1,0 +1,5 @@
+{
+  "version": 1,
+  "include": ["/blog.html", "/blog"],
+  "exclude": []
+}

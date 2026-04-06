@@ -231,16 +231,27 @@ ul, ol { list-style:none; }
 .nav-logo {
   display:flex; align-items:center; gap:0.65rem;
   text-decoration:none; flex-shrink:0;
+  overflow:visible;          /* Fix 3: never clip the logo area */
+  min-width:0;
 }
 .nav-logo-mark { width:36px; height:36px; flex-shrink:0; }
+.nav-logo-text {
+  overflow:visible;          /* Fix 3: parent container must not clip */
+  min-width:0;
+}
 .nav-logo-text .name {
-  font-family: var(--font-display); font-size:1rem; font-weight:700;
+  font-family: var(--font-display); font-weight:700;
+  font-size: clamp(0.78rem, 2.5vw, 1rem); /* Fix 1: fluid — scales down on mobile */
   color:var(--text); letter-spacing:-0.02em; line-height:1.1;
+  white-space: nowrap;       /* Fix 1: always one line, never wraps */
+  overflow: visible;         /* Fix 3: text never gets cut off */
 }
 .nav-logo-text .name span { color:var(--accent); }
 .nav-logo-text .role {
-  font-family: var(--font-mono); font-size:0.5rem; color:var(--text3);
-  letter-spacing:0.08em; line-height:1;
+  font-family: var(--font-mono);
+  font-size: clamp(0.44rem, 1.2vw, 0.5rem); /* also fluid on mobile */
+  color:var(--text3); letter-spacing:0.08em; line-height:1;
+  white-space: nowrap;       /* subtitle stays on one line too */
 }
 .nav-links { display:flex; align-items:center; gap:0.2rem; }
 .nav-links a {
@@ -423,9 +434,19 @@ ul, ol { list-style:none; }
 .footer-brand .fb-logo {
   display:flex; align-items:center; gap:0.65rem; margin-bottom:1rem;
 }
-.fb-name { font-family:var(--font-display); font-size:1rem; font-weight:700; letter-spacing:-0.02em; }
+.fb-name {
+  font-family:var(--font-display);
+  font-size: clamp(0.78rem, 2.5vw, 1rem); /* matches nav name sizing */
+  font-weight:700; letter-spacing:-0.02em;
+  white-space: nowrap;  /* never break the footer brand name */
+  overflow: visible;
+}
 .fb-name span { color:var(--accent); }
-.fb-role { font-family:var(--font-mono); font-size:0.52rem; color:var(--text3); margin-top:0.15rem; }
+.fb-role {
+  font-family:var(--font-mono); font-size:0.52rem;
+  color:var(--text3); margin-top:0.15rem;
+  white-space: nowrap;
+}
 .footer-bio { font-size:var(--text-sm); color:var(--text3); line-height:1.7; max-width:340px; }
 .footer-cols { display:grid; grid-template-columns:repeat(3,1fr); gap:2rem; }
 .fc-title {

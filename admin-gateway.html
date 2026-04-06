@@ -1,0 +1,729 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin Gateway — James.dev</title>
+<!-- SECURITY: Add noindex so search engines never find this page -->
+<meta name="robots" content="noindex, nofollow">
+<!-- SECURITY: No OG tags — no social previews -->
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=DM+Mono:wght@400;500;600&family=Fraunces:wght@700;900&display=swap" rel="stylesheet">
+
+<style>
+/* ═══════════════════════════════════════════════════════════════
+   ADMIN GATEWAY — Self-contained dark theme (no style.css import)
+   Matches the shop's slate/emerald palette exactly.
+   ═══════════════════════════════════════════════════════════════ */
+:root {
+  --bg:     #0f172a; --bg2: #1e293b; --bg3: #253347; --bg4: #334155;
+  --text:   #f8fafc; --text2: #94a3b8; --text3: #475569;
+  --accent: #6366f1; --accent2: #818cf8; --accent3: #c7d2fe;
+  --green:  #22d3a5; --green-dim: rgba(34,211,165,.1);
+  --rose:   #f43f5e; --amber: #f59e0b;
+  --border: rgba(255,255,255,.06); --border2: rgba(255,255,255,.10);
+  --shadow: 0 24px 64px rgba(0,0,0,.55);
+  --r: 10px; --r2: 16px; --r3: 24px;
+  --t: all .25s cubic-bezier(.4,0,.2,1);
+  --font-body:    'DM Sans', system-ui, sans-serif;
+  --font-mono:    'DM Mono', monospace;
+  --font-display: 'Fraunces', Georgia, serif;
+}
+
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+html { font-size:16px; }
+body {
+  font-family: var(--font-body); background: var(--bg);
+  color: var(--text); line-height: 1.65; min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+}
+a { color: var(--accent2); text-decoration:none; }
+
+/* ── Auth screen ───────────────────────────────────────────────── */
+.auth-screen {
+  display:flex; align-items:center; justify-content:center;
+  min-height:100vh; padding:2rem;
+}
+.auth-card {
+  background: var(--bg2); border: 1px solid var(--border2);
+  border-radius: var(--r3); padding: 3rem;
+  width:100%; max-width:420px;
+  box-shadow: var(--shadow); text-align:center;
+}
+.auth-logo { font-size:2.5rem; margin-bottom:1rem; }
+.auth-title { font-family: var(--font-display); font-size:1.75rem; font-weight:900; margin-bottom:.35rem; }
+.auth-sub   { font-family: var(--font-mono); font-size:.65rem; color:var(--text3); letter-spacing:.1em; text-transform:uppercase; margin-bottom:2rem; }
+.auth-input {
+  width:100%; background:var(--bg3); border:1px solid var(--border2); color:var(--text);
+  border-radius:var(--r); padding:.85rem 1rem; font-size:.9rem; font-family:var(--font-body);
+  outline:none; transition:border-color .2s; margin-bottom:1rem; text-align:center;
+  letter-spacing:.3em; font-family:var(--font-mono);
+}
+.auth-input:focus { border-color:var(--accent); box-shadow:0 0 0 3px rgba(99,102,241,.14); }
+.auth-btn {
+  width:100%; padding:.9rem; background:var(--accent); color:#fff;
+  font-size:.95rem; font-weight:700; border:none; border-radius:var(--r);
+  cursor:pointer; font-family:var(--font-body); transition:var(--t);
+}
+.auth-btn:hover { background:var(--accent2); }
+.auth-error { color:var(--rose); font-size:.82rem; margin-top:.75rem; font-family:var(--font-mono); }
+
+/* ── Admin shell ───────────────────────────────────────────────── */
+.admin-shell { display:none; }
+.admin-shell.show { display:block; }
+
+.admin-header {
+  position:sticky; top:0; z-index:100;
+  background:rgba(15,23,42,.92); backdrop-filter:blur(20px);
+  border-bottom:1px solid var(--border2);
+  padding:.9rem 2rem;
+  display:flex; align-items:center; justify-content:space-between;
+}
+.admin-header h1 {
+  font-family:var(--font-display); font-size:1.25rem; font-weight:900;
+  display:flex; align-items:center; gap:.5rem;
+}
+.admin-header .badge {
+  font-family:var(--font-mono); font-size:.58rem; background:var(--rose);
+  color:#fff; padding:.15rem .55rem; border-radius:100px; letter-spacing:.08em;
+}
+.logout-btn {
+  font-family:var(--font-mono); font-size:.65rem; color:var(--text3);
+  border:1px solid var(--border2); background:transparent;
+  padding:.35rem .8rem; border-radius:6px; cursor:pointer; transition:var(--t);
+}
+.logout-btn:hover { border-color:var(--rose); color:var(--rose); }
+
+.admin-body { max-width:1100px; margin:0 auto; padding:2rem; display:grid; gap:2rem; }
+
+/* ── Panels ────────────────────────────────────────────────────── */
+.panel {
+  background: var(--bg2); border: 1px solid var(--border2);
+  border-radius: var(--r2); overflow:hidden;
+}
+.panel-head {
+  display:flex; align-items:center; gap:.75rem;
+  padding:1.25rem 1.5rem; border-bottom:1px solid var(--border);
+  background:rgba(255,255,255,.02);
+}
+.panel-icon { font-size:1.3rem; }
+.panel-title { font-size:1rem; font-weight:700; }
+.panel-sub   { font-family:var(--font-mono); font-size:.6rem; color:var(--text3); margin-top:.1rem; }
+.panel-body  { padding:1.5rem; }
+
+/* ── Form elements ─────────────────────────────────────────────── */
+.form-grid { display:grid; grid-template-columns:1fr 1fr; gap:1rem; margin-bottom:1rem; }
+.fg { display:flex; flex-direction:column; gap:.35rem; }
+.fg.full { grid-column:1/-1; }
+.fg label { font-family:var(--font-mono); font-size:.65rem; color:var(--text2); text-transform:uppercase; letter-spacing:.07em; font-weight:600; }
+.fg input, .fg textarea, .fg select {
+  background:var(--bg3); border:1px solid var(--border2); color:var(--text);
+  border-radius:var(--r); padding:.72rem 1rem; font-size:.875rem;
+  font-family:var(--font-body); outline:none; transition:border-color .2s, box-shadow .2s; width:100%;
+}
+.fg input:focus, .fg textarea:focus, .fg select:focus {
+  border-color:var(--accent); box-shadow:0 0 0 3px rgba(99,102,241,.14);
+}
+.fg textarea { height:90px; resize:vertical; }
+.fg select option { background:var(--bg3); }
+.fg .hint { font-family:var(--font-mono); font-size:.58rem; color:var(--text3); margin-top:.2rem; }
+
+.btn { display:inline-flex; align-items:center; gap:.45rem; font-size:.85rem; font-weight:600; border-radius:var(--r); padding:.7rem 1.5rem; transition:var(--t); font-family:var(--font-body); cursor:pointer; border:none; white-space:nowrap; }
+.btn-primary { background:var(--accent); color:#fff; }
+.btn-primary:hover { background:var(--accent2); }
+.btn-green { background:var(--green); color:var(--bg); }
+.btn-green:hover { filter:brightness(1.1); }
+.btn-outline { border:1px solid var(--border2); color:var(--text2); background:transparent; }
+.btn-outline:hover { border-color:var(--accent); color:var(--text); }
+.btn-sm { padding:.45rem 1rem; font-size:.78rem; }
+.btn:disabled { opacity:.5; cursor:not-allowed; }
+
+/* ── Status chip ───────────────────────────────────────────────── */
+.status-chip { display:inline-flex; align-items:center; gap:.3rem; font-family:var(--font-mono); font-size:.62rem; padding:.2rem .65rem; border-radius:100px; font-weight:700; white-space:nowrap; }
+.s-pending    { background:rgba(245,158,11,.12); color:var(--amber); border:1px solid rgba(245,158,11,.25); }
+.s-shipped    { background:rgba(99,102,241,.12);  color:var(--accent2); border:1px solid rgba(99,102,241,.25); }
+.s-delivered  { background:rgba(34,211,165,.12); color:var(--green); border:1px solid rgba(34,211,165,.25); }
+.s-transit    { background:rgba(14,165,233,.12); color:#38bdf8; border:1px solid rgba(14,165,233,.25); }
+
+/* ── Orders table ──────────────────────────────────────────────── */
+.orders-table-wrap { overflow-x:auto; border-radius:var(--r); }
+table { width:100%; border-collapse:collapse; font-size:.82rem; }
+thead th { background:var(--bg3); color:var(--text2); font-family:var(--font-mono); font-size:.62rem; text-transform:uppercase; letter-spacing:.08em; padding:.75rem 1rem; text-align:left; border-bottom:2px solid var(--border2); white-space:nowrap; }
+tbody td { padding:.75rem 1rem; border-bottom:1px solid var(--border); color:var(--text2); vertical-align:middle; }
+tbody tr:last-child td { border-bottom:none; }
+tbody tr:hover td { background:rgba(255,255,255,.02); }
+.td-order-id { font-family:var(--font-mono); font-size:.7rem; color:var(--accent2); }
+.td-name { font-weight:600; color:var(--text); }
+.td-total { font-family:var(--font-mono); font-weight:700; color:var(--text); }
+
+/* ── Inline order edit form ────────────────────────────────────── */
+.order-edit-row { background:var(--bg3) !important; }
+.order-edit-row td { padding:1rem; }
+.order-edit-inner {
+  display:grid; grid-template-columns:1fr 1fr auto; gap:.75rem; align-items:end;
+}
+
+/* ── Toast ─────────────────────────────────────────────────────── */
+.toast {
+  position:fixed; bottom:2rem; left:50%; transform:translateX(-50%) translateY(80px);
+  background:var(--bg2); border:1px solid var(--border2); color:var(--text);
+  padding:.65rem 1.5rem; border-radius:var(--r); font-size:.82rem; font-weight:500;
+  z-index:9999; transition:transform .35s; white-space:nowrap; box-shadow:var(--shadow);
+}
+.toast.show    { transform:translateX(-50%) translateY(0); }
+.toast.success { border-color:var(--green); color:var(--green); }
+.toast.error   { border-color:var(--rose);  color:var(--rose); }
+
+/* ── Spinner ────────────────────────────────────────────────────── */
+.spinner-sm { width:16px; height:16px; border:2px solid rgba(255,255,255,.3); border-top-color:#fff; border-radius:50%; animation:spin .7s linear infinite; }
+@keyframes spin { to { transform:rotate(360deg); } }
+
+/* ── Returns list ──────────────────────────────────────────────── */
+.return-card { background:var(--bg3); border:1px solid var(--border2); border-radius:var(--r); padding:1rem; margin-bottom:.75rem; display:flex; align-items:center; gap:1rem; flex-wrap:wrap; }
+.return-card-info { flex:1; }
+.return-order-id { font-family:var(--font-mono); font-size:.7rem; color:var(--accent2); }
+.return-reason   { font-size:.85rem; font-weight:600; margin:.2rem 0; }
+.return-meta     { font-family:var(--font-mono); font-size:.65rem; color:var(--text3); }
+
+/* ── Tabs ───────────────────────────────────────────────────────── */
+.tab-nav { display:flex; gap:.25rem; background:var(--bg3); border-radius:var(--r); padding:.3rem; margin-bottom:1.5rem; }
+.tab-btn { flex:1; text-align:center; font-family:var(--font-mono); font-size:.68rem; padding:.55rem; border-radius:8px; cursor:pointer; color:var(--text3); background:transparent; border:none; transition:var(--t); text-transform:uppercase; letter-spacing:.07em; font-family:var(--font-body); font-size:.82rem; font-weight:600; }
+.tab-btn.active { background:var(--accent); color:#fff; }
+.tab-panel { display:none; }
+.tab-panel.active { display:block; }
+
+/* Responsive */
+@media(max-width:640px) {
+  .form-grid { grid-template-columns:1fr; }
+  .order-edit-inner { grid-template-columns:1fr; }
+  .admin-body { padding:1rem; }
+  table { font-size:.75rem; }
+}
+</style>
+</head>
+<body>
+
+<!-- ══════════════════════════════════════════════════════════════
+     AUTH GATE — simple password check (client-side only)
+     For production, replace with Supabase Auth:
+     https://supabase.com/docs/guides/auth
+     ══════════════════════════════════════════════════════════════ -->
+<div class="auth-screen" id="authScreen">
+  <div class="auth-card">
+    <div class="auth-logo">🔐</div>
+    <h1 class="auth-title">Admin Gateway</h1>
+    <p class="auth-sub">// James.dev · Restricted access</p>
+    <input class="auth-input" id="authPin" type="password"
+           placeholder="Enter PIN" maxlength="20"
+           onkeydown="if(event.key==='Enter')checkAuth()">
+    <button class="auth-btn" onclick="checkAuth()">Enter</button>
+    <p class="auth-error" id="authError" style="display:none">Incorrect PIN. Try again.</p>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════════
+     ADMIN SHELL (shown after auth)
+     ══════════════════════════════════════════════════════════════ -->
+<div class="admin-shell" id="adminShell">
+
+  <header class="admin-header">
+    <h1>🛠 Admin Gateway <span class="badge">PRIVATE</span></h1>
+    <button class="logout-btn" onclick="logout()">🔒 Lock</button>
+  </header>
+
+  <div class="admin-body">
+
+    <!-- ── TAB NAVIGATION ── -->
+    <div class="tab-nav" role="tablist">
+      <button class="tab-btn active" onclick="switchTab('products')" role="tab">📦 Products</button>
+      <button class="tab-btn"        onclick="switchTab('orders')"   role="tab">📋 Orders</button>
+      <button class="tab-btn"        onclick="switchTab('returns')"  role="tab">🔁 Returns</button>
+    </div>
+
+    <!-- ══ TAB: PRODUCTS ══ -->
+    <div class="tab-panel active" id="tab-products">
+
+      <!-- Upload new product -->
+      <div class="panel">
+        <div class="panel-head">
+          <span class="panel-icon">➕</span>
+          <div>
+            <div class="panel-title">Add New Product</div>
+            <div class="panel-sub">// Saves directly to Supabase `products` table</div>
+          </div>
+        </div>
+        <div class="panel-body">
+          <div class="form-grid">
+            <div class="fg">
+              <label>Product Name *</label>
+              <input id="pName" type="text" placeholder="Keychron K2 Pro">
+            </div>
+            <div class="fg">
+              <label>SKU</label>
+              <input id="pSku" type="text" placeholder="PKB-001">
+            </div>
+            <div class="fg">
+              <label>Category *</label>
+              <select id="pCat">
+                <option value="Keyboards">Keyboards</option>
+                <option value="Mice">Mice</option>
+                <option value="Hubs & Docks">Hubs &amp; Docks</option>
+                <option value="Accessories">Accessories</option>
+                <option value="Monitors">Monitors</option>
+                <option value="Other">Other</option>
+              </select>
+            </div>
+            <div class="fg">
+              <label>Price (KES) *</label>
+              <input id="pPrice" type="number" placeholder="18500" min="0">
+            </div>
+            <div class="fg">
+              <label>Original / RRP (KES)</label>
+              <input id="pOriginal" type="number" placeholder="22000 (optional)" min="0">
+            </div>
+            <div class="fg">
+              <label>Stock Quantity *</label>
+              <input id="pStock" type="number" placeholder="10" min="0">
+            </div>
+            <div class="fg full">
+              <label>Description *</label>
+              <textarea id="pDesc" placeholder="Brief product description shown in the shop…"></textarea>
+            </div>
+            <div class="fg full">
+              <label>Image URL *</label>
+              <input id="pImg" type="url" placeholder="https://images.unsplash.com/photo-…?w=600&q=80">
+              <span class="hint">Host on Unsplash, Cloudinary, or your own CDN. Must be a direct .jpg/.png/.webp URL.</span>
+            </div>
+            <div class="fg">
+              <label>Tags (comma-separated)</label>
+              <input id="pTags" type="text" placeholder="mechanical, wireless, productivity">
+            </div>
+            <div class="fg">
+              <label>Rating (1–5)</label>
+              <input id="pRating" type="number" placeholder="4.8" min="0" max="5" step="0.1">
+            </div>
+          </div>
+          <div style="display:flex;align-items:center;gap:1rem;flex-wrap:wrap">
+            <label style="display:flex;align-items:center;gap:.5rem;cursor:pointer;font-size:.85rem;color:var(--text2)">
+              <input type="checkbox" id="pFeatured" style="accent-color:var(--accent)"> Mark as Featured
+            </label>
+            <label style="display:flex;align-items:center;gap:.5rem;cursor:pointer;font-size:.85rem;color:var(--text2)">
+              <input type="checkbox" id="pActive" checked style="accent-color:var(--green)"> Active (visible in shop)
+            </label>
+            <button class="btn btn-green" onclick="uploadProduct()" id="btnUpload" style="margin-left:auto">
+              ➕ Add Product
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Existing products list -->
+      <div class="panel" style="margin-top:1.5rem">
+        <div class="panel-head">
+          <span class="panel-icon">📦</span>
+          <div>
+            <div class="panel-title">Existing Products</div>
+            <div class="panel-sub">// Live from Supabase — click any row to toggle active/inactive</div>
+          </div>
+          <button class="btn btn-outline btn-sm" style="margin-left:auto" onclick="loadExistingProducts()">↺ Refresh</button>
+        </div>
+        <div class="panel-body">
+          <div id="existingProductsList">
+            <div style="color:var(--text3);font-family:var(--font-mono);font-size:.8rem">Loading…</div>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /tab-products -->
+
+    <!-- ══ TAB: ORDERS ══ -->
+    <div class="tab-panel" id="tab-orders">
+      <div class="panel">
+        <div class="panel-head">
+          <span class="panel-icon">📋</span>
+          <div>
+            <div class="panel-title">Order Management</div>
+            <div class="panel-sub">// Update status &amp; add DHL tracking numbers</div>
+          </div>
+          <button class="btn btn-outline btn-sm" style="margin-left:auto" onclick="loadOrders()">↺ Refresh</button>
+        </div>
+        <div class="panel-body" style="padding:0">
+          <div class="orders-table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Order ID</th>
+                  <th>Customer</th>
+                  <th>Zone</th>
+                  <th>Total (KES)</th>
+                  <th>Status</th>
+                  <th>Date</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody id="ordersTableBody">
+                <tr><td colspan="7" style="text-align:center;padding:2rem;color:var(--text3);font-family:var(--font-mono)">Loading orders…</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div><!-- /tab-orders -->
+
+    <!-- ══ TAB: RETURNS ══ -->
+    <div class="tab-panel" id="tab-returns">
+      <div class="panel">
+        <div class="panel-head">
+          <span class="panel-icon">🔁</span>
+          <div>
+            <div class="panel-title">Return Requests</div>
+            <div class="panel-sub">// Pending customer return requests</div>
+          </div>
+          <button class="btn btn-outline btn-sm" style="margin-left:auto" onclick="loadReturns()">↺ Refresh</button>
+        </div>
+        <div class="panel-body" id="returnsPanel">
+          <div style="color:var(--text3);font-family:var(--font-mono);font-size:.8rem">Loading…</div>
+        </div>
+      </div>
+    </div><!-- /tab-returns -->
+
+  </div><!-- /admin-body -->
+</div><!-- /admin-shell -->
+
+<div class="toast" id="toast" role="alert" aria-live="assertive"></div>
+
+<!-- Supabase CDN -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+
+<script>
+'use strict';
+
+/* ══════════════════════════════════════════════════════════════
+   CONFIG
+   ══════════════════════════════════════════════════════════════ */
+const SUPABASE_URL  = 'https://abgmvftptdkrztfflxbn.supabase.co';
+const SUPABASE_ANON = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImFiZ212ZnRwdGRrcnp0ZmZseGJuIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQwODY2ODgsImV4cCI6MjA4OTY2MjY4OH0.WstNFP-z1BnaVE-LuDHx1qU-4H342t2DaU7Lud_Vvi4';
+const sb = supabase.createClient(SUPABASE_URL, SUPABASE_ANON);
+
+/*
+   ┌─────────────────────────────────────────────────────────────┐
+   │  SECURITY NOTE                                              │
+   │  This file uses a simple client-side PIN gate.             │
+   │  For true security, replace this with Supabase Auth:       │
+   │  sb.auth.signInWithPassword({ email, password })           │
+   │  Then use authenticated RLS policies on your tables.       │
+   │                                                             │
+   │  DO NOT commit this file to a public GitHub repo.          │
+   │  Add it to .gitignore or deploy only to Cloudflare Pages.  │
+   └─────────────────────────────────────────────────────────────┘
+*/
+
+// Change this PIN to something long and unique. Store it only in your head.
+// For production: replace with Supabase Auth email/password login.
+const ADMIN_PIN = 'JM@Admin2025!';
+
+/* ══════════════════════════════════════════════════════════════
+   AUTH GATE
+   ══════════════════════════════════════════════════════════════ */
+function checkAuth(){
+  const pin = document.getElementById('authPin').value;
+  if(pin === ADMIN_PIN){
+    sessionStorage.setItem('jm_admin', '1');
+    document.getElementById('authScreen').style.display = 'none';
+    document.getElementById('adminShell').classList.add('show');
+    loadOrders();
+    loadExistingProducts();
+    loadReturns();
+  } else {
+    document.getElementById('authError').style.display = 'block';
+    document.getElementById('authPin').value = '';
+    document.getElementById('authPin').focus();
+  }
+}
+
+function logout(){
+  sessionStorage.removeItem('jm_admin');
+  location.reload();
+}
+
+// Re-check session on load (persists for tab lifetime)
+if(sessionStorage.getItem('jm_admin') === '1'){
+  document.getElementById('authScreen').style.display = 'none';
+  document.getElementById('adminShell').classList.add('show');
+}
+
+/* ══════════════════════════════════════════════════════════════
+   TOAST
+   ══════════════════════════════════════════════════════════════ */
+function showToast(msg, type = ''){
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.className   = 'toast show' + (type ? ' ' + type : '');
+  setTimeout(() => t.classList.remove('show'), 3500);
+}
+
+/* ══════════════════════════════════════════════════════════════
+   TABS
+   ══════════════════════════════════════════════════════════════ */
+function switchTab(tab){
+  document.querySelectorAll('.tab-btn').forEach((b,i) => {
+    b.classList.toggle('active', b.textContent.toLowerCase().includes(tab));
+  });
+  document.querySelectorAll('.tab-panel').forEach(p => {
+    p.classList.toggle('active', p.id === 'tab-' + tab);
+  });
+}
+
+/* ══════════════════════════════════════════════════════════════
+   UTILITIES
+   ══════════════════════════════════════════════════════════════ */
+function esc(s){ return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+function fmtDate(iso){ return iso ? new Date(iso).toLocaleDateString('en-GB',{day:'numeric',month:'short',year:'numeric'}) : '—'; }
+function fmtKES(n){ return 'KES ' + Number(n||0).toLocaleString('en-KE'); }
+
+function statusChip(status){
+  const map = {
+    pending:'s-pending', processing:'s-pending', paid:'s-pending',
+    shipped:'s-shipped', 'in transit':'s-transit', in_transit:'s-transit',
+    delivered:'s-delivered'
+  };
+  const cls = map[(status||'').toLowerCase()] || 's-pending';
+  return `<span class="status-chip ${cls}">${esc(status||'pending')}</span>`;
+}
+
+/* ══════════════════════════════════════════════════════════════
+   UPLOAD NEW PRODUCT
+   ══════════════════════════════════════════════════════════════ */
+async function uploadProduct(){
+  const btn  = document.getElementById('btnUpload');
+  const name = document.getElementById('pName').value.trim();
+  const cat  = document.getElementById('pCat').value;
+  const price= parseFloat(document.getElementById('pPrice').value);
+  const stock= parseInt(document.getElementById('pStock').value, 10);
+  const desc = document.getElementById('pDesc').value.trim();
+  const img  = document.getElementById('pImg').value.trim();
+
+  // Basic validation
+  if(!name || !cat || isNaN(price) || isNaN(stock) || !desc || !img){
+    showToast('Please fill in all required fields.', 'error'); return;
+  }
+
+  const original = parseFloat(document.getElementById('pOriginal').value) || null;
+  const rating   = parseFloat(document.getElementById('pRating').value)   || null;
+  const tagsRaw  = document.getElementById('pTags').value;
+  const tags     = tagsRaw ? tagsRaw.split(',').map(t => t.trim()).filter(Boolean) : [];
+  const sku      = document.getElementById('pSku').value.trim() || null;
+
+  btn.disabled = true;
+  btn.innerHTML = '<div class="spinner-sm"></div> Uploading…';
+
+  try {
+    const { error } = await sb.from('products').insert({
+      name,
+      sku,
+      category:       cat,
+      price,
+      original_price: original,
+      stock,
+      description:    desc,
+      image_url:      img,
+      tags,
+      rating,
+      review_count:   0,
+      featured:       document.getElementById('pFeatured').checked,
+      active:         document.getElementById('pActive').checked,
+      currency:       'KES'
+    });
+    if(error) throw error;
+
+    showToast('Product added successfully! ✓', 'success');
+    // Clear form
+    ['pName','pSku','pPrice','pOriginal','pStock','pDesc','pImg','pTags','pRating'].forEach(id => { document.getElementById(id).value = ''; });
+    document.getElementById('pFeatured').checked = false;
+    document.getElementById('pActive').checked   = true;
+    loadExistingProducts();
+  } catch(err){
+    console.error(err);
+    showToast('Upload failed: ' + err.message, 'error');
+  } finally {
+    btn.disabled = false;
+    btn.textContent = '➕ Add Product';
+  }
+}
+
+/* ══════════════════════════════════════════════════════════════
+   LOAD EXISTING PRODUCTS
+   ══════════════════════════════════════════════════════════════ */
+async function loadExistingProducts(){
+  const el = document.getElementById('existingProductsList');
+  el.innerHTML = '<div style="color:var(--text3);font-family:var(--font-mono);font-size:.8rem">Loading…</div>';
+  try {
+    const { data, error } = await sb.from('products').select('id,name,price,category,stock,active,featured').order('created_at',{ascending:false});
+    if(error) throw error;
+    if(!data || !data.length){ el.innerHTML = '<p style="color:var(--text3);font-size:.85rem">No products yet.</p>'; return; }
+
+    el.innerHTML = `<div style="overflow-x:auto"><table>
+      <thead><tr><th>Name</th><th>Category</th><th>Price</th><th>Stock</th><th>Status</th><th>Featured</th><th>Action</th></tr></thead>
+      <tbody>
+        ${data.map(p => `
+          <tr>
+            <td class="td-name">${esc(p.name)}</td>
+            <td style="color:var(--text3)">${esc(p.category)}</td>
+            <td class="td-total">${fmtKES(p.price)}</td>
+            <td style="font-family:var(--font-mono)">${p.stock}</td>
+            <td>${p.active ? '<span class="status-chip s-delivered">Active</span>' : '<span class="status-chip s-pending">Hidden</span>'}</td>
+            <td>${p.featured ? '⭐' : '—'}</td>
+            <td><button class="btn btn-outline btn-sm" onclick="toggleProductActive('${esc(p.id)}',${p.active})">${p.active ? 'Hide' : 'Show'}</button></td>
+          </tr>`).join('')}
+      </tbody>
+    </table></div>`;
+  } catch(err){
+    el.innerHTML = `<p style="color:var(--rose);font-size:.85rem">Error: ${esc(err.message)}</p>`;
+  }
+}
+
+async function toggleProductActive(id, currentState){
+  const { error } = await sb.from('products').update({ active: !currentState }).eq('id', id);
+  if(error){ showToast('Update failed: ' + error.message, 'error'); return; }
+  showToast('Product visibility updated ✓', 'success');
+  loadExistingProducts();
+}
+
+/* ══════════════════════════════════════════════════════════════
+   LOAD ORDERS
+   ══════════════════════════════════════════════════════════════ */
+async function loadOrders(){
+  const tbody = document.getElementById('ordersTableBody');
+  tbody.innerHTML = '<tr><td colspan="7" style="text-align:center;padding:2rem;color:var(--text3);font-family:var(--font-mono)">Loading…</td></tr>';
+  try {
+    const { data, error } = await sb
+      .from('orders')
+      .select('id,customer_name,customer_email,customer_phone,total,status,shipping_zone,shipping_carrier,tracking_number,created_at')
+      .order('created_at', { ascending: false })
+      .limit(100);
+    if(error) throw error;
+
+    if(!data || !data.length){
+      tbody.innerHTML = '<tr><td colspan="7" style="text-align:center;padding:2rem;color:var(--text3)">No orders yet.</td></tr>';
+      return;
+    }
+
+    tbody.innerHTML = data.map(o => {
+      const ref = '#JM-' + o.id.slice(-8).toUpperCase();
+      return `
+        <tr id="orow-${esc(o.id)}">
+          <td class="td-order-id">${esc(ref)}</td>
+          <td class="td-name">${esc(o.customer_name)}<br><span style="font-family:var(--font-mono);font-size:.65rem;color:var(--text3)">${esc(o.customer_phone||'')}</span></td>
+          <td style="font-family:var(--font-mono);font-size:.7rem">${esc(o.shipping_zone||'—')}</td>
+          <td class="td-total">${fmtKES(o.total)}</td>
+          <td>${statusChip(o.status)}</td>
+          <td style="font-family:var(--font-mono);font-size:.7rem;color:var(--text3)">${fmtDate(o.created_at)}</td>
+          <td><button class="btn btn-outline btn-sm" onclick="toggleEditRow('${esc(o.id)}', '${esc(o.status)}', '${esc(o.tracking_number||'')}', '${esc(o.shipping_carrier||'')}')">✏️ Update</button></td>
+        </tr>
+        <tr class="order-edit-row" id="oedit-${esc(o.id)}" style="display:none">
+          <td colspan="7">
+            <div class="order-edit-inner">
+              <div class="fg">
+                <label>New Status</label>
+                <select id="os-${esc(o.id)}">
+                  <option value="pending">Pending</option>
+                  <option value="processing">Processing</option>
+                  <option value="paid">Paid</option>
+                  <option value="shipped">Shipped</option>
+                  <option value="in_transit">In Transit</option>
+                  <option value="delivered">Delivered</option>
+                </select>
+              </div>
+              <div class="fg">
+                <label>DHL / Carrier Tracking Number</label>
+                <input type="text" id="otrack-${esc(o.id)}" placeholder="e.g. 1234567890">
+              </div>
+              <button class="btn btn-green" onclick="updateOrder('${esc(o.id)}')">Save</button>
+            </div>
+          </td>
+        </tr>`;
+    }).join('');
+
+  } catch(err){
+    tbody.innerHTML = `<tr><td colspan="7" style="color:var(--rose);padding:1.5rem;font-family:var(--font-mono)">${esc(err.message)}</td></tr>`;
+  }
+}
+
+function toggleEditRow(orderId, currentStatus, currentTracking, currentCarrier){
+  const row = document.getElementById('oedit-' + orderId);
+  const sel = document.getElementById('os-' + orderId);
+  const inp = document.getElementById('otrack-' + orderId);
+  if(!row) return;
+  const isHidden = row.style.display === 'none';
+  row.style.display = isHidden ? 'table-row' : 'none';
+  if(isHidden){
+    if(sel) sel.value = currentStatus;
+    if(inp) inp.value = currentTracking;
+  }
+}
+
+async function updateOrder(orderId){
+  const status   = document.getElementById('os-' + orderId)?.value;
+  const tracking = document.getElementById('otrack-' + orderId)?.value.trim() || null;
+
+  const payload = { status };
+  if(tracking){
+    payload.tracking_number = tracking;
+    // Build DHL tracking URL automatically
+    payload.tracking_url = `https://www.dhl.com/ke-en/home/tracking/tracking-express.html?submit=1&tracking-id=${encodeURIComponent(tracking)}`;
+  }
+  payload.updated_at = new Date().toISOString();
+
+  const { error } = await sb.from('orders').update(payload).eq('id', orderId);
+  if(error){ showToast('Update failed: ' + error.message, 'error'); return; }
+  showToast('Order updated successfully ✓', 'success');
+  document.getElementById('oedit-' + orderId).style.display = 'none';
+  loadOrders();
+}
+
+/* ══════════════════════════════════════════════════════════════
+   LOAD RETURNS
+   ══════════════════════════════════════════════════════════════ */
+async function loadReturns(){
+  const panel = document.getElementById('returnsPanel');
+  panel.innerHTML = '<div style="color:var(--text3);font-family:var(--font-mono);font-size:.8rem">Loading…</div>';
+  try {
+    const { data, error } = await sb
+      .from('returns')
+      .select('id,order_id,customer_email,reason,notes,status,created_at')
+      .order('created_at', { ascending: false });
+    if(error) throw error;
+
+    if(!data || !data.length){
+      panel.innerHTML = '<p style="color:var(--text3);font-size:.85rem">No return requests yet. 🎉</p>';
+      return;
+    }
+
+    panel.innerHTML = data.map(r => `
+      <div class="return-card">
+        <div style="font-size:1.5rem">${r.reason?.includes('damaged')||r.reason?.includes('Damaged') ? '📦' : r.reason?.includes('Wrong') ? '🔄' : r.reason?.includes('described') ? '📋' : '💭'}</div>
+        <div class="return-card-info">
+          <div class="return-order-id">Order: ${esc(r.order_id)} · ${esc(r.customer_email)}</div>
+          <div class="return-reason">${esc(r.reason)}</div>
+          ${r.notes ? `<div class="return-meta">Note: ${esc(r.notes)}</div>` : ''}
+          <div class="return-meta">${fmtDate(r.created_at)}</div>
+        </div>
+        ${statusChip(r.status)}
+        <button class="btn btn-outline btn-sm" onclick="resolveReturn('${esc(r.id)}')">Mark Resolved</button>
+      </div>`).join('');
+
+  } catch(err){
+    panel.innerHTML = `<p style="color:var(--rose);font-size:.85rem">${esc(err.message)}</p>`;
+  }
+}
+
+async function resolveReturn(id){
+  const { error } = await sb.from('returns').update({ status: 'resolved' }).eq('id', id);
+  if(error){ showToast('Error: ' + error.message, 'error'); return; }
+  showToast('Return marked as resolved ✓', 'success');
+  loadReturns();
+}
+</script>
+</body>
+</html>
