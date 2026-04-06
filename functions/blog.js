@@ -2,7 +2,6 @@
 /**
  * functions/blog.js  ←  This file MUST live at this exact path in your project
  * ═══════════════════════════════════════════════════════════════════════════════
- *
  * Cloudflare Pages Function — SSR OG Meta Injector
  *
  * WHAT IT DOES:
