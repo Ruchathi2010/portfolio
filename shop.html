@@ -4,9 +4,9 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Tech Shop — James Mwangi | Developer Tools & Global Shipping</title>
-<meta name="description" content="Enterprise-grade refurbished and new developer hardware — keyboards, mice, docks, and accessories, evaluated for Linux compatibility and long-term reliability. Secure M-Pesa and card checkout, DHL and local courier shipping across Kenya and internationally.">
-<meta property="og:title"       content="Hardware Lab — James Mwangi | Developer Hardware Shop">
-<meta property="og:description" content="Enterprise-grade refurbished and new developer hardware, evaluated for Linux compatibility and reliability. Secure M-Pesa &amp; card checkout · Real-time order tracking · Kenya &amp; international shipping.">
+<meta name="description" content="A live production e-commerce platform engineered by James Mwangi. Built on Supabase, Cloudflare Pages, and Stripe/M-Pesa — serving as a real-world case study in secure transaction flows and inventory management.">
+<meta property="og:title"       content="Hardware Lab — James Mwangi | Software Engineer">
+<meta property="og:description" content="Live production e-commerce case study. Supabase backend · Stripe/M-Pesa payments · Real-time order tracking · Built by James Mwangi.">
 <meta property="og:type"        content="website">
 <meta name="robots" content="index, follow">
 
@@ -56,9 +56,6 @@
 .prod-card { background:var(--bg2); border:1px solid var(--border); border-radius:var(--r2); overflow:hidden; transition:var(--t); display:flex; flex-direction:column; position:relative; }
 .prod-card:hover { border-color:rgba(34,211,165,.3); transform:translateY(-5px); box-shadow:var(--shadow2); }
 .prod-img-wrap { position:relative; overflow:hidden; aspect-ratio:4/3; background:var(--bg3); display:flex; align-items:center; justify-content:center; }
-.prod-img-link { display:flex; width:100%; height:100%; align-items:center; justify-content:center; text-decoration:none; }
-.prod-name-link { color:inherit; text-decoration:none; }
-.prod-name-link:hover { color:var(--green); }
 .prod-img { width:100%; height:100%; object-fit:cover; transition:transform .5s; }
 .prod-card:hover .prod-img { transform:scale(1.06); }
 .prod-img-placeholder { font-size:clamp(2.5rem,6vw,4rem); opacity:.4; }
@@ -964,6 +961,110 @@
   .search-bar-inner  { border-radius: var(--r); }
 }
 
+/* ══════════════════════════════════════════════════════════════════
+   ENGINEER FRAMING — Case Study / Technical Documentation styles
+   ══════════════════════════════════════════════════════════════════ */
+
+/* ── Case study banner above the hero ─────────────────────────────── */
+.case-study-banner {
+  background: linear-gradient(135deg, rgba(99,102,241,.10) 0%, rgba(34,211,165,.08) 100%);
+  border-bottom: 1px solid rgba(99,102,241,.18);
+  padding: clamp(2.5rem,6vw,4rem) 0 clamp(2rem,4vw,3rem);
+}
+.csb-inner { max-width: 860px; }
+.csb-label {
+  font-family: var(--font-mono); font-size: var(--text-xs);
+  color: var(--accent2); letter-spacing: .14em; text-transform: uppercase;
+  margin-bottom: .65rem; display: flex; align-items: center; gap: .5rem;
+}
+.csb-label::before {
+  content: ''; display: inline-block; width: 18px; height: 2px;
+  background: var(--accent2);
+}
+.csb-title {
+  font-family: var(--font-display); font-size: clamp(1.6rem,4vw,2.4rem);
+  font-weight: 900; letter-spacing: -.035em; line-height: 1.1;
+  margin-bottom: 1rem; color: var(--text);
+}
+.csb-title span { color: var(--accent2); }
+.csb-desc {
+  font-size: var(--text-base); color: var(--text2); line-height: 1.78;
+  max-width: 720px; margin-bottom: 1.5rem;
+}
+.csb-stack {
+  display: flex; flex-wrap: wrap; gap: .5rem; margin-bottom: 1.5rem;
+}
+.stack-chip {
+  font-family: var(--font-mono); font-size: var(--text-xs);
+  padding: .28rem .8rem; border-radius: 6px; font-weight: 500;
+  border: 1px solid rgba(99,102,241,.3);
+  background: rgba(99,102,241,.08); color: var(--accent2);
+}
+.csb-metrics {
+  display: grid; grid-template-columns: repeat(auto-fit,minmax(140px,1fr));
+  gap: 1rem; padding: 1.25rem; background: var(--bg2);
+  border: 1px solid var(--border); border-radius: var(--r2);
+}
+.metric { text-align: center; }
+.metric-val {
+  font-family: var(--font-display); font-size: var(--text-2xl);
+  font-weight: 900; color: var(--accent2); display: block; line-height: 1;
+}
+.metric-label {
+  font-family: var(--font-mono); font-size: var(--text-xs);
+  color: var(--text3); margin-top: .25rem; text-transform: uppercase;
+  letter-spacing: .08em;
+}
+
+/* ── Section heading style ─────────────────────────────────────────── */
+.section-doc-heading {
+  font-family: var(--font-mono); font-size: var(--text-xs);
+  color: var(--accent2); letter-spacing: .12em; text-transform: uppercase;
+  margin-bottom: .5rem;
+}
+.section-doc-title {
+  font-family: var(--font-display); font-size: clamp(1.3rem,3vw,1.75rem);
+  font-weight: 800; color: var(--text); margin-bottom: .5rem;
+}
+.section-doc-sub {
+  font-size: var(--text-sm); color: var(--text2); line-height: 1.7;
+  max-width: 640px; margin-bottom: 2rem;
+}
+
+/* ── Arch section (below tracking) ────────────────────────────────── */
+.arch-section {
+  padding: clamp(3rem,6vw,5rem) 0;
+  border-top: 1px solid var(--border);
+  margin-top: clamp(2rem,4vw,3rem);
+}
+.arch-grid {
+  display: grid; grid-template-columns: repeat(auto-fit,minmax(240px,1fr));
+  gap: 1.25rem;
+}
+.arch-card {
+  background: var(--bg2); border: 1px solid var(--border);
+  border-radius: var(--r2); padding: 1.4rem;
+  transition: border-color .2s;
+}
+.arch-card:hover { border-color: rgba(99,102,241,.35); }
+.arch-card-icon { font-size: 1.5rem; margin-bottom: .65rem; }
+.arch-card-title {
+  font-family: var(--font-mono); font-size: var(--text-xs);
+  color: var(--accent2); text-transform: uppercase; letter-spacing: .1em;
+  margin-bottom: .4rem;
+}
+.arch-card h4 {
+  font-size: var(--text-base); font-weight: 700; color: var(--text);
+  margin-bottom: .5rem;
+}
+.arch-card p {
+  font-size: var(--text-sm); color: var(--text2); line-height: 1.65;
+}
+.arch-card ul {
+  font-size: var(--text-xs); color: var(--text3); font-family: var(--font-mono);
+  padding-left: 1.1rem; margin-top: .5rem; line-height: 1.8;
+}
+
 /* ── Professional button overrides ────────────────────────────────── */
 .btn-select-config {
   display: flex; align-items: center; gap: .45rem;
@@ -1004,6 +1105,7 @@
 }
 
 @media(max-width:640px){
+  .csb-metrics { grid-template-columns: repeat(2,1fr); }
   .wa-fab-label { display: none; }
 }
 </style>
@@ -1418,15 +1520,61 @@
 <!-- ════════ MAIN CONTENT ════════ -->
 <main id="main">
 
+  <!-- ══ CASE STUDY BANNER ══ -->
+  <section class="case-study-banner" aria-label="Technical Implementation Overview">
+    <div class="container csb-inner">
+      <div class="csb-label">Live Production System · Case Study</div>
+      <h1 class="csb-title">Hardware Lab — <span>Technical Implementation</span></h1>
+      <p class="csb-desc">
+        This is a fully operational e-commerce platform I designed and engineered as a live
+        portfolio piece. It serves as a production environment for testing secure payment
+        flows, real-time inventory management, and global logistics automation.
+        The frontend is built on Cloudflare Pages with a Supabase (PostgreSQL) backend,
+        integrating both Stripe (international card payments) and the Safaricom Daraja
+        API (M-Pesa STK Push) for dual-currency checkout — a pattern common in
+        African FinTech systems. Every product listing is fetched dynamically from
+        Supabase with Row Level Security policies enforced at the database layer.
+      </p>
+      <div class="csb-stack" role="list" aria-label="Technology stack">
+        <span class="stack-chip">Cloudflare Pages</span>
+        <span class="stack-chip">Supabase PostgreSQL</span>
+        <span class="stack-chip">Row Level Security</span>
+        <span class="stack-chip">Stripe / M-Pesa Daraja</span>
+        <span class="stack-chip">DHL Express API</span>
+        <span class="stack-chip">Vanilla JS ES2022</span>
+        <span class="stack-chip">localStorage Cart</span>
+        <span class="stack-chip">Real-Time Order Tracking</span>
+      </div>
+      <div class="csb-metrics" role="list" aria-label="Platform metrics">
+        <div class="metric" role="listitem">
+          <span class="metric-val">2</span>
+          <div class="metric-label">Payment Gateways</div>
+        </div>
+        <div class="metric" role="listitem">
+          <span class="metric-val">3</span>
+          <div class="metric-label">Shipping Zones</div>
+        </div>
+        <div class="metric" role="listitem">
+          <span class="metric-val">RLS</span>
+          <div class="metric-label">DB Security Layer</div>
+        </div>
+        <div class="metric" role="listitem">
+          <span class="metric-val">100%</span>
+          <div class="metric-label">Serverless Infra</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <!-- Shop Hero (condensed — engineer identity, not retailer identity) -->
   <header class="shop-hero" style="padding:clamp(2.5rem,5vw,3.5rem) 0 clamp(1.5rem,3vw,2.5rem)">
     <div class="container shop-hero-inner">
       <div class="label" style="font-family:var(--font-mono);font-size:var(--text-xs);color:var(--text3)">
         // Engineer-curated developer hardware · Enterprise-grade refurbished &amp; new
       </div>
-      <h1 id="shopHeroTitle" style="font-family:var(--font-display);font-size:clamp(1.4rem,3.5vw,2rem);font-weight:800;letter-spacing:-.03em;margin:.5rem 0 .75rem">
+      <h2 style="font-family:var(--font-display);font-size:clamp(1.4rem,3.5vw,2rem);font-weight:800;letter-spacing:-.03em;margin:.5rem 0 .75rem">
         Sustainable Hardware Catalogue
-      </h1>
+      </h2>
       <p style="font-size:var(--text-sm);color:var(--text2);max-width:560px;line-height:1.7;margin-bottom:1.25rem">
         Each item below is personally evaluated for developer workload performance, Linux
         compatibility, and long-term reliability. Specifications are drawn from
@@ -1476,6 +1624,7 @@
     </div>
 
     <!-- Catalogue filter -->
+    <div class="section-doc-heading"> </div>
     <div class="shop-toolbar" role="toolbar" aria-label="Filter products by category">
       <button class="shop-cat-btn active" onclick="filterProducts('all',this)">All Devices</button>
       <button class="shop-cat-btn" onclick="filterProducts('Keyboards',this)">Input Devices</button>
@@ -1585,6 +1734,68 @@
 
   </div><!-- /container -->
 
+
+    <!-- ══ TECHNICAL ARCHITECTURE SECTION ══ -->
+    <section class="arch-section" aria-label="Technical Architecture">
+      <div class="section-doc-heading">// System Design — How This Platform Works</div>
+      <h2 class="section-doc-title">Technical Architecture</h2>
+      <p class="section-doc-sub">
+        This platform is designed as a modern JAMstack application demonstrating
+        production-level patterns relevant to senior software engineering roles.
+        The following components form the core of the system.
+      </p>
+      <div class="arch-grid">
+
+        <div class="arch-card">
+          <div class="arch-card-icon">🗄️</div>
+          <div class="arch-card-title">// Layer 1 — Data</div>
+          <h4>Supabase (PostgreSQL)</h4>
+          <p>Products, orders, returns and reviews are persisted in a normalised relational schema with Row Level Security (RLS) policies enforced at the database layer. Anon users can read active inventory; only authenticated service roles may write order state.</p>
+          <ul>
+            <li>RLS policies per table</li>
+            <li>Real-time subscriptions (orders)</li>
+            <li>Indexed on active + created_at</li>
+          </ul>
+        </div>
+
+        <div class="arch-card">
+          <div class="arch-card-icon">💳</div>
+          <div class="arch-card-title">// Layer 2 — Payments</div>
+          <h4>Dual-Gateway Checkout</h4>
+          <p>Stripe handles international card payments via the Elements SDK. M-Pesa payments use the Safaricom Daraja STK Push API, triggering a payment prompt on the customer's handset. A Cloudflare Worker serves as the callback receiver, updating order state in Supabase upon confirmation.</p>
+          <ul>
+            <li>Stripe Elements (PCI DSS)</li>
+            <li>M-Pesa Daraja OAuth 2.0</li>
+            <li>Worker callback → DB update</li>
+          </ul>
+        </div>
+
+        <div class="arch-card">
+          <div class="arch-card-icon">🚚</div>
+          <div class="arch-card-title">// Layer 3 — Logistics</div>
+          <h4>Intelligent Shipping Engine</h4>
+          <p>Shipping cost and carrier selection are computed client-side based on a zone lookup table (Nairobi / Rest of Kenya / International). DHL Express is integrated for tracked international fulfilment. The order tracking portal queries Supabase for live state transitions (Processing → Shipped → In Transit → Delivered).</p>
+          <ul>
+            <li>Zone-based cost calculation</li>
+            <li>DHL tracking reference storage</li>
+            <li>4-state order machine</li>
+          </ul>
+        </div>
+
+        <div class="arch-card">
+          <div class="arch-card-icon">🔐</div>
+          <div class="arch-card-title">// Layer 4 — Security</div>
+          <h4>Authentication &amp; Authorisation</h4>
+          <p>Supabase Auth provides email/password and Google OAuth 2.0 flows. Checkout fields are pre-filled from authenticated user metadata, reducing friction. The admin gateway uses session-scoped PIN + Supabase service role — a pattern appropriate for low-traffic internal tooling while a full RBAC system is overkill.</p>
+          <ul>
+            <li>Supabase Auth (JWT)</li>
+            <li>Google OAuth 2.0</li>
+            <li>RLS + service role separation</li>
+          </ul>
+        </div>
+
+      </div>
+    </section>
 
 <!-- ════════ PRODUCT DETAIL MODAL ════════ -->
 <div class="pdm-overlay" id="pdmOverlay" role="dialog" aria-modal="true" aria-label="Product details">
@@ -1812,9 +2023,9 @@
 
       <div style="display:flex;justify-content:space-between;align-items:center;width:100%;flex-wrap:wrap;gap:1rem">
         <div class="footer-copy">
-          © 2025 Hardware Lab, Nairobi, Kenya. All rights reserved.<br>
+          © 2025 James Mwangi. Hardware Lab is a live production case study.<br>
           <span style="font-family:var(--font-mono);font-size:var(--text-xs);color:var(--text3)">
-            Enterprise-grade developer hardware · Kenya &amp; international shipping
+            Full-Stack Engineer · Cybersecurity Specialist · Nairobi, Kenya → UK
           </span>
         </div>
         <div style="display:flex;align-items:center;gap:.75rem;flex-wrap:wrap">
@@ -2120,21 +2331,18 @@ function renderProducts(){
     // Safe-encode product JSON for inline onclick handlers
     const pJson = esc(JSON.stringify(p));
 
-    // Product page URL — clean, crawlable, one per product.
-    // Falls back to the id only for legacy rows that don't have a slug yet.
-    const prodUrl = `/shop/${esc(p.slug || p.id)}`;
-
     return `
     <div class="prod-card reveal" role="listitem"
-         style="transition-delay:${i * 0.06}s"
-         data-slug="${esc(p.slug || p.id)}">
+         style="transition-delay:${i * 0.06}s; cursor:pointer"
+         data-slug="${esc(p.slug || p.id)}"
+         onclick="openProductDetail('${esc(p.slug || p.id)}')"
+         onkeydown="if(event.key==='Enter')openProductDetail('${esc(p.slug || p.id)}')"
+         tabindex="0"
+         aria-label="View details for ${esc(p.name)}">
       <div class="prod-img-wrap">
-        <!-- Real <a href> — crawlable by search engines, no JS required to follow it -->
-        <a href="${prodUrl}" class="prod-img-link" aria-label="View details for ${esc(p.name)}">
-          ${getFirstImage(p)
-            ? `<img class="prod-img lazy" data-src="${esc(getFirstImage(p))}" alt="${esc(p.name)}" width="600" height="450" loading="lazy">`
-            : `<div class="prod-img-placeholder">🖥️</div>`}
-        </a>
+        ${getFirstImage(p)
+          ? `<img class="prod-img lazy" data-src="${esc(getFirstImage(p))}" alt="${esc(p.name)}" width="600" height="450" loading="lazy">`
+          : `<div class="prod-img-placeholder">🖥️</div>`}
 
         ${disc > 0
           ? `<div class="prod-badge badge-sale">-${disc}%</div>`
@@ -2142,14 +2350,14 @@ function renderProducts(){
           ? `<div class="prod-badge badge-featured">★ Featured</div>`
           : ''}
 
-        <!-- Quick hover overlay — still allows fast add without leaving the grid -->
+        <!-- Quick hover overlay — still allows fast add without opening modal -->
         ${!isSoldOut ? `
         <div class="prod-quick-btns">
           <button class="add-to-cart btn-sm"
-                  onclick="addToCart(${pJson})"
+                  onclick="event.stopPropagation();addToCart(${pJson})"
                   aria-label="Select configuration">+ Select</button>
           <button class="btn-wa-quick btn-sm"
-                  onclick="orderViaWA(${pJson})"
+                  onclick="event.stopPropagation();orderViaWA(${pJson})"
                   aria-label="Technical consultation">💬 Consult</button>
         </div>` : ''}
 
@@ -2158,10 +2366,7 @@ function renderProducts(){
 
       <div class="prod-body">
         <div class="prod-cat">${esc(p.category)}</div>
-        <h2 class="prod-name">
-          <!-- Real <a href> — crawlable, replaces the old modal-opening click -->
-          <a href="${prodUrl}" class="prod-name-link">${highlightText(p.name, searchQuery)}</a>
-        </h2>
+        <h2 class="prod-name">${highlightText(p.name, searchQuery)}</h2>
         <p class="prod-desc">${highlightText(stripHtml(p.description || ''), searchQuery)}</p>
         ${p.rating ? `<div class="prod-rating"><span class="stars" aria-label="${p.rating} stars">${stars(p.rating)}</span><span class="rating-num">${p.rating} (${p.review_count||0})</span></div>` : ''}
 
@@ -2171,7 +2376,7 @@ function renderProducts(){
             ${p.original_price ? `<div class="prod-original">${formatKES(p.original_price)}</div>` : ''}
           </div>
           <button class="add-to-cart" id="atc-${esc(p.id)}"
-                  onclick="addToCart(${pJson})"
+                  onclick="event.stopPropagation();addToCart(${pJson})"
                   aria-label="Add ${esc(p.name)} to cart"
                   ${isSoldOut ? 'disabled' : ''}>
             ${isSoldOut ? 'Sold out' : '+ Add'}
@@ -2183,7 +2388,8 @@ function renderProducts(){
           : ''}
 
         <!-- Real <a> tag: crawlable by Google, readable by screen readers -->
-        <a href="${prodUrl}"
+        <a href="?product=${esc(p.slug || p.id)}"
+           onclick="event.preventDefault();openProductDetail('${esc(p.slug || p.id)}')"
            style="font-family:var(--font-mono);font-size:0.62rem;color:#2563eb;margin-top:.4rem;opacity:.7;display:block;text-decoration:none;"
            aria-label="View full details for ${esc(p.name)}">
           View details →
@@ -3185,10 +3391,9 @@ async function openProductDetail(identifier){
   body.style.display  = 'none';
 
   // ── Push the identifier to the URL bar ───────────────────────────
-  // Matches the clean /shop/<slug> URL scheme served by
-  // functions/shop/[slug].js, so the address bar, back button, and
-  // sharing all point at the real crawlable page — not a query string.
-  history.pushState({ pdm: identifier }, '', `/shop/${encodeURIComponent(identifier)}`);
+  // UUIDs → ?product=007fbd0b-b1b7-...  (current behaviour, works now)
+  // Slugs → ?product=lenovo-thinkpad-t480s  (SEO-friendly, once added)
+  history.pushState({ pdm: identifier }, '', `?product=${encodeURIComponent(identifier)}`);
 
   // ── Check in-memory cache first (instant, zero network cost) ─────
   let product = isUUID
