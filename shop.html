@@ -3,10 +3,10 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Tech Shop — James Mwangi | Developer Tools & Global Shipping</title>
-<meta name="description" content="A live production e-commerce platform engineered by James Mwangi. Built on Supabase, Cloudflare Pages, and Stripe/M-Pesa — serving as a real-world case study in secure transaction flows and inventory management.">
-<meta property="og:title"       content="Hardware Lab — James Mwangi | Software Engineer">
-<meta property="og:description" content="Live production e-commerce case study. Supabase backend · Stripe/M-Pesa payments · Real-time order tracking · Built by James Mwangi.">
+<title>Hardware Lab — Premium Tech & Developer Hardware</title>
+<meta name="description" content="Hardware Lab — enterprise-grade refurbished and new developer hardware, hand-tested for performance and reliability. Secure checkout, fast delivery across Kenya, and international shipping.">
+<meta property="og:title"       content="Hardware Lab — Premium Tech & Developer Hardware">
+<meta property="og:description" content="Enterprise-grade refurbished and new developer hardware, hand-tested for performance. Secure checkout · fast local delivery · international shipping.">
 <meta property="og:type"        content="website">
 <meta name="robots" content="index, follow">
 
@@ -1065,6 +1065,27 @@
   padding-left: 1.1rem; margin-top: .5rem; line-height: 1.8;
 }
 
+/* ── System Architecture drawer (recruiter/engineering view) ───────── */
+.arch-toggle-btn {
+  display: flex; align-items: center; gap: .4rem;
+  font-family: var(--font-mono); font-size: var(--text-xs);
+  color: var(--text3); background: transparent; border: 1px solid var(--border2);
+  border-radius: 100px; padding: .42rem .9rem; cursor: pointer; transition: var(--t);
+  white-space: nowrap;
+}
+.arch-toggle-btn:hover { border-color: var(--accent2); color: var(--accent2); }
+.arch-overlay { position: fixed; inset: 0; z-index: 7000; background: rgba(10,15,28,.65); backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px); opacity: 0; pointer-events: none; transition: opacity .3s; }
+.arch-overlay.open { opacity: 1; pointer-events: all; }
+.arch-drawer { position: fixed; top: 0; right: 0; bottom: 0; z-index: 7001; width: min(640px,100vw); background: var(--bg2); border-left: 1px solid var(--border2); box-shadow: -4px 0 40px rgba(0,0,0,.5); display: flex; flex-direction: column; transform: translateX(100%); transition: transform .35s cubic-bezier(.4,0,.2,1); }
+.arch-drawer.open { transform: none; }
+.arch-drawer-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 1rem; padding: 1.5rem 1.5rem 1.25rem; border-bottom: 1px solid var(--border); flex-shrink: 0; }
+.arch-drawer-title { font-family: var(--font-display); font-size: clamp(1.3rem,3vw,1.75rem); font-weight: 900; letter-spacing: -.03em; color: var(--text); margin-top: .35rem; }
+.arch-drawer-body { flex: 1; overflow-y: auto; padding: 1.5rem; }
+.arch-drawer .arch-grid { margin-top: 1.75rem; }
+.arch-drawer .csb-metrics { margin-top: 0; }
+@media(max-width:640px){ .arch-drawer { width: 100vw; } }
+@media(max-width:900px){ .arch-toggle-btn { display: none; } }
+
 /* ── Professional button overrides ────────────────────────────────── */
 .btn-select-config {
   display: flex; align-items: center; gap: .45rem;
@@ -1123,6 +1144,7 @@
   <a href="services.html">Services</a>
   <a href="shop.html" aria-current="page">Shop</a>
   <a href="index.html#contact">Contact</a>
+  <a href="javascript:void(0)" onclick="openArchDrawer()">System Architecture</a>
 </div>
 
 <!-- Navigation -->
@@ -1147,6 +1169,7 @@
       <a href="index.html#contact">Contact</a>
     </div>
     <div class="nav-right">
+      <button class="arch-toggle-btn" onclick="openArchDrawer()" aria-haspopup="dialog" aria-controls="archDrawer">⚙ System Architecture</button>
       <button class="theme-toggle" id="themeBtn" onclick="toggleTheme()" aria-label="Toggle theme">🌙</button>
       <!-- Auth button — shows Sign In when logged out, avatar initial when logged in -->
       <button class="nav-account-btn" id="navAuthBtn" onclick="openAuthModal()" aria-label="Sign in or view account">
@@ -1520,70 +1543,19 @@
 <!-- ════════ MAIN CONTENT ════════ -->
 <main id="main">
 
-  <!-- ══ CASE STUDY BANNER ══ -->
-  <section class="case-study-banner" aria-label="Technical Implementation Overview">
-    <div class="container csb-inner">
-      <div class="csb-label">Live Production System · Case Study</div>
-      <h1 class="csb-title">Hardware Lab — <span>Technical Implementation</span></h1>
-      <p class="csb-desc">
-        This is a fully operational e-commerce platform I designed and engineered as a live
-        portfolio piece. It serves as a production environment for testing secure payment
-        flows, real-time inventory management, and global logistics automation.
-        The frontend is built on Cloudflare Pages with a Supabase (PostgreSQL) backend,
-        integrating both Stripe (international card payments) and the Safaricom Daraja
-        API (M-Pesa STK Push) for dual-currency checkout — a pattern common in
-        African FinTech systems. Every product listing is fetched dynamically from
-        Supabase with Row Level Security policies enforced at the database layer.
-      </p>
-      <div class="csb-stack" role="list" aria-label="Technology stack">
-        <span class="stack-chip">Cloudflare Pages</span>
-        <span class="stack-chip">Supabase PostgreSQL</span>
-        <span class="stack-chip">Row Level Security</span>
-        <span class="stack-chip">Stripe / M-Pesa Daraja</span>
-        <span class="stack-chip">DHL Express API</span>
-        <span class="stack-chip">Vanilla JS ES2022</span>
-        <span class="stack-chip">localStorage Cart</span>
-        <span class="stack-chip">Real-Time Order Tracking</span>
-      </div>
-      <div class="csb-metrics" role="list" aria-label="Platform metrics">
-        <div class="metric" role="listitem">
-          <span class="metric-val">2</span>
-          <div class="metric-label">Payment Gateways</div>
-        </div>
-        <div class="metric" role="listitem">
-          <span class="metric-val">3</span>
-          <div class="metric-label">Shipping Zones</div>
-        </div>
-        <div class="metric" role="listitem">
-          <span class="metric-val">RLS</span>
-          <div class="metric-label">DB Security Layer</div>
-        </div>
-        <div class="metric" role="listitem">
-          <span class="metric-val">100%</span>
-          <div class="metric-label">Serverless Infra</div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Shop Hero (condensed — engineer identity, not retailer identity) -->
-  <header class="shop-hero" style="padding:clamp(2.5rem,5vw,3.5rem) 0 clamp(1.5rem,3vw,2.5rem)">
+  <!-- Shop Hero — customer-facing storefront -->
+  <header class="shop-hero">
     <div class="container shop-hero-inner">
-      <div class="label" style="font-family:var(--font-mono);font-size:var(--text-xs);color:var(--text3)">
-        // Engineer-curated developer hardware · Enterprise-grade refurbished &amp; new
-      </div>
-      <h2 style="font-family:var(--font-display);font-size:clamp(1.4rem,3.5vw,2rem);font-weight:800;letter-spacing:-.03em;margin:.5rem 0 .75rem">
-        Sustainable Hardware Catalogue
-      </h2>
-      <p style="font-size:var(--text-sm);color:var(--text2);max-width:560px;line-height:1.7;margin-bottom:1.25rem">
-        Each item below is personally evaluated for developer workload performance, Linux
-        compatibility, and long-term reliability. Specifications are drawn from
-        manufacturer datasheets and independent benchmark sources.
+      <h1>Hardware Lab — <span>Premium Tech &amp; Developer Hardware</span></h1>
+      <p>
+        Enterprise-grade refurbished and new hardware, hand-tested for performance,
+        Linux compatibility, and long-term reliability — so you can build with
+        confidence, not guesswork.
       </p>
       <div class="trust-row" role="list">
         <div class="trust-item" role="listitem"><span class="dot">●</span> Enterprise-grade refurbished</div>
-        <div class="trust-item" role="listitem"><span class="dot">●</span> DHL Express international</div>
-        <div class="trust-item" role="listitem"><span class="dot">●</span> Secure M-Pesa &amp; Stripe checkout</div>
+        <div class="trust-item" role="listitem"><span class="dot">●</span> Secure checkout — Card &amp; M-Pesa</div>
+        <div class="trust-item" role="listitem"><span class="dot">●</span> Fast local delivery, DHL international</div>
         <div class="trust-item" role="listitem"><span class="dot">●</span> Real-time order tracking</div>
       </div>
     </div>
@@ -1729,73 +1701,122 @@
       <div class="strip-item"><span class="si-icon">🚚</span><div><div class="si-title">Nairobi Metro — 24 Hours</div><div class="si-sub">Local courier · KES 300</div></div></div>
       <div class="strip-item"><span class="si-icon">🇰🇪</span><div><div class="si-title">Rest of Kenya — 3–5 Days</div><div class="si-sub">G4S / Wells Fargo · KES 600</div></div></div>
       <div class="strip-item"><span class="si-icon">✈️</span><div><div class="si-title">International — 3–7 Days</div><div class="si-sub">DHL Express (tracked) · USD 35</div></div></div>
-      <div class="strip-item"><span class="si-icon">📱</span><div><div class="si-title">Stripe &amp; M-Pesa Daraja</div><div class="si-sub">PCI-compliant · dual currency</div></div></div>
+      <div class="strip-item"><span class="si-icon">📱</span><div><div class="si-title">Card &amp; M-Pesa Accepted</div><div class="si-sub">Secure checkout · dual currency</div></div></div>
     </div>
 
   </div><!-- /container -->
 
 
-    <!-- ══ TECHNICAL ARCHITECTURE SECTION ══ -->
-    <section class="arch-section" aria-label="Technical Architecture">
-      <div class="section-doc-heading">// System Design — How This Platform Works</div>
-      <h2 class="section-doc-title">Technical Architecture</h2>
-      <p class="section-doc-sub">
-        This platform is designed as a modern JAMstack application demonstrating
-        production-level patterns relevant to senior software engineering roles.
-        The following components form the core of the system.
-      </p>
-      <div class="arch-grid">
-
-        <div class="arch-card">
-          <div class="arch-card-icon">🗄️</div>
-          <div class="arch-card-title">// Layer 1 — Data</div>
-          <h4>Supabase (PostgreSQL)</h4>
-          <p>Products, orders, returns and reviews are persisted in a normalised relational schema with Row Level Security (RLS) policies enforced at the database layer. Anon users can read active inventory; only authenticated service roles may write order state.</p>
-          <ul>
-            <li>RLS policies per table</li>
-            <li>Real-time subscriptions (orders)</li>
-            <li>Indexed on active + created_at</li>
-          </ul>
+    <!-- ══ SYSTEM ARCHITECTURE DRAWER (recruiter / engineering view) ══ -->
+    <div class="arch-overlay" id="archOverlay" onclick="closeArchDrawer()"></div>
+    <aside class="arch-drawer" id="archDrawer" role="dialog" aria-modal="true" aria-label="System Architecture" aria-hidden="true">
+      <div class="arch-drawer-head">
+        <div>
+          <div class="csb-label">Live Production System · Case Study</div>
+          <h2 class="arch-drawer-title">System Architecture</h2>
         </div>
-
-        <div class="arch-card">
-          <div class="arch-card-icon">💳</div>
-          <div class="arch-card-title">// Layer 2 — Payments</div>
-          <h4>Dual-Gateway Checkout</h4>
-          <p>Stripe handles international card payments via the Elements SDK. M-Pesa payments use the Safaricom Daraja STK Push API, triggering a payment prompt on the customer's handset. A Cloudflare Worker serves as the callback receiver, updating order state in Supabase upon confirmation.</p>
-          <ul>
-            <li>Stripe Elements (PCI DSS)</li>
-            <li>M-Pesa Daraja OAuth 2.0</li>
-            <li>Worker callback → DB update</li>
-          </ul>
-        </div>
-
-        <div class="arch-card">
-          <div class="arch-card-icon">🚚</div>
-          <div class="arch-card-title">// Layer 3 — Logistics</div>
-          <h4>Intelligent Shipping Engine</h4>
-          <p>Shipping cost and carrier selection are computed client-side based on a zone lookup table (Nairobi / Rest of Kenya / International). DHL Express is integrated for tracked international fulfilment. The order tracking portal queries Supabase for live state transitions (Processing → Shipped → In Transit → Delivered).</p>
-          <ul>
-            <li>Zone-based cost calculation</li>
-            <li>DHL tracking reference storage</li>
-            <li>4-state order machine</li>
-          </ul>
-        </div>
-
-        <div class="arch-card">
-          <div class="arch-card-icon">🔐</div>
-          <div class="arch-card-title">// Layer 4 — Security</div>
-          <h4>Authentication &amp; Authorisation</h4>
-          <p>Supabase Auth provides email/password and Google OAuth 2.0 flows. Checkout fields are pre-filled from authenticated user metadata, reducing friction. The admin gateway uses session-scoped PIN + Supabase service role — a pattern appropriate for low-traffic internal tooling while a full RBAC system is overkill.</p>
-          <ul>
-            <li>Supabase Auth (JWT)</li>
-            <li>Google OAuth 2.0</li>
-            <li>RLS + service role separation</li>
-          </ul>
-        </div>
-
+        <button class="cart-close" onclick="closeArchDrawer()" aria-label="Close">✕</button>
       </div>
-    </section>
+      <div class="arch-drawer-body">
+        <p class="csb-desc">
+          Hardware Lab is a fully operational e-commerce platform designed and engineered
+          by James Mwangi as a live portfolio piece. It runs as a production environment
+          for secure payment flows, real-time inventory management, and global logistics
+          automation. The frontend is built on Cloudflare Pages with a Supabase (PostgreSQL)
+          backend, integrating both Stripe (international card payments) and the Safaricom
+          Daraja API (M-Pesa STK Push) for dual-currency checkout — a pattern common in
+          African FinTech systems. Every product listing is fetched dynamically from
+          Supabase with Row Level Security policies enforced at the database layer.
+        </p>
+        <div class="csb-stack" role="list" aria-label="Technology stack">
+          <span class="stack-chip">Cloudflare Pages</span>
+          <span class="stack-chip">Supabase PostgreSQL</span>
+          <span class="stack-chip">Row Level Security</span>
+          <span class="stack-chip">Stripe / M-Pesa Daraja</span>
+          <span class="stack-chip">DHL Express API</span>
+          <span class="stack-chip">Vanilla JS ES2022</span>
+          <span class="stack-chip">localStorage Cart</span>
+          <span class="stack-chip">Real-Time Order Tracking</span>
+        </div>
+        <div class="csb-metrics" role="list" aria-label="Platform metrics">
+          <div class="metric" role="listitem">
+            <span class="metric-val">2</span>
+            <div class="metric-label">Payment Gateways</div>
+          </div>
+          <div class="metric" role="listitem">
+            <span class="metric-val">3</span>
+            <div class="metric-label">Shipping Zones</div>
+          </div>
+          <div class="metric" role="listitem">
+            <span class="metric-val">RLS</span>
+            <div class="metric-label">DB Security Layer</div>
+          </div>
+          <div class="metric" role="listitem">
+            <span class="metric-val">100%</span>
+            <div class="metric-label">Serverless Infra</div>
+          </div>
+        </div>
+
+        <div class="section-doc-heading" style="margin-top:2rem">// System Design — How This Platform Works</div>
+        <h2 class="section-doc-title">Technical Architecture</h2>
+        <p class="section-doc-sub">
+          This platform is designed as a modern JAMstack application demonstrating
+          production-level patterns relevant to senior software engineering roles.
+          The following components form the core of the system.
+        </p>
+        <div class="arch-grid">
+
+          <div class="arch-card">
+            <div class="arch-card-icon">🗄️</div>
+            <div class="arch-card-title">// Layer 1 — Data</div>
+            <h4>Supabase (PostgreSQL)</h4>
+            <p>Products, orders, returns and reviews are persisted in a normalised relational schema with Row Level Security (RLS) policies enforced at the database layer. Anon users can read active inventory; only authenticated service roles may write order state.</p>
+            <ul>
+              <li>RLS policies per table</li>
+              <li>Real-time subscriptions (orders)</li>
+              <li>Indexed on active + created_at</li>
+            </ul>
+          </div>
+
+          <div class="arch-card">
+            <div class="arch-card-icon">💳</div>
+            <div class="arch-card-title">// Layer 2 — Payments</div>
+            <h4>Dual-Gateway Checkout</h4>
+            <p>Stripe handles international card payments via the Elements SDK. M-Pesa payments use the Safaricom Daraja STK Push API, triggering a payment prompt on the customer's handset. A Cloudflare Worker serves as the callback receiver, updating order state in Supabase upon confirmation.</p>
+            <ul>
+              <li>Stripe Elements (PCI DSS)</li>
+              <li>M-Pesa Daraja OAuth 2.0</li>
+              <li>Worker callback → DB update</li>
+            </ul>
+          </div>
+
+          <div class="arch-card">
+            <div class="arch-card-icon">🚚</div>
+            <div class="arch-card-title">// Layer 3 — Logistics</div>
+            <h4>Intelligent Shipping Engine</h4>
+            <p>Shipping cost and carrier selection are computed client-side based on a zone lookup table (Nairobi / Rest of Kenya / International). DHL Express is integrated for tracked international fulfilment. The order tracking portal queries Supabase for live state transitions (Processing → Shipped → In Transit → Delivered).</p>
+            <ul>
+              <li>Zone-based cost calculation</li>
+              <li>DHL tracking reference storage</li>
+              <li>4-state order machine</li>
+            </ul>
+          </div>
+
+          <div class="arch-card">
+            <div class="arch-card-icon">🔐</div>
+            <div class="arch-card-title">// Layer 4 — Security</div>
+            <h4>Authentication &amp; Authorisation</h4>
+            <p>Supabase Auth provides email/password and Google OAuth 2.0 flows. Checkout fields are pre-filled from authenticated user metadata, reducing friction. The admin gateway uses session-scoped PIN + Supabase service role — a pattern appropriate for low-traffic internal tooling while a full RBAC system is overkill.</p>
+            <ul>
+              <li>Supabase Auth (JWT)</li>
+              <li>Google OAuth 2.0</li>
+              <li>RLS + service role separation</li>
+            </ul>
+          </div>
+
+        </div>
+      </div>
+    </aside>
 
 <!-- ════════ PRODUCT DETAIL MODAL ════════ -->
 <div class="pdm-overlay" id="pdmOverlay" role="dialog" aria-modal="true" aria-label="Product details">
@@ -2023,14 +2044,12 @@
 
       <div style="display:flex;justify-content:space-between;align-items:center;width:100%;flex-wrap:wrap;gap:1rem">
         <div class="footer-copy">
-          © 2025 James Mwangi. Hardware Lab is a live production case study.<br>
-          <span style="font-family:var(--font-mono);font-size:var(--text-xs);color:var(--text3)">
-            Full-Stack Engineer · Cybersecurity Specialist · Nairobi, Kenya → UK
-          </span>
+          © 2026 Hardware Lab. All rights reserved.
         </div>
         <div style="display:flex;align-items:center;gap:.75rem;flex-wrap:wrap">
           <button class="btn btn-outline btn-sm" onclick="openReturnModal()" aria-label="Request a return">🔁 Returns &amp; Refunds</button>
-          <a href="index.html#contact" class="btn btn-outline btn-sm">Technical Enquiry →</a>
+          <a href="index.html#contact" class="btn btn-outline btn-sm">Contact Us →</a>
+          <button class="arch-toggle-btn" onclick="openArchDrawer()">View Case Study</button>
         </div>
       </div>
 
@@ -2053,8 +2072,8 @@
   </div>
 </footer>
 
-<div class="wa-fab-label">Technical Consultation</div>
-<a href="https://wa.me/254711618115?text=Hi James, I have a technical enquiry about the Hardware Lab" target="_blank" rel="noopener" class="wa-fab" aria-label="Technical consultation via WhatsApp">
+<div class="wa-fab-label">Chat with us</div>
+<a href="https://wa.me/254711618115?text=Hi, I have a question about Hardware Lab" target="_blank" rel="noopener" class="wa-fab" aria-label="Chat with us on WhatsApp">
   <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
 </a>
 
@@ -2162,6 +2181,23 @@ window.addEventListener('scroll', () => {
 
 function openMob(){ document.getElementById('mobNav').classList.add('open'); }
 function closeMob(){ document.getElementById('mobNav').classList.remove('open'); }
+
+/* ── System Architecture drawer (recruiter/engineering view) ── */
+function openArchDrawer(){
+  document.getElementById('archOverlay').classList.add('open');
+  document.getElementById('archDrawer').classList.add('open');
+  document.getElementById('archDrawer').setAttribute('aria-hidden','false');
+  document.body.style.overflow = 'hidden';
+}
+function closeArchDrawer(){
+  document.getElementById('archOverlay').classList.remove('open');
+  document.getElementById('archDrawer').classList.remove('open');
+  document.getElementById('archDrawer').setAttribute('aria-hidden','true');
+  document.body.style.overflow = '';
+}
+document.addEventListener('keydown', (e) => {
+  if(e.key === 'Escape') closeArchDrawer();
+});
 
 /* ══════════════════════════════════════════════════════════════
    TOAST
