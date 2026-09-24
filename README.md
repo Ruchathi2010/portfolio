@@ -122,7 +122,7 @@ See blog post `mpesa-daraja-api-node` for the full implementation guide (add it 
 
 ---
 
-## 🎨 Design System
+##  Design System
 
 CSS variables in `style.css` — change these to retheme everything:
 ```css
@@ -135,4 +135,4 @@ CSS variables in `style.css` — change these to retheme everything:
 
 ---
 
-Built with ❤️ by Claude for James Mwangi | jamesmainamwangi.com
+Built by James Mwangi for www.jamesmainamwangi.com
